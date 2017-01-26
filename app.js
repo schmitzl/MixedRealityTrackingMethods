@@ -110,7 +110,7 @@ app.updateEvent.addEventListener(function (frame) {
     boxGeoObject.quaternion.copy(boxPose.orientation);
     // rotate the boxes at a constant speed, independent of frame rates     
     // to make it a little less boring
-    box.rotateY(3 * frame.deltaTime / 10000);
+   // box.rotateY(3 * frame.deltaTime / 10000);
 });
 // renderEvent is fired whenever argon wants the app to update its display
 app.renderEvent.addEventListener(function () {
