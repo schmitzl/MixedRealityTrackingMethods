@@ -1,6 +1,8 @@
 /// <reference types="@argonjs/argon" />
 /// <reference types="three" />
 // grab some handles on APIs we use
+
+
 var Cesium = Argon.Cesium;
 var Cartesian3 = Argon.Cesium.Cartesian3;
 var ReferenceFrame = Argon.Cesium.ReferenceFrame;
@@ -8,6 +10,7 @@ var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 // set up Argon
 var app = Argon.init();
+
 // Tell argon what local coordinate system you want.  The default coordinate
 // frame used by Argon is Cesium's FIXED frame, which is centered at the center
 // of the earth and oriented with the earth's axes.  
@@ -53,7 +56,7 @@ var boxGeoObject = new THREE.Object3D();
 var box = new THREE.Object3D();
 var loader = new THREE.TextureLoader();
 loader.load('box.png', function (texture) {
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
+    var geometry = new THREE.BoxGeometry(3, 1, 1);
     var material = new THREE.MeshBasicMaterial({ map: texture });
     var mesh = new THREE.Mesh(geometry, material);
     box.add(mesh);
@@ -136,3 +139,4 @@ app.renderEvent.addEventListener(function () {
         renderer.render(scene, camera);
     }
 });
+
