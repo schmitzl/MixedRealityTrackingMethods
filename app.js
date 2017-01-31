@@ -38,6 +38,15 @@ scene.add(userLocation);
 
 // ---- RENDERER ------
 
+var renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    logarithmicDepthBuffer: true
+});
+renderer.setPixelRatio(window.devicePixelRatio);
+app.view.element.appendChild(renderer.domElement);
+
+
+
 
 
 
