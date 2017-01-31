@@ -1,8 +1,6 @@
 /// <reference types="@argonjs/argon" />
 /// <reference types="three" />
 // grab some handles on APIs we use
-
-
 var Cesium = Argon.Cesium;
 var Cartesian3 = Argon.Cesium.Cartesian3;
 var ReferenceFrame = Argon.Cesium.ReferenceFrame;
@@ -10,7 +8,6 @@ var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 // set up Argon
 var app = Argon.init();
-
 // Tell argon what local coordinate system you want.  The default coordinate
 // frame used by Argon is Cesium's FIXED frame, which is centered at the center
 // of the earth and oriented with the earth's axes.  
@@ -34,22 +31,12 @@ scene.add(camera);
 scene.add(userLocation);
 // In this demo, we are  rendering the 3D graphics with WebGL, 
 // using the standard WebGLRenderer
-
-
-// ---- RENDERER ------
-
 var renderer = new THREE.WebGLRenderer({
     alpha: true,
     logarithmicDepthBuffer: true
 });
 renderer.setPixelRatio(window.devicePixelRatio);
 app.view.element.appendChild(renderer.domElement);
-
-
-
-
-
-
 // We put some elements in the index.html, for convenience. 
 var locationElement = document.getElementById("location");
 // All geospatial objects need to have an Object3D linked to a Cesium Entity.
@@ -66,7 +53,7 @@ var boxGeoObject = new THREE.Object3D();
 var box = new THREE.Object3D();
 var loader = new THREE.TextureLoader();
 loader.load('box.png', function (texture) {
-    var geometry = new THREE.BoxGeometry(50, 50, 50);
+    var geometry = new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({ map: texture });
     var mesh = new THREE.Mesh(geometry, material);
     box.add(mesh);
@@ -120,7 +107,7 @@ app.updateEvent.addEventListener(function (frame) {
     boxGeoObject.quaternion.copy(boxPose.orientation);
     // rotate the boxes at a constant speed, independent of frame rates     
     // to make it a little less boring
-   // box.rotateY(3 * frame.deltaTime / 10000);
+    box.rotateY(3 * frame.deltaTime / 10000);
 });
 // renderEvent is fired whenever argon wants the app to update its display
 app.renderEvent.addEventListener(function () {
@@ -149,4 +136,3 @@ app.renderEvent.addEventListener(function () {
         renderer.render(scene, camera);
     }
 });
-
