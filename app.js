@@ -34,14 +34,93 @@ scene.add(camera);
 scene.add(userLocation);
 // In this demo, we are  rendering the 3D graphics with WebGL, 
 // using the standard WebGLRenderer
+
+
+// ---- RENDERER ------
 var renderer = new THREE.WebGLRenderer({
     alpha: true,
     logarithmicDepthBuffer: true
 });
 renderer.setPixelRatio(window.devicePixelRatio);
 app.view.element.appendChild(renderer.domElement);
+
+
+var cssRenderer = new THREE.CSS3DArgonRenderer();
+app.view.element.appendChild(cssRenderer.domElement);
+
+
+
 // We put some elements in the index.html, for convenience. 
 var locationElement = document.getElementById("location");
+
+var hudContent = document.getElementById('hud');
+hud.appendChild(hudContent);
+var locationElements = hudContent.getElementsByClassName('location');
+//  We also move the description box to the Argon HUD, but moving it inside the hud element
+var hudDescription = document.getElementById('description');
+hudContent.appendChild(hudDescription);
+
+var boxLocDiv = document.getElementById("box-location");
+var boxLabel = new THREE.CSS3DSprite(boxLocDiv);
+boxLabel.scale.set(0.02, 0.02, 0.02);
+boxLabel.position.set(0, 1.25, 0);
+boxGeoObject.add(boxLabel);
+
+    
+var boxCartographicDeg = [0, 0, 0];
+var lastInfoText = '';
+var lastBoxText = '';
+// make floating point output a little less ugly
+function toFixed(value, precision) {
+    var power = Math.pow(10, precision || 0);
+    return String(Math.round(value * power) / power);
+}
+
+var gpsCartographicDeg = [0, 0, 0];
+// get user position in global coordinates
+var userPoseFIXED = app.context.getEntityPose(app.context.user, ReferenceFrame.FIXED);
+var userLLA = Cesium.Ellipsoid.WGS84.cartesianToCartographic(userPoseFIXED.position);
+if (userLLA) {
+    gpsCartographicDeg = [
+        CesiumMath.toDegrees(userLLA.longitude),
+        CesiumMath.toDegrees(userLLA.latitude),
+        userLLA.height
+    ];
+}
+var boxPoseFIXED = app.context.getEntityPose(boxGeoEntity, ReferenceFrame.FIXED);
+var boxLLA = Cesium.Ellipsoid.WGS84.cartesianToCartographic(boxPoseFIXED.position);
+if (boxLLA) {
+    boxCartographicDeg = [
+        CesiumMath.toDegrees(boxLLA.longitude),
+        CesiumMath.toDegrees(boxLLA.latitude),
+        boxLLA.height
+    ];
+}
+
+// we'll compute the distance to the cube, just for fun. 
+// If the cube could be further away, we'd want to use 
+// Cesium.EllipsoidGeodesic, rather than Euclidean distance, 
+// but this is fine here.
+var userPos = userLocation.getWorldPosition();
+var boxPos = box.getWorldPosition();
+var distanceToBox = userPos.distanceTo( boxPos );
+// create some feedback text
+var infoText = 'Geospatial Argon example:<br>';
+infoText += 'Your location is lla (' + toFixed(gpsCartographicDeg[0], 6) + ', ';
+infoText += toFixed(gpsCartographicDeg[1], 6) + ', ' + toFixed(gpsCartographicDeg[2], 2) + ')';
+infoText += 'box is ' + toFixed(distanceToBox, 2) + ' meters away';
+var boxLabelText = 'a wooden box!<br>lla = ' + toFixed(boxCartographicDeg[0], 6) + ', ';
+boxLabelText += toFixed(boxCartographicDeg[1], 6) + ', ' + toFixed(boxCartographicDeg[2], 2);
+if (lastInfoText !== infoText) {
+    locationElements[0].innerHTML = infoText;
+    lastInfoText = infoText;
+}
+if (lastBoxText !== boxLabelText) {
+    boxLocDiv.innerHTML = boxLabelText;
+    lastBoxText = boxLabelText;
+}
+
+
 // All geospatial objects need to have an Object3D linked to a Cesium Entity.
 // We need to do this because Argon needs a mapping between Entities and Object3Ds.
 //
@@ -114,11 +193,13 @@ app.updateEvent.addEventListener(function (frame) {
 });
 // renderEvent is fired whenever argon wants the app to update its display
 app.renderEvent.addEventListener(function () {
-    // set the renderers to know the current size of the viewport.
+  // set the renderers to know the current size of the viewport.
     // This is the full size of the viewport, which would include
     // both views if we are in stereo viewing mode
     var viewport = app.view.getViewport();
     renderer.setSize(viewport.width, viewport.height);
+    cssRenderer.setSize(viewport.width, viewport.height);
+    hud.setSize(viewport.width, viewport.height);
     // there is 1 subview in monocular mode, 2 in stereo mode    
     for (var _i = 0, _a = app.view.getSubviews(); _i < _a.length; _i++) {
         var subview = _a[_i];
@@ -132,11 +213,18 @@ app.renderEvent.addEventListener(function () {
         camera.projectionMatrix.fromArray(subview.projectionMatrix);
         // set the viewport for this view
         var _b = subview.viewport, x = _b.x, y = _b.y, width = _b.width, height = _b.height;
+        // set the CSS rendering up, by computing the FOV, and render this view
+        camera.fov = THREE.Math.radToDeg(frustum.fovy);
+        cssRenderer.setViewport(x, y, width, height, subview.index);
+        cssRenderer.render(scene, camera, subview.index);
         // set the webGL rendering parameters and render this view
         renderer.setViewport(x, y, width, height);
         renderer.setScissor(x, y, width, height);
         renderer.setScissorTest(true);
         renderer.render(scene, camera);
+        // adjust the hud
+        hud.setViewport(x, y, width, height, subview.index);
+        hud.render(subview.index);
     }
 });
 
