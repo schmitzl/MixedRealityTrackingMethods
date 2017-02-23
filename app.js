@@ -38,7 +38,7 @@ scene.add(userLocation);
 // using the standard WebGLRenderer, and using the CSS3DArgonHUD
 // to manage the 2D display fixed content
 var cssRenderer = new THREE.CSS3DArgonRenderer();
-//var hud = new THREE.CSS3DArgonHUD();
+var hud = new THREE.CSS3DArgonHUD();
 var renderer = new THREE.WebGLRenderer({
     alpha: true,
     logarithmicDepthBuffer: true
