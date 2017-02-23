@@ -38,7 +38,7 @@ scene.add(userLocation);
 // using the standard WebGLRenderer, and using the CSS3DArgonHUD
 // to manage the 2D display fixed content
 var cssRenderer = new THREE.CSS3DArgonRenderer();
-var hud = new THREE.CSS3DArgonHUD();
+//var hud = new THREE.CSS3DArgonHUD();
 var renderer = new THREE.WebGLRenderer({
     alpha: true,
     logarithmicDepthBuffer: true
@@ -56,8 +56,8 @@ var hudContent = document.getElementById('hud');
 hud.appendChild(hudContent);
 var locationElements = hudContent.getElementsByClassName('location');
 //  We also move the description box to the Argon HUD, but moving it inside the 'hud' element
-var hudDescription = document.getElementById('description');
-hudContent.appendChild(hudDescription);
+//var hudDescription = document.getElementById('description');
+//hudContent.appendChild(hudDescription);
 // All geospatial objects need to have an Object3D linked to a Cesium Entity.
 // We need to do this because Argon needs a mapping between Entities and Object3Ds.
 //
