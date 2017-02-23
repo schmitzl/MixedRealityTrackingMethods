@@ -48,13 +48,13 @@ renderer.setPixelRatio(window.devicePixelRatio);
 // in the DOM determines which content is in front (top->bottom = back->front)
 app.view.element.appendChild(renderer.domElement);
 app.view.element.appendChild(cssRenderer.domElement);
-app.view.element.appendChild(hud.domElement);
+//app.view.element.appendChild(hud.domElement);
 // We put some elements in the index.html, for convenience. 
 // Here, we retrieve them and move the information boxes to the 
 // the CSS3DArgonHUD hudElement.
-var hudContent = document.getElementById('hud');
-hud.appendChild(hudContent);
-var locationElements = hudContent.getElementsByClassName('location');
+//var hudContent = document.getElementById('hud');
+//hud.appendChild(hudContent);
+//var locationElements = hudContent.getElementsByClassName('location');
 //  We also move the description box to the Argon HUD, but moving it inside the 'hud' element
 //var hudDescription = document.getElementById('description');
 //hudContent.appendChild(hudDescription);
