@@ -90,7 +90,7 @@ boxLabel.position.set(0, 1.25, 0);
 boxGeoObject.add(boxLabel);
 var boxInit = false;
 var boxCartographicDeg = [0, 0, 0];
-var lastInfoText = '';
+//var lastInfoText = '';
 var lastBoxText = '';
 // make floating point output a little less ugly
 function toFixed(value, precision) {
@@ -174,7 +174,7 @@ app.updateEvent.addEventListener(function (frame) {
     var boxPos = box.getWorldPosition();
     var distanceToBox = userPos.distanceTo(boxPos);
     // create some feedback text
-    var infoText = 'Geospatial Argon example:<br>';
+   /* var infoText = 'Geospatial Argon example:<br>';
     infoText += 'Your location is lla (' + toFixed(gpsCartographicDeg[0], 6) + ', ';
     infoText += toFixed(gpsCartographicDeg[1], 6) + ', ' + toFixed(gpsCartographicDeg[2], 2) + ')';
     infoText += 'box is ' + toFixed(distanceToBox, 2) + ' meters away';
@@ -183,7 +183,7 @@ app.updateEvent.addEventListener(function (frame) {
     if (lastInfoText !== infoText) {
         locationElements[0].innerHTML = infoText;
         lastInfoText = infoText;
-    }
+    }*/
     if (lastBoxText !== boxLabelText) {
         boxLocDiv.innerHTML = boxLabelText;
         lastBoxText = boxLabelText;
