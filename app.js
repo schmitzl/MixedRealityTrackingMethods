@@ -61,6 +61,15 @@ app.view.element.appendChild(cssRenderer.domElement);
 // All geospatial objects need to have an Object3D linked to a Cesium Entity.
 // We need to do this because Argon needs a mapping between Entities and Object3Ds.
 //
+
+
+// -- INSERT LOADING HEAD MODEL --
+var headModel = new THREE.Object3D();
+loadLeePerrySmith();
+
+
+
+
 // Here, we will position a cube near our starting location.  This geolocated object starts without a
 // location, until our reality is set and we know the location.  Each time the reality changes, we update
 // the cube position.
@@ -76,7 +85,7 @@ loader.load('box.png', function (texture) {
     var mesh = new THREE.Mesh(geometry, material);
     box.add(mesh);
 });
-boxGeoObject.add(box);
+boxGeoObject.add(headModel);
 var boxGeoEntity = new Argon.Cesium.Entity({
     name: "I have a box",
     position: Cartesian3.ZERO,
@@ -225,3 +234,21 @@ app.renderEvent.addEventListener(function () {
         hud.render(subview.index);
     }
 });
+function loadLeePerrySmith() {
+    var loader = new THREE.JSONLoader();
+    loader.load('resources/obj/leeperrysmith/LeePerrySmith.js', function (geometry) {
+        var material = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: textureLoader.load('resources/obj/leeperrysmith/Map-COL.jpg'),
+            specularMap: textureLoader.load('resources/obj/leeperrysmith/Map-SPEC.jpg'),
+            normalMap: textureLoader.load('resources/obj/leeperrysmith/Infinite-Level_02_Tangent_SmoothUV.jpg'),
+            normalScale: new THREE.Vector2(0.75, 0.75),
+            shininess: 25
+        });
+        mesh = new THREE.Mesh(geometry, material);
+        // add the model to the headModel object, not the scene
+        headModel.add(mesh);
+        mesh.scale.set(.02, .02, .02);
+        mesh.rotation.x = THREE.Math.degToRad(90);
+    });
+}
