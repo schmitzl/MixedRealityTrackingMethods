@@ -67,7 +67,7 @@ app.view.element.appendChild(cssRenderer.domElement);
 var headModel = new THREE.Object3D();
 var mesh;
 var textureLoader = new THREE.TextureLoader();
-var loader = new THREE.JSONLoader();
+var geometry = new THREE.Geometry();
 
 loadLeePerrySmith();
 
@@ -240,7 +240,7 @@ function loadLeePerrySmith() {
     var loader = new THREE.JSONLoader();
     loader.load('resources/obj/leeperrysmith/LeePerrySmith.js', function (geometry) {
         var material = new THREE.MeshPhongMaterial({
-           // specular: 0x111111,
+            specular: 0x111111,
             map: textureLoader.load('resources/obj/leeperrysmith/Map-COL.jpg'),
             specularMap: textureLoader.load('resources/obj/leeperrysmith/Map-SPEC.jpg'),
             normalMap: textureLoader.load('resources/obj/leeperrysmith/Infinite-Level_02_Tangent_SmoothUV.jpg'),
