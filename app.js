@@ -142,6 +142,13 @@ app.updateEvent.addEventListener(function (frame) {
         // the box doesn't move if the local coordinate system origin changes.
         if (Argon.convertEntityReferenceFrame(boxGeoEntity, frame.time, ReferenceFrame.FIXED)) {
             scene.add(boxGeoObject);
+            scene.add(new THREE.AmbientLight(0x443333));
+            var light = new THREE.DirectionalLight(0xffddcc, 1);
+            light.position.set(1, 0.75, 0.5);
+            scene.add(light);
+            var light = new THREE.DirectionalLight(0xccccff, 1);
+            light.position.set(-1, 0.75, -0.5);
+            scene.add(light);
             boxInit = true;
         }
     }
