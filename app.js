@@ -67,25 +67,9 @@ app.view.element.appendChild(cssRenderer.domElement);
 var headModel = new THREE.Object3D();
 var mesh;
 var textureLoader = new THREE.TextureLoader();
-//loadLeePerrySmith();
-
 var loader = new THREE.JSONLoader();
-loader.load('resources/obj/leeperrysmith/LeePerrySmith.js', function (geometry) {
-    var material = new THREE.MeshPhongMaterial({
-        specular: 0x111111,
-        map: textureLoader.load('resources/obj/leeperrysmith/Map-COL.jpg'),
-        specularMap: textureLoader.load('resources/obj/leeperrysmith/Map-SPEC.jpg'),
-        normalMap: textureLoader.load('resources/obj/leeperrysmith/Infinite-Level_02_Tangent_SmoothUV.jpg'),
-        normalScale: new THREE.Vector2(0.75, 0.75),
-        shininess: 25
-    });
-    mesh = new THREE.Mesh(geometry, material);
-    // add the model to the headModel object, not the scene
-    headModel.add(mesh);
-    mesh.scale.set(.4, .4, .4);
-    mesh.rotation.x = THREE.Math.degToRad(90);
-});
 
+loadLeePerrySmith();
 
 
 // Here, we will position a cube near our starting location.  This geolocated object starts without a
@@ -266,7 +250,7 @@ function loadLeePerrySmith() {
         mesh = new THREE.Mesh(geometry, material);
         // add the model to the headModel object, not the scene
         headModel.add(mesh);
-        mesh.scale.set(.02, .02, .02);
+        mesh.scale.set(.4, .4, .4);
         mesh.rotation.x = THREE.Math.degToRad(90);
     });
 }
