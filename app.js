@@ -189,7 +189,7 @@ app.updateEvent.addEventListener(function (frame) {
     infoText += 'Your location is lla (' + toFixed(gpsCartographicDeg[0], 6) + ', ';
     infoText += toFixed(gpsCartographicDeg[1], 6) + ', ' + toFixed(gpsCartographicDeg[2], 2) + ')';
     infoText += 'box is ' + toFixed(distanceToBox, 2) + ' meters away'; */
-    var boxLabelText = 'wuden box!<br>lla = ' + toFixed(boxCartographicDeg[0], 6) + ', ';
+    var boxLabelText = 'wuhuden box!<br>lla = ' + toFixed(boxCartographicDeg[0], 6) + ', ';
     boxLabelText += toFixed(boxCartographicDeg[1], 6) + ', ' + toFixed(boxCartographicDeg[2], 2);
   /*  if (lastInfoText !== infoText) {
         locationElements[0].innerHTML = infoText;
@@ -240,7 +240,7 @@ function loadLeePerrySmith() {
     var loader = new THREE.JSONLoader();
     loader.load('resources/obj/leeperrysmith/LeePerrySmith.js', function (geometry) {
         var material = new THREE.MeshPhongMaterial({
-            specular: 0x111111,
+           // specular: 0x111111,
             map: textureLoader.load('resources/obj/leeperrysmith/Map-COL.jpg'),
             specularMap: textureLoader.load('resources/obj/leeperrysmith/Map-SPEC.jpg'),
             normalMap: textureLoader.load('resources/obj/leeperrysmith/Infinite-Level_02_Tangent_SmoothUV.jpg'),
