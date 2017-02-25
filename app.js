@@ -82,7 +82,7 @@ loader.load('resources/obj/leeperrysmith/LeePerrySmith.js', function (geometry) 
     mesh = new THREE.Mesh(geometry, material);
     // add the model to the headModel object, not the scene
     headModel.add(mesh);
-    mesh.scale.set(.02, .02, .02);
+    mesh.scale.set(.4, .4, .4);
     mesh.rotation.x = THREE.Math.degToRad(90);
 });
 
@@ -205,7 +205,7 @@ app.updateEvent.addEventListener(function (frame) {
     infoText += 'Your location is lla (' + toFixed(gpsCartographicDeg[0], 6) + ', ';
     infoText += toFixed(gpsCartographicDeg[1], 6) + ', ' + toFixed(gpsCartographicDeg[2], 2) + ')';
     infoText += 'box is ' + toFixed(distanceToBox, 2) + ' meters away'; */
-    var boxLabelText = 'woooden box!<br>lla = ' + toFixed(boxCartographicDeg[0], 6) + ', ';
+    var boxLabelText = 'wuden box!<br>lla = ' + toFixed(boxCartographicDeg[0], 6) + ', ';
     boxLabelText += toFixed(boxCartographicDeg[1], 6) + ', ' + toFixed(boxCartographicDeg[2], 2);
   /*  if (lastInfoText !== infoText) {
         locationElements[0].innerHTML = infoText;
