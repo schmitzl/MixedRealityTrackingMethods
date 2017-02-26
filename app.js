@@ -269,7 +269,7 @@ function loadLeePerrySmith() {
 function loadTram() {
     var loader = new THREE.JSONLoader();
     loader.load('resources/obj/tram/tram.js', function (geometry) {
-        var material = new THREE.MeshLambertMaterial({
+        var material = new THREE.MeshPhongMaterial({
            // specular: 0x111111,
             map: textureLoader.load('resources/obj/tram/b_tramBase_Albedo.png'),
             //specularMap: textureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
