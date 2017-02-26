@@ -279,8 +279,8 @@ function loadTram() {
             shininess: 25
         });
         mesh = new THREE.Mesh(geometry, material);
-        // add the model to the headModel object, not the scene
-        headModel.add(mesh);
+        // add the model to the tramModel object, not the scene
+        tramModel.add(mesh);
         mesh.scale.set(.4, .4, .4);
         mesh.rotation.x = THREE.Math.degToRad(90);
     });
