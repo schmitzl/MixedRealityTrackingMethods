@@ -13,7 +13,7 @@
       <div id="hud">
       
       </div>
-      <button id="box-location" class="location">Tram Location</button>
+      <button id="box-location" class="location">Box Location</button>
     </div>
   </body>
 	<script>
