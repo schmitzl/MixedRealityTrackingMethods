@@ -73,7 +73,7 @@ var geometry = new THREE.Geometry();
 //loadLeePerrySmith();
 
 // load tram model
-var tram = new THREE.Object3D();
+var tramModel = new THREE.Object3D();
 loadTram();
 
 
