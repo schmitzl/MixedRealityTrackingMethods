@@ -269,7 +269,7 @@ function loadLeePerrySmith() {
 function loadTram() {
     var loader = new THREE.JSONLoader();
     loader.load('resources/obj/tram/tram.js', function (geometry) {
-        var material = new new THREE.MeshLambertMaterial();({
+        var material = new THREE.MeshLambertMaterial({
            // specular: 0x111111,
             map: textureLoader.load('resources/obj/tram/b_tramBase_Albedo.png'),
             //specularMap: textureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
@@ -280,7 +280,7 @@ function loadTram() {
         mesh = new THREE.Mesh(geometry, material);
         // add the model to the tramModel object, not the scene
         tramModel.add(mesh);
-        mesh.scale.set(.4, .4, .4);
-        mesh.rotation.x = THREE.Math.degToRad(90);
+      //  mesh.scale.set(.4, .4, .4);
+       // mesh.rotation.x = THREE.Math.degToRad(90);
     });
 }
