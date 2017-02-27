@@ -11,9 +11,10 @@
   <body>
     <div id="argon">
       <div id="hud">
-      
+          <img id="arrow" src="resources/imgs/arrow.png"/>
       </div>
-      <button id="box-location" class="location">Tram Location</button>
+      <button id="box-location" class="location">block</button>
+     
     </div>
   </body>
 	<script>
