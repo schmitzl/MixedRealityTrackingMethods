@@ -67,11 +67,6 @@ var textureLoader = new THREE.TextureLoader();
 var geometry = new THREE.Geometry();
 
 
-
-// -- INSERT LOADING HEAD MODEL --
-//var headModel = new THREE.Object3D();
-//loadLeePerrySmith();
-
 // load tram model
 var tramModel = new THREE.Object3D();
 loadTram();
@@ -83,16 +78,8 @@ loadTram();
 // create a 1m cube with a wooden box texture on it, that we will attach to the geospatial object when we create it
 // Box texture from https://www.flickr.com/photos/photoshoproadmap/8640003215/sizes/l/in/photostream/
 // licensed under https://creativecommons.org/licenses/by/2.0/legalcode
-var boxGeoObject = new THREE.Object3D();
-var box = new THREE.Object3D();
-var loader = new THREE.TextureLoader();
-loader.load('box.png', function (texture) {
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
-    var material = new THREE.MeshBasicMaterial({ map: texture });
-    var mesh = new THREE.Mesh(geometry, material);
-    box.add(mesh);
-});
-boxGeoObject.add(tramModel);
+var tramGeoObject = new THREE.Object3D();
+tramGeoObject.add(tramModel);
 var boxGeoEntity = new Argon.Cesium.Entity({
     name: "I have a box",
     position: Cartesian3.ZERO,
@@ -103,7 +90,7 @@ var boxLocDiv = document.getElementById("box-location");
 var boxLabel = new THREE.CSS3DSprite(boxLocDiv);
 boxLabel.scale.set(0.02, 0.02, 0.02);
 boxLabel.position.set(0, 1.25, 0);
-boxGeoObject.add(boxLabel);
+tramGeoObject.add(boxLabel);
 var boxInit = false;
 var boxCartographicDeg = [0, 0, 0];
 //var lastInfoText = '';
@@ -145,7 +132,7 @@ app.updateEvent.addEventListener(function (frame) {
         // now, we want to move the box's coordinates to the FIXED frame, so
         // the box doesn't move if the local coordinate system origin changes.
         if (Argon.convertEntityReferenceFrame(boxGeoEntity, frame.time, ReferenceFrame.FIXED)) {
-            scene.add(boxGeoObject);
+            scene.add(tramGeoObject);
             scene.add(new THREE.AmbientLight(0x443333));
             var light = new THREE.DirectionalLight(0xffddcc, 1);
             light.position.set(1, 0.75, 0.5);
@@ -158,8 +145,8 @@ app.updateEvent.addEventListener(function (frame) {
     }
     // get the local coordinates of the local box, and set the THREE object
     var boxPose = app.context.getEntityPose(boxGeoEntity);
-    boxGeoObject.position.copy(boxPose.position);
-    boxGeoObject.quaternion.copy(boxPose.orientation);
+    tramGeoObject.position.copy(boxPose.position);
+    tramGeoObject.quaternion.copy(boxPose.orientation);
     // rotate the boxes at a constant speed, independent of frame rates     
     // to make it a little less boring
     box.rotateY(3 * frame.deltaTime / 10000);
@@ -248,24 +235,7 @@ app.renderEvent.addEventListener(function () {
         hud.render(subview.index);
     }
 });
-function loadLeePerrySmith() {
-    var loader = new THREE.JSONLoader();
-    loader.load('resources/obj/leeperrysmith/LeePerrySmith.js', function (geometry) {
-        var material = new THREE.MeshPhongMaterial({
-            specular: 0x111111,
-            map: textureLoader.load('resources/obj/leeperrysmith/Map-COL.jpg'),
-            specularMap: textureLoader.load('resources/obj/leeperrysmith/Map-SPEC.jpg'),
-            normalMap: textureLoader.load('resources/obj/leeperrysmith/Infinite-Level_02_Tangent_SmoothUV.jpg'),
-            normalScale: new THREE.Vector2(0.75, 0.75),
-            shininess: 25
-        });
-        mesh = new THREE.Mesh(geometry, material);
-        // add the model to the headModel object, not the scene
-        headModel.add(mesh);
-        mesh.scale.set(.4, .4, .4);
-        mesh.rotation.x = THREE.Math.degToRad(90);
-    });
-}
+
 function loadTram() {
     var loader = new THREE.JSONLoader();
     loader.load('resources/obj/tram/tram.js', function (geometry) {
