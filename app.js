@@ -36,7 +36,7 @@ app.view.element.appendChild(hud.domElement);
 // the CSS3DArgonHUD hudElement.
 var hudContent = document.getElementById('hud');
 hud.appendChild(hudContent);
-var arrow = hudContent.getElementsById('arrow');
+var arrow = hudContent.getElementById('arrow');
 //  We also move the description box to the Argon HUD, but moving it inside the 'hud' element
 //var hudDescription = document.getElementById('description');
 hudContent.appendChild(arrow);
