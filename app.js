@@ -80,21 +80,21 @@ loadTram();
 // licensed under https://creativecommons.org/licenses/by/2.0/legalcode
 var tramGeoObject = new THREE.Object3D();
 tramGeoObject.add(tramModel);
-var boxGeoEntity = new Argon.Cesium.Entity({
+var tramGeoEntity = new Argon.Cesium.Entity({
     name: "I have a box",
     position: Cartesian3.ZERO,
     orientation: Cesium.Quaternion.IDENTITY
 });
 // Create a DIV to use to label the position and distance of the cube
-var boxLocDiv = document.getElementById("box-location");
-var boxLabel = new THREE.CSS3DSprite(boxLocDiv);
-boxLabel.scale.set(0.02, 0.02, 0.02);
-boxLabel.position.set(0, 1.25, 0);
-tramGeoObject.add(boxLabel);
-var boxInit = false;
-var boxCartographicDeg = [0, 0, 0];
+var tramLocDiv = document.getElementById("box-location");
+var tramLabel = new THREE.CSS3DSprite(tramLocDiv);
+tramLabel.scale.set(0.02, 0.02, 0.02);
+tramLabel.position.set(0, 1.25, 0);
+tramGeoObject.add(tramLabel);
+var tramInit = false;
+var tramCartographicDeg = [0, 0, 0];
 //var lastInfoText = '';
-var lastBoxText = '';
+var lastTramText = '';
 // make floating point output a little less ugly
 function toFixed(value, precision) {
     var power = Math.pow(10, precision || 0);
@@ -117,21 +117,19 @@ app.updateEvent.addEventListener(function (frame) {
         return;
     }
     // the first time through, we create a geospatial position for
-    // the box somewhere near us 
-    if (!boxInit) {
+    if (!tramInit) {
         var defaultFrame = app.context.getDefaultReferenceFrame();
-        // set the box's position to 10 meters away from the user.
         // First, clone the userPose postion, and add 10 to the X
-        var boxPos_1 = userPose.position.clone();
-        boxPos_1.x += 10;
-        // set the value of the box Entity to this local position, by
+        var tramPos_1 = userPose.position.clone();
+        tramPos_1.x += 10;
+        // set the value of the tram Entity to this local position, by
         // specifying the frame of reference to our local frame
-        boxGeoEntity.position.setValue(boxPos_1, defaultFrame);
-        // orient the box according to the local world frame
-        boxGeoEntity.orientation.setValue(Cesium.Quaternion.IDENTITY);
-        // now, we want to move the box's coordinates to the FIXED frame, so
-        // the box doesn't move if the local coordinate system origin changes.
-        if (Argon.convertEntityReferenceFrame(boxGeoEntity, frame.time, ReferenceFrame.FIXED)) {
+        tramGeoEntity.position.setValue(tramPos_1, defaultFrame);
+        // orient the tram according to the local world frame
+        tramGeoEntity.orientation.setValue(Cesium.Quaternion.IDENTITY);
+        // now, we want to move the tram's coordinates to the FIXED frame, so
+        // the tram doesn't move if the local coordinate system origin changes.
+        if (Argon.convertEntityReferenceFrame(tramGeoEntity, frame.time, ReferenceFrame.FIXED)) {
             scene.add(tramGeoObject);
             scene.add(new THREE.AmbientLight(0x443333));
             var light = new THREE.DirectionalLight(0xffddcc, 1);
@@ -140,16 +138,15 @@ app.updateEvent.addEventListener(function (frame) {
             var light = new THREE.DirectionalLight(0xccccff, 1);
             light.position.set(-1, 0.75, -0.5);
             scene.add(light);
-            boxInit = true;
+            tramInit = true;
         }
     }
-    // get the local coordinates of the local box, and set the THREE object
-    var boxPose = app.context.getEntityPose(boxGeoEntity);
-    tramGeoObject.position.copy(boxPose.position);
-    tramGeoObject.quaternion.copy(boxPose.orientation);
-    // rotate the boxes at a constant speed, independent of frame rates     
+    // get the local coordinates of the local tram, and set the THREE object
+    var tramPose = app.context.getEntityPose(tramGeoEntity);
+    tramGeoObject.position.copy(tramPose.position);
+    tramGeoObject.quaternion.copy(tramPose.orientation);
+    // rotate the tram at a constant speed, independent of frame rates     
     // to make it a little less boring
-    box.rotateY(3 * frame.deltaTime / 10000);
     // stuff to print out the status message.
     // It's fairly expensive to convert FIXED coordinates back to LLA, 
     // but those coordinates probably make the most sense as
@@ -167,13 +164,13 @@ app.updateEvent.addEventListener(function (frame) {
             userLLA.height
         ];
     }
-    var boxPoseFIXED = app.context.getEntityPose(boxGeoEntity, ReferenceFrame.FIXED);
-    var boxLLA = Cesium.Ellipsoid.WGS84.cartesianToCartographic(boxPoseFIXED.position);
-    if (boxLLA) {
-        boxCartographicDeg = [
-            CesiumMath.toDegrees(boxLLA.longitude),
-            CesiumMath.toDegrees(boxLLA.latitude),
-            boxLLA.height
+    var tramPoseFIXED = app.context.getEntityPose(tramGeoEntity, ReferenceFrame.FIXED);
+    var tramLLA = Cesium.Ellipsoid.WGS84.cartesianToCartographic(tramPoseFIXED.position);
+    if (tramLLA) {
+        tramCartographicDeg = [
+            CesiumMath.toDegrees(tramLLA.longitude),
+            CesiumMath.toDegrees(tramLLA.latitude),
+            tramLLA.height
         ];
     }
     // we'll compute the distance to the cube, just for fun. 
@@ -181,22 +178,22 @@ app.updateEvent.addEventListener(function (frame) {
     // Cesium.EllipsoidGeodesic, rather than Euclidean distance, 
     // but this is fine here.
     var userPos = userLocation.getWorldPosition();
-    var boxPos = box.getWorldPosition();
-    var distanceToBox = userPos.distanceTo(boxPos);
+    var tramPos = tramModel.getWorldPosition();
+    var distanceToTram = userPos.distanceTo(tramPos);
     // create some feedback text
    /* var infoText = 'Geospatial Argon example:<br>';
     infoText += 'Your location is lla (' + toFixed(gpsCartographicDeg[0], 6) + ', ';
     infoText += toFixed(gpsCartographicDeg[1], 6) + ', ' + toFixed(gpsCartographicDeg[2], 2) + ')';
-    infoText += 'box is ' + toFixed(distanceToBox, 2) + ' meters away'; */
-    var boxLabelText = 'A tram!<br>lla = ' + toFixed(boxCartographicDeg[0], 6) + ', ';
-    boxLabelText += toFixed(boxCartographicDeg[1], 6) + ', ' + toFixed(boxCartographicDeg[2], 2);
+    infoText += 'tram is ' + toFixed(distanceToTram, 2) + ' meters away'; */
+    var tramLabelText = 'A tram!<br>lla = ' + toFixed(tramCartographicDeg[0], 6) + ', ';
+    tramLabelText += toFixed(tramCartographicDeg[1], 6) + ', ' + toFixed(tramCartographicDeg[2], 2);
   /*  if (lastInfoText !== infoText) {
         locationElements[0].innerHTML = infoText;
         lastInfoText = infoText;
     }*/
-    if (lastBoxText !== boxLabelText) {
-        boxLocDiv.innerHTML = boxLabelText;
-        lastBoxText = boxLabelText;
+    if (lastTramText !== tramLabelText) {
+        tramLocDiv.innerHTML = tramLabelText;
+        lastTramText = tramLabelText;
     }
 });
 // renderEvent is fired whenever argon wants the app to update its display
