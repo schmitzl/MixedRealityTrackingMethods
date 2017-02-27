@@ -8,47 +8,29 @@ var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 // set up Argon
 var app = Argon.init();
-// Tell argon what local coordinate system you want.  The default coordinate
-// frame used by Argon is Cesium's FIXED frame, which is centered at the center
-// of the earth and oriented with the earth's axes.  
-// The FIXED frame is inconvenient for a number of reasons: the numbers used are
-// large and cause issues with rendering, and the orientation of the user's "local
-// view of the world" is different that the FIXED orientation (my perception of "up"
-// does not correspond to one of the FIXED axes).  
-// Therefore, Argon uses a local coordinate frame that sits on a plane tangent to 
-// the earth near the user's current location.  This frame automatically changes if the
-// user moves more than a few kilometers.
-// The EUS frame cooresponds to the typical 3D computer graphics coordinate frame, so we use
-// that here.  The other option Argon supports is localOriginEastNorthUp, which is
-// more similar to what is used in the geospatial industry
+
+// ser local coordinate system 
 app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
-// set up THREE.  Create a scene, a perspective camera and an object
-// for the user's location
+ 
+// set up THREE
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera();
 var userLocation = new THREE.Object3D();
 scene.add(camera);
 scene.add(userLocation);
-// The CSS3DArgonRenderer supports mono and stereo views.  Currently
-// not using it in this example, but left it in the code in case we
-// want to add an HTML element near the geo object. 
-// The CSS3DArgonHUD is a place to put things that appear 
-// fixed to the screen (heads-up-display).  
-// In this demo, we are  rendering the 3D graphics with WebGL, 
-// using the standard WebGLRenderer, and using the CSS3DArgonHUD
-// to manage the 2D display fixed content
+
+// set up renderer
 var cssRenderer = new THREE.CSS3DArgonRenderer();
-var hud = new THREE.CSS3DArgonHUD();
+var hud = new THREE.CSS3DArgonHUD(); // place for fixed html screen content
 var renderer = new THREE.WebGLRenderer({
     alpha: true,
     logarithmicDepthBuffer: true
 });
 renderer.setPixelRatio(window.devicePixelRatio);
-// Assuming the z-orders are the same, the order of sibling elements
-// in the DOM determines which content is in front (top->bottom = back->front)
 app.view.element.appendChild(renderer.domElement);
 app.view.element.appendChild(cssRenderer.domElement);
 //app.view.element.appendChild(hud.domElement);
+
 // We put some elements in the index.html, for convenience. 
 // Here, we retrieve them and move the information boxes to the 
 // the CSS3DArgonHUD hudElement.
@@ -60,24 +42,19 @@ app.view.element.appendChild(cssRenderer.domElement);
 //hudContent.appendChild(hudDescription);
 // All geospatial objects need to have an Object3D linked to a Cesium Entity.
 // We need to do this because Argon needs a mapping between Entities and Object3Ds.
-//
+
+
 // initialize model loading variables
 var mesh;
 var textureLoader = new THREE.TextureLoader();
 var geometry = new THREE.Geometry();
-
 
 // load tram model
 var tramModel = new THREE.Object3D();
 loadTram();
 
 
-// Here, we will position a cube near our starting location.  This geolocated object starts without a
-// location, until our reality is set and we know the location.  Each time the reality changes, we update
-// the cube position.
-// create a 1m cube with a wooden box texture on it, that we will attach to the geospatial object when we create it
-// Box texture from https://www.flickr.com/photos/photoshoproadmap/8640003215/sizes/l/in/photostream/
-// licensed under https://creativecommons.org/licenses/by/2.0/legalcode
+// create tram geo object
 var tramGeoObject = new THREE.Object3D();
 tramGeoObject.add(tramModel);
 var tramGeoEntity = new Argon.Cesium.Entity({
@@ -85,7 +62,15 @@ var tramGeoEntity = new Argon.Cesium.Entity({
     position: Cartesian3.ZERO,
     orientation: Cesium.Quaternion.IDENTITY
 });
-// Create a DIV to use to label the position and distance of the cube
+
+// Create DIV for arrow images
+/* var arrowElem = document.getElementById("arrow");
+var arrow = new THREE.CSS3DSprite(arrowElem);
+arrow.scale.set(0.02,0.02,0.02);
+arrow.position.set(0,1.25,0); */
+
+
+// Create a DIV to use to label the position and distance of the tram
 var tramLocDiv = document.getElementById("box-location");
 var tramLabel = new THREE.CSS3DSprite(tramLocDiv);
 tramLabel.scale.set(0.02, 0.02, 0.02);
@@ -93,17 +78,16 @@ tramLabel.position.set(0, 1.25, 0);
 tramGeoObject.add(tramLabel);
 var tramInit = false;
 var tramCartographicDeg = [0, 0, 0];
-//var lastInfoText = '';
 var lastTramText = '';
+
 // make floating point output a little less ugly
 function toFixed(value, precision) {
     var power = Math.pow(10, precision || 0);
     return String(Math.round(value * power) / power);
 }
-// the updateEvent is called each time the 3D world should be
-// rendered, before the renderEvent.  The state of your application
-// should be updated here.
-app.updateEvent.addEventListener(function (frame) {
+
+
+app.updateEvent.addEventListener(function (frame) { // called before every render event
     // get the position and orientation (the 'pose') of the user
     // in the local coordinate frame.
     var userPose = app.context.getEntityPose(app.context.user);
@@ -113,7 +97,6 @@ app.updateEvent.addEventListener(function (frame) {
         userLocation.position.copy(userPose.position);
     }
     else {
-        // if we don't know the user pose we can't do anything
         return;
     }
     // the first time through, we create a geospatial position for
@@ -173,10 +156,8 @@ app.updateEvent.addEventListener(function (frame) {
             tramLLA.height
         ];
     }
-    // we'll compute the distance to the cube, just for fun. 
-    // If the cube could be further away, we'd want to use 
-    // Cesium.EllipsoidGeodesic, rather than Euclidean distance, 
-    // but this is fine here.
+    // Calculate euclidean distance to tram
+    // use Cesium.EllipsoidGeodesic if object is further away
     var userPos = userLocation.getWorldPosition();
     var tramPos = tramModel.getWorldPosition();
     var distanceToTram = userPos.distanceTo(tramPos);
@@ -187,15 +168,13 @@ app.updateEvent.addEventListener(function (frame) {
     infoText += 'tram is ' + toFixed(distanceToTram, 2) + ' meters away'; */
     var tramLabelText = 'A tram!<br>lla = ' + toFixed(tramCartographicDeg[0], 6) + ', ';
     tramLabelText += toFixed(tramCartographicDeg[1], 6) + ', ' + toFixed(tramCartographicDeg[2], 2);
-  /*  if (lastInfoText !== infoText) {
-        locationElements[0].innerHTML = infoText;
-        lastInfoText = infoText;
-    }*/
+
     if (lastTramText !== tramLabelText) {
         tramLocDiv.innerHTML = tramLabelText;
         lastTramText = tramLabelText;
     }
 });
+
 // renderEvent is fired whenever argon wants the app to update its display
 app.renderEvent.addEventListener(function () {
     // set the renderers to know the current size of the viewport.
@@ -237,12 +216,12 @@ function loadTram() {
     var loader = new THREE.JSONLoader();
     loader.load('resources/obj/tram/tram.js', function (geometry) {
         var material = new THREE.MeshPhongMaterial({
-           // specular: 0x111111,
+            specular: 0x111111,
             map: textureLoader.load('resources/obj/tram/b_tramBase_Albedo.png'),
-            //specularMap: textureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
-            //normalMap: textureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
+            specularMap: textureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
+            normalMap: textureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
             //normalScale: new THREE.Vector2(0.75, 0.75),
-            //shininess: 25
+            shininess: 25
         });
         mesh = new THREE.Mesh(geometry, material);
         // add the model to the tramModel object, not the scene
