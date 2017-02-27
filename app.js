@@ -221,7 +221,7 @@ function loadTram() {
             specularMap: textureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
             normalMap: textureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
             //normalScale: new THREE.Vector2(0.75, 0.75),
-            shininess: 50;
+            shininess: 50
         });
         mesh = new THREE.Mesh(geometry, material);
         // add the model to the tramModel object, not the scene
