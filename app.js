@@ -216,7 +216,7 @@ app.renderEvent.addEventListener(function () {
 
 function loadTram() {
     var loader = new THREE.JSONLoader();
-    loader.load('resources/obj/tram/tram.js', function (geometry) {
+    loader.load('resources/obj/tram/frame.js', function (geometry) {
         var material = new THREE.MeshPhongMaterial({
             specular: 0x111111,
             map: textureLoader.load('resources/obj/tram/b_tramBase_Albedo.png'),
