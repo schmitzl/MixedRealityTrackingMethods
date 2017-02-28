@@ -53,12 +53,14 @@ var geometry = new THREE.Geometry();
 
 // load tram model
 var tramModel = new THREE.Object3D();
+var frameModel = new THREE.Object3D();
 loadTram();
 
 
 // create tram geo object
 var tramGeoObject = new THREE.Object3D();
 tramGeoObject.add(tramModel);
+tramGeoEntity.add(frameModel);
 var tramGeoEntity = new Argon.Cesium.Entity({
     name: "I have a box",
     position: Cartesian3.ZERO,
@@ -234,7 +236,7 @@ function loadTram() {
         var material = new THREE.MeshLambertMaterial({color: 0xFFFFFF});
         mesh = new THREE.Mesh(geometry, material);
         // add the model to the tramModel object, not the scene
-        tramModel.add(mesh);
+        frameModel.add(mesh);
       //  mesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
