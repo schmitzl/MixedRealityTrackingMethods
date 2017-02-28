@@ -232,12 +232,20 @@ function loadTram() {
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
+    var loader = new THREE.JSONLoader();
     var mesh;
 var textureLoader = new THREE.TextureLoader();
 var geometry = new THREE.Geometry();
     
      loader.load('resources/obj/tram/frame.js', function (geometry) {
-        var material = new THREE.MeshLambertMaterial({color: 0x990000});
+        var material = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: textureLoader.load('resources/obj/tram/b_tramBase_Albedo.png'),
+            specularMap: textureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
+            normalMap: textureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
+            //normalScale: new THREE.Vector2(0.75, 0.75),
+            shininess: 25
+        });
         mesh = new THREE.Mesh(geometry, material);
         // add the model to the tramModel object, not the scene
         frameModel.add(mesh);
