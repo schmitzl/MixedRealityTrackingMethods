@@ -46,10 +46,8 @@ arrowContainer.appendChild(arrow);
 // We need to do this because Argon needs a mapping between Entities and Object3Ds.
 
 
-loadGeoTram();
-
-function loadGeoTram() {
-    // load tram model
+// -- LOAD GEO TRAM --
+// load tram model
 var tramModel = new THREE.Object3D();
 var frameModel = new THREE.Object3D();
 loadTram();
@@ -82,7 +80,13 @@ var tramInit = false;
 var tramCartographicDeg = [0, 0, 0];
 var lastTramText = '';
 
-};
+
+
+
+// -- LOAD VUFORIA TRAM --
+
+
+
 
 
 // make floating point output a little less ugly
