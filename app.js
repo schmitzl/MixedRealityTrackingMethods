@@ -98,18 +98,6 @@ app.vuforia.isAvailable().then(function (available) {
         encryptedLicenseData: "-----BEGIN PGP MESSAGE-----\nVersion: OpenPGP.js v2.3.2\nComment: http://openpgpjs.org\n\nAbpgIff/////AAAAGZQMcI4Z7kIIly3Z1UGsKaAocd3l/8m0ESOk7IPPwje5qxNTEAxj/ou7imDB18KyywDyGC2JcjBJl2NZzx+fvPBtAhME919bYrZd9mdl3A9WZrwGckVA9kLYPE3MqoXB3gv98ELez7QEWREW0C2rGM2P5FFWdqY2FRieJm6h3GHDlvN++MPpzyzna0839EEdFxeQRV0YSDMViZcOgANVY1B+dwfKIzTXellyiwQG3z1SLKPu4ua/1+adhRtn+TNk8qOZSgXdGSzpr6wn4A9/1NnTadcsQi1axt/1VPPDWxDelyqF3u+My4RLSl/B5SWMPB9z63PgGHAeVDexillU/9E9elqrHYp+ZUBXQZi8LIPM\n-----END PGP MESSAGE-----"
     }).then(function (api) {
         //
-        // the vuforia API is ready, so we can start using it.
-        //
-    }).catch(function (err) {
-        console.log("vuforia failed to initialize: " + err.message);
-    });
-});
-    
-
-
-
-    
-//
 // the vuforia API is ready, so we can start using it.
 //
 // tell argon to download a vuforia dataset.  The .xml and .dat file must be together
@@ -163,6 +151,16 @@ api.objectTracker.createDataSet("resources/datasets/ARStockholm.xml").then(funct
     api.objectTracker.activateDataSet(dataSet);
 });
     
+    }).catch(function (err) {
+        console.log("vuforia failed to initialize: " + err.message);
+    });
+});
+    
+
+
+
+    
+
 
 
 
