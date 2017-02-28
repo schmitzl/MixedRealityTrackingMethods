@@ -47,9 +47,7 @@ arrowContainer.appendChild(arrow);
 
 
 // initialize model loading variables
-var mesh;
-var textureLoader = new THREE.TextureLoader();
-var geometry = new THREE.Geometry();
+
 
 // load tram model
 var tramModel = new THREE.Object3D();
@@ -215,29 +213,38 @@ app.renderEvent.addEventListener(function () {
 });
 
 function loadTram() {
-    var loader = new THREE.JSONLoader();
-    loader.load('resources/obj/tram/tram.js', function (geometry) {
-        var material = new THREE.MeshPhongMaterial({
+    var tramMesh;
+    var tramTextureLoader = new THREE.TextureLoader();
+    var tramGeometry = new THREE.Geometry();
+    
+    var tramLoader = new THREE.JSONLoader();
+    tramLoader.load('resources/obj/tram/tram.js', function (tramGeometry) {
+        var tramMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
-            map: textureLoader.load('resources/obj/tram/b_tramBase_Albedo.png'),
-            specularMap: textureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
-            normalMap: textureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
+            map: tramTextureLoader.load('resources/obj/tram/b_tramBase_Albedo.png'),
+            specularMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
+            normalMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
             //normalScale: new THREE.Vector2(0.75, 0.75),
             shininess: 25
         });
-        mesh = new THREE.Mesh(geometry, material);
+        tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
         // add the model to the tramModel object, not the scene
-        tramModel.add(mesh);
+        tramModel.add(tramMesh);
       //  mesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
-
     
-     loader.load('resources/obj/tram/frame.js', function (geometry) {
-        var material = new THREE.MeshLambertMaterial({color: 0x000000});
-        mesh = new THREE.Mesh(geometry, material);
+    
+    var frameMesh;
+    var frameTextureLoader = new THREE.TextureLoader();
+    var frameGeometry = new THREE.Geometry();
+
+     var frameLoader = new THREE.JSONLoader();
+     frameLoader.load('resources/obj/tram/frame.js', function (frameGeometry) {
+        var frameMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
+        frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
         // add the model to the tramModel object, not the scene
-        frameModel.add(mesh);
+        frameModel.add(frameMesh);
       //  mesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
