@@ -232,8 +232,12 @@ function loadTram() {
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
+    var mesh;
+var textureLoader = new THREE.TextureLoader();
+var geometry = new THREE.Geometry();
+    
      loader.load('resources/obj/tram/frame.js', function (geometry) {
-        var material = new THREE.MeshLambertMaterial({color: 0xFFFFFF});
+        var material = new THREE.MeshLambertMaterial({color: 0x990000});
         mesh = new THREE.Mesh(geometry, material);
         // add the model to the tramModel object, not the scene
         frameModel.add(mesh);
