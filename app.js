@@ -46,47 +46,8 @@ arrowContainer.appendChild(arrow);
 // We need to do this because Argon needs a mapping between Entities and Object3Ds.
 
 
-// initialize model loading variables
+loadGeoTram();
 
-
-// load tram model
-var tramModel = new THREE.Object3D();
-var frameModel = new THREE.Object3D();
-loadTram();
-
-
-// create tram geo object
-var tramGeoObject = new THREE.Object3D();
-tramGeoObject.add(tramModel);
-tramGeoObject.add(frameModel);
-var tramGeoEntity = new Argon.Cesium.Entity({
-    name: "I have a box",
-    position: Cartesian3.ZERO,
-    orientation: Cesium.Quaternion.IDENTITY
-});
-
-// Create DIV for arrow images
-/* var arrowElem = document.getElementById("arrow");
-var arrow = new THREE.CSS3DSprite(arrowElem);
-arrow.scale.set(0.02,0.02,0.02);
-arrow.position.set(0,1.25,0); */
-
-
-// Create a DIV to use to label the position and distance of the tram
-var tramLocDiv = document.getElementById("box-location");
-var tramLabel = new THREE.CSS3DSprite(tramLocDiv);
-tramLabel.scale.set(0.02, 0.02, 0.02);
-tramLabel.position.set(0, 1.25, 0);
-tramGeoObject.add(tramLabel);
-var tramInit = false;
-var tramCartographicDeg = [0, 0, 0];
-var lastTramText = '';
-
-// make floating point output a little less ugly
-function toFixed(value, precision) {
-    var power = Math.pow(10, precision || 0);
-    return String(Math.round(value * power) / power);
-}
 
 
 app.updateEvent.addEventListener(function (frame) { // called before every render event
@@ -211,6 +172,50 @@ app.renderEvent.addEventListener(function () {
         hud.render(subview.index);
     }
 });
+
+function loadGeoTram() {
+    // load tram model
+var tramModel = new THREE.Object3D();
+var frameModel = new THREE.Object3D();
+loadTram();
+
+
+// create tram geo object
+var tramGeoObject = new THREE.Object3D();
+tramGeoObject.add(tramModel);
+tramGeoObject.add(frameModel);
+var tramGeoEntity = new Argon.Cesium.Entity({
+    name: "I have a box",
+    position: Cartesian3.ZERO,
+    orientation: Cesium.Quaternion.IDENTITY
+});
+
+// Create DIV for arrow images
+/* var arrowElem = document.getElementById("arrow");
+var arrow = new THREE.CSS3DSprite(arrowElem);
+arrow.scale.set(0.02,0.02,0.02);
+arrow.position.set(0,1.25,0); */
+
+
+// Create a DIV to use to label the position and distance of the tram
+var tramLocDiv = document.getElementById("box-location");
+var tramLabel = new THREE.CSS3DSprite(tramLocDiv);
+tramLabel.scale.set(0.02, 0.02, 0.02);
+tramLabel.position.set(0, 1.25, 0);
+tramGeoObject.add(tramLabel);
+var tramInit = false;
+var tramCartographicDeg = [0, 0, 0];
+var lastTramText = '';
+
+};
+
+
+// make floating point output a little less ugly
+function toFixed(value, precision) {
+    var power = Math.pow(10, precision || 0);
+    return String(Math.round(value * power) / power);
+}
+
 
 function loadTram() {
     var tramMesh;
