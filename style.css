@@ -34,7 +34,6 @@ a {
 #hud {
     width: 100%;
     height: 100%;
-    background-color: aqua;
 }
 
 #arrowContainer {
@@ -42,7 +41,6 @@ a {
     width: 100%;
     bottom: 0; 
     margin-bottom: 0;
-    background-color: red;
 }
 
 #arrow {

@@ -130,9 +130,7 @@ app.updateEvent.addEventListener(function (frame) { // called before every rende
     var tramPose = app.context.getEntityPose(tramGeoEntity);
     tramGeoObject.position.copy(tramPose.position);
     tramGeoObject.quaternion.copy(tramPose.orientation);
-    // rotate the tram at a constant speed, independent of frame rates     
-    // to make it a little less boring
-    // stuff to print out the status message.
+
     // It's fairly expensive to convert FIXED coordinates back to LLA, 
     // but those coordinates probably make the most sense as
     // something to show the user, so we'll do that computation.
@@ -231,4 +229,32 @@ function loadTram() {
       //  mesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
+    
+     loader.load('resources/obj/tram/frame.js', function (geometry) {
+        var material = new THREE.MeshLambertMaterial({color: 0xFFFFFF});
+        mesh = new THREE.Mesh(geometry, material);
+        // add the model to the tramModel object, not the scene
+        tramModel.add(mesh);
+      //  mesh.scale.set(.4, .4, .4);
+       // mesh.rotation.x = THREE.Math.degToRad(90);
+    });
+}
+
+function cameraToClosestObjectPos() {
+    // get user postion
+    var userPose = app.context.getEntityPose(app.context.user);
+    
+    // get camera rotation 
+    var cameraRotation = camera.rotation.y;
+    
+    // calculate rotation vector
+    var quaternion = new THREE.Quaternion();
+    quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), cameraRotation);
+
+    var gazeVector =  userPose;
+    gazeVector.applyQuaternion( quaternion );
+    
+    // get object position
+    
+    // 
 }
