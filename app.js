@@ -60,7 +60,7 @@ loadTram();
 // create tram geo object
 var tramGeoObject = new THREE.Object3D();
 tramGeoObject.add(tramModel);
-tramGeoEntity.add(frameModel);
+tramGeoObject.add(frameModel);
 var tramGeoEntity = new Argon.Cesium.Entity({
     name: "I have a box",
     position: Cartesian3.ZERO,
@@ -242,7 +242,7 @@ function loadTram() {
     });
 }
 
-function cameraToClosestObjectPos() {
+/*function cameraToClosestObjectPos() {
     // get user postion
     var userPose = app.context.getEntityPose(app.context.user);
     
@@ -259,4 +259,4 @@ function cameraToClosestObjectPos() {
     // get object position
     
     // 
-}
+}*/
