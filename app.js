@@ -231,11 +231,7 @@ function loadTram() {
       //  mesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
-    
-    var loader = new THREE.JSONLoader();
-    var mesh;
-var textureLoader = new THREE.TextureLoader();
-var geometry = new THREE.Geometry();
+
     
      loader.load('resources/obj/tram/frame.js', function (geometry) {
         var material = new THREE.MeshLambertMaterial({color: 0x000000});
