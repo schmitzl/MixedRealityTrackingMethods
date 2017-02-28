@@ -86,6 +86,86 @@ var lastTramText = '';
 // -- LOAD VUFORIA TRAM --
 
 
+    
+app.vuforia.isAvailable().then(function (available) {
+    // vuforia not available on this platform
+    if (!available) {
+        console.warn("vuforia not available on this platform.");
+        return;
+    }
+    // tell argon to initialize vuforia for our app, using our license information.
+    app.vuforia.init({
+        encryptedLicenseData: "-----BEGIN PGP MESSAGE-----\nVersion: OpenPGP.js v2.3.2\nComment: http://openpgpjs.org\n\nAbpgIff/////AAAAGZQMcI4Z7kIIly3Z1UGsKaAocd3l/8m0ESOk7IPPwje5qxNTEAxj/ou7imDB18KyywDyGC2JcjBJl2NZzx+fvPBtAhME919bYrZd9mdl3A9WZrwGckVA9kLYPE3MqoXB3gv98ELez7QEWREW0C2rGM2P5FFWdqY2FRieJm6h3GHDlvN++MPpzyzna0839EEdFxeQRV0YSDMViZcOgANVY1B+dwfKIzTXellyiwQG3z1SLKPu4ua/1+adhRtn+TNk8qOZSgXdGSzpr6wn4A9/1NnTadcsQi1axt/1VPPDWxDelyqF3u+My4RLSl/B5SWMPB9z63PgGHAeVDexillU/9E9elqrHYp+ZUBXQZi8LIPM\n-----END PGP MESSAGE-----"
+    }).then(function (api) {
+        //
+        // the vuforia API is ready, so we can start using it.
+        //
+    }).catch(function (err) {
+        console.log("vuforia failed to initialize: " + err.message);
+    });
+});
+    
+
+
+
+    
+//
+// the vuforia API is ready, so we can start using it.
+//
+// tell argon to download a vuforia dataset.  The .xml and .dat file must be together
+// in the web directory, even though we just provide the .xml file url here 
+api.objectTracker.createDataSet("resources/datasets/ARStockholm.xml").then(function (dataSet) {
+    // the data set has been succesfully downloaded
+    // tell vuforia to load the dataset.  
+    dataSet.load().then(function () {
+        // when it is loaded, we retrieve a list of trackables defined in the
+        // dataset and set up the content for the target
+        var trackables = dataSet.getTrackables();
+        // tell argon we want to track a specific trackable.  Each trackable
+        // has a Cesium entity associated with it, and is expressed in a 
+        // coordinate frame relative to the camera.  Because they are Cesium
+        // entities, we can ask for their pose in any coordinate frame we know
+        // about.
+        var tramObjectEntity = app.context.subscribeToEntityById(trackables["tram"].id);
+        // create a THREE object to put on the trackable
+        var tramIconObject = new THREE.Object3D;
+        scene.add(tramIconObject);
+        // the updateEvent is called each time the 3D world should be
+        // rendered, before the renderEvent.  The state of your application
+        // should be updated here.
+        app.context.updateEvent.addEventListener(function () {
+            // get the pose (in local coordinates) of the tramObject target
+            var tramObjectPose = app.context.getEntityPose(tramObjectEntity);
+            // if the pose is known the target is visible, so set the
+            // THREE object to the location and orientation
+            if (tramObjectPose.poseStatus & Argon.PoseStatus.KNOWN) {
+                tramIconObject.position.copy(tramObjectPose.position);
+                tramIconObject.quaternion.copy(tramObjectPose.orientation);
+            }
+            // when the target is first seen after not being seen, the 
+            // status is FOUND.  Here, we move the 3D text object from the
+            // world to the target.
+            // when the target is first lost after being seen, the status 
+            // is LOST.  Here, we move the 3D text object back to the world
+            if (tramObjectPose.poseStatus & Argon.PoseStatus.FOUND) {
+                tramIconObject.add(tramModel);
+                tramModel.position.z = 0;
+            }
+           /* else if (tramObjectPose.poseStatus & Argon.PoseStatus.LOST) {
+                tramModel.position.z = -0.5;
+                userLocation.add(argonTextObject);
+            } */
+        });
+    }).catch(function (err) {
+        console.log("could not load dataset: " + err.message);
+    });
+    // activate the dataset.
+    api.objectTracker.activateDataSet(dataSet);
+});
+    
+
+
+
 
 
 
