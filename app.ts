@@ -1,15 +1,43 @@
 /// <reference types="@argonjs/argon" />
 /// <reference types="three" />
-
-// grab some handles on APIs we use
-const Cesium = Argon.Cesium;
-const Cartesian3 = Argon.Cesium.Cartesian3;
-const ReferenceFrame = Argon.Cesium.ReferenceFrame;
-const JulianDate = Argon.Cesium.JulianDate;
-const CesiumMath = Argon.Cesium.CesiumMath;
+/// <reference types="dat-gui" />
+/// <reference types="stats" />
 
 // set up Argon
 const app = Argon.init();
+
+// set up THREE.  Create a scene, a perspective camera and an object
+// for the user's location
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera();
+const userLocation = new THREE.Object3D();
+scene.add(camera);
+scene.add(userLocation);
+scene.autoUpdate = false;
+
+// We use the standard WebGLRenderer when we only need WebGL-based content
+const renderer = new THREE.WebGLRenderer({ 
+    alpha: true, 
+    logarithmicDepthBuffer: true
+});
+// account for the pixel density of the device
+renderer.setPixelRatio(window.devicePixelRatio);
+app.view.element.appendChild(renderer.domElement);
+
+// to easily control stuff on the display
+const hud = new (<any>THREE).CSS3DArgonHUD();
+
+// We put some elements in the index.html, for convenience. 
+// Here, we retrieve the description box and move it to the 
+// the CSS3DArgonHUD hudElements[0].  We only put it in the left
+// hud since we'll be hiding it in stereo
+var description = document.getElementById( 'description' );
+hud.hudElements[0].appendChild(description);
+app.view.element.appendChild(hud.domElement);
+
+// let's show the rendering stats
+var stats = new Stats();
+hud.hudElements[0].appendChild( stats.dom );
 
 // Tell argon what local coordinate system you want.  The default coordinate
 // frame used by Argon is Cesium's FIXED frame, which is centered at the center
@@ -26,136 +54,289 @@ const app = Argon.init();
 // more similar to what is used in the geospatial industry
 app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 
-// set up THREE.  Create a scene, a perspective camera and an object
-// for the user's location
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera();
-const userLocation = new THREE.Object3D;
-scene.add(camera);
-scene.add(userLocation);
 
-// In this demo, we are  rendering the 3D graphics with WebGL, 
-// using the standard WebGLRenderer
-const renderer = new THREE.WebGLRenderer({ 
-    alpha: true, 
-    logarithmicDepthBuffer: true
+// create a bit of animated 3D text that says "argon.js" to display 
+var uniforms = {
+    amplitude: { type: "f", value: 0.0 }
+}
+
+var argonTextObject = new THREE.Object3D();
+argonTextObject.position.z = -0.5;
+userLocation.add(argonTextObject);
+
+var loader = new THREE.FontLoader();
+loader.load( '../resources/fonts/helvetiker_bold.typeface.js', function ( font ) {
+    var textGeometry = new THREE.TextGeometry( "argon.js", {
+        font: <any>font,
+        size: 40,
+        height: 5,
+        curveSegments: 3,
+        bevelThickness: 2,
+        bevelSize: 1,
+        bevelEnabled: true
+    });
+    textGeometry.center();
+    var tessellateModifier = new (<any>THREE).TessellateModifier( 8 );
+    for ( var i = 0; i < 6; i ++ ) {
+        tessellateModifier.modify( textGeometry );
+    }
+    var explodeModifier = new (<any>THREE).ExplodeModifier();
+    explodeModifier.modify( textGeometry );
+    var numFaces = textGeometry.faces.length;
+    
+    var bufferGeometry = new THREE.BufferGeometry().fromGeometry( textGeometry );
+    var colors = new Float32Array( numFaces * 3 * 3 );
+    var displacement = new Float32Array( numFaces * 3 * 3 );
+    var color = new THREE.Color();
+    for ( var f = 0; f < numFaces; f ++ ) {
+        var index = 9 * f;
+        var h = 0.07 + 0.1 * Math.random();
+        var s = 0.5 + 0.5 * Math.random();
+        var l = 0.6 + 0.4 * Math.random();
+        color.setHSL( h, s, l );
+        var d = 5 + 20 * ( 0.5 - Math.random() );
+        for ( var i = 0; i < 3; i ++ ) {
+            colors[ index + ( 3 * i )     ] = color.r;
+            colors[ index + ( 3 * i ) + 1 ] = color.g;
+            colors[ index + ( 3 * i ) + 2 ] = color.b;
+            displacement[ index + ( 3 * i )     ] = d;
+            displacement[ index + ( 3 * i ) + 1 ] = d;
+            displacement[ index + ( 3 * i ) + 2 ] = d;
+        }
+    }
+    bufferGeometry.addAttribute( 'customColor', new THREE.BufferAttribute( colors, 3 ) );
+    bufferGeometry.addAttribute( 'displacement', new THREE.BufferAttribute( displacement, 3 ) );
+    
+    var shaderMaterial = new THREE.ShaderMaterial({
+        uniforms: uniforms,
+        vertexShader: `
+            uniform float amplitude;
+            attribute vec3 customColor;
+            attribute vec3 displacement;
+            varying vec3 vNormal;
+            varying vec3 vColor;
+            void main() {
+                vNormal = normal;
+                vColor = customColor;
+                vec3 newPosition = position + normal * amplitude * displacement;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+            }
+        `,
+        fragmentShader: `
+            varying vec3 vNormal;
+            varying vec3 vColor;
+            void main() {
+                const float ambient = 0.4;
+                vec3 light = vec3( 1.0 );
+                light = normalize( light );
+                float directional = max( dot( vNormal, light ), 0.0 );
+                gl_FragColor = vec4( ( directional + ambient ) * vColor, 1.0 );
+            }
+        `
+    });
+    
+    var textMesh = new THREE.Mesh( bufferGeometry, shaderMaterial );
+    argonTextObject.add( textMesh );
+    argonTextObject.scale.set (0.001,0.001,0.001);
+    argonTextObject.position.z = -0.50;
+
+    // add an argon updateEvent listener to slowly change the text over time.
+    // we don't have to pack all our logic into one listener.
+    app.context.updateEvent.addEventListener(() => {
+        uniforms.amplitude.value = 1.0 + Math.sin( Date.now() * 0.001 * 0.5 );
+    });
 });
-renderer.setPixelRatio(window.devicePixelRatio);
-app.view.element.appendChild(renderer.domElement);
 
-// We put some elements in the index.html, for convenience. 
-const locationElement = document.getElementById("location");
+app.vuforia.isAvailable().then(function(available) {
+    // vuforia not available on this platform
+    if (!available) {
+        console.warn("vuforia not available on this platform.");
+        return;
+    } 
 
-// All geospatial objects need to have an Object3D linked to a Cesium Entity.
-// We need to do this because Argon needs a mapping between Entities and Object3Ds.
-//
-// Here, we will position a cube near our starting location.  This geolocated object starts without a
-// location, until our reality is set and we know the location.  Each time the reality changes, we update
-// the cube position.
+// tell argon to initialize vuforia for our app, using our license information.
+app.vuforia.init({
+        encryptedLicenseData: 
+`-----BEGIN PGP MESSAGE-----
+Version: OpenPGP.js v2.3.2
+Comment: http://openpgpjs.org
 
-// This code creates a 1m cube with a wooden box texture on it, 
-// that we will attach to the geospatial object when we create it.
-// Box texture from https://www.flickr.com/photos/photoshoproadmap/8640003215/sizes/l/in/photostream/
-// licensed under https://creativecommons.org/licenses/by/2.0/legalcode
-var boxGeoObject = new THREE.Object3D();
+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
+CDjUbY1FxwlVJ4UZ7lz+8jWHO5jYY99adPoATpUaWYxm9oPxz/QR4kvgvLjl
+9Ti8379Y8qihzqsRmf6YLYyggknlt9Uyl2HjA+1zcwbDnb3I6g/XjTFUPy1D
+xZqqSEuCNDLh7m1+GDA3KXQnLIqOdcxOVzyFCDtKI9c6b0D0ezNkxUjgkoIp
+mxSSLDjzmHuPLsQVwqxP4KNU1gT7mXTnhlhsG2Vll/WZD+tuzGK8h9anf6/p
+4pCk61Dhj1hmb9msTaK4FGhmBMtJ6kQ4SzGOfFKG5IElAHidYgd0iz7AqEzX
+GttDkcHGM9iPIYUBY2r/538M/kxeVx5fBiWEkmWz5FMzqPRs3GZWYiAb2tnp
+WSDXW3B1mwznwcCkyUP6OP/c6FFmb6Rag/ZaItVAvVjmA7tXICLJPhYIs9hE
+I6zJSVZ81YtKg9Nb6Rx49qf18pQ1SWZNGrZrWaTJTLu4cu4c5v/czY5kyT0Y
+8RqNUlI5hwWU8G9LpJ5jv8dssrgcweTG/PEbCkzqz0R6W6VgDUyqo6WSGgoS
+B9or791lGcDazNT6CJ4/2Z1wBd4BSHkhSwfcPovGOleZFE24gLiG6puHyVjk
+WEIir2WXzhypwLkG/dn+ZJW1ezOvTb4gVVILHrWhNh8=
+=LoZg
+-----END PGP MESSAGE-----`
+    }).then((api)=>{
+        // the vuforia API is ready, so we can start using it.
 
-var box = new THREE.Object3D();
-var loader = new THREE.TextureLoader();
-loader.load( 'box.png', function ( texture ) {
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
-    var material = new THREE.MeshBasicMaterial( { map: texture } );
-    var mesh = new THREE.Mesh( geometry, material );
-    box.add( mesh )
-});
-boxGeoObject.add(box);
+        // tell argon to download a vuforia dataset.  The .xml and .dat file must be together
+        // in the web directory, even though we just provide the .xml file url here 
+        api.objectTracker.createDataSet("../resources/datasets/ArgonTutorial.xml").then( (dataSet)=>{
+            // the data set has been succesfully downloaded
 
-var boxGeoEntity = new Argon.Cesium.Entity({
-    name: "I have a box",
-    position: Cartesian3.ZERO,
-    orientation: Cesium.Quaternion.IDENTITY
+            // tell vuforia to load the dataset.  
+            dataSet.load().then(()=>{
+                // when it is loaded, we retrieve a list of trackables defined in the
+                // dataset and set up the content for the target
+                const trackables = dataSet.getTrackables();
+
+                // tell argon we want to track a specific trackable.  Each trackable
+                // has a Cesium entity associated with it, and is expressed in a 
+                // coordinate frame relative to the camera.  Because they are Cesium
+                // entities, we can ask for their pose in any coordinate frame we know
+                // about.
+                const gvuBrochureEntity = app.context.subscribeToEntityById(trackables["GVUBrochure"].id)
+
+                // create a THREE object to put on the trackable
+                const gvuBrochureObject = new THREE.Object3D;
+                scene.add(gvuBrochureObject);
+
+                // the updateEvent is called each time the 3D world should be
+                // rendered, before the renderEvent.  The state of your application
+                // should be updated here.
+                app.context.updateEvent.addEventListener(() => {
+                    // get the pose (in local coordinates) of the gvuBrochure target
+                    const gvuBrochurePose = app.context.getEntityPose(gvuBrochureEntity);
+
+                    // if the pose is known the target is visible, so set the
+                    // THREE object to the location and orientation
+                    if (gvuBrochurePose.poseStatus & Argon.PoseStatus.KNOWN) {
+                        gvuBrochureObject.position.copy(<any>gvuBrochurePose.position);
+                        gvuBrochureObject.quaternion.copy(<any>gvuBrochurePose.orientation);
+                    }
+
+                    // when the target is first seen after not being seen, the 
+                    // status is FOUND.  Here, we move the 3D text object from the
+                    // world to the target.
+                    // when the target is first lost after being seen, the status 
+                    // is LOST.  Here, we move the 3D text object back to the world
+                    if (gvuBrochurePose.poseStatus & Argon.PoseStatus.FOUND) {
+                        gvuBrochureObject.add(argonTextObject);
+                        argonTextObject.position.z = 0;
+                    } else if (gvuBrochurePose.poseStatus & Argon.PoseStatus.LOST) {
+                        argonTextObject.position.z = -0.50;
+                        userLocation.add(argonTextObject);
+                    }
+                })
+            }).catch(function(err) {
+                console.log("could not load dataset: " + err.message);
+            });
+            
+            // activate the dataset.
+            api.objectTracker.activateDataSet(dataSet);
+        });
+    }).catch(function(err) {
+        console.log("vuforia failed to initialize: " + err.message);
+    });
 });
 
 // the updateEvent is called each time the 3D world should be
 // rendered, before the renderEvent.  The state of your application
 // should be updated here.
-var boxInit = false;
-
-app.updateEvent.addEventListener((frame) => {
+app.context.updateEvent.addEventListener(() => {
     // get the position and orientation (the "pose") of the user
     // in the local coordinate frame.
     const userPose = app.context.getEntityPose(app.context.user);
+
     // assuming we know the user's pose, set the position of our 
     // THREE user object to match it
     if (userPose.poseStatus & Argon.PoseStatus.KNOWN) {
-        userLocation.position.copy(userPose.position);
-    } else {
-        // if we don't know the user pose we can't do anything
-        return;
+        userLocation.position.copy(<any>userPose.position);
     }
 
-    // the first time through, we create a geospatial position for
-    // the box somewhere near us 
-    if (!boxInit) {
-        const defaultFrame = app.context.getDefaultReferenceFrame();
-
-        // set the box's position to 10 meters away from the user.
-        // First, clone the userPose postion, and add 10 to the X
-        const boxPos = userPose.position.clone();
-        boxPos.x += 10;
-        // set the value of the box Entity to this local position, by
-        // specifying the frame of reference to our local frame
-        boxGeoEntity.position.setValue(boxPos, defaultFrame);        
-
-        // orient the box according to the local world frame
-        boxGeoEntity.orientation.setValue(Cesium.Quaternion.IDENTITY);
-
-        // now, we want to move the box's coordinates to the FIXED frame, so
-        // the box doesn't move if the local coordinate system origin changes.
-        if (Argon.convertEntityReferenceFrame(boxGeoEntity, frame.time, 
-                                              ReferenceFrame.FIXED)) {
-            scene.add(boxGeoObject);            
-            boxInit = true;
-        }
-    }
-
-    // get the local coordinates of the local box, and set the THREE object
-    var boxPose = app.context.getEntityPose(boxGeoEntity);
-    boxGeoObject.position.copy(boxPose.position);        
-    boxGeoObject.quaternion.copy(boxPose.orientation);
-
-    // rotate the boxes at a constant speed, independent of frame rates     
-    // to make it a little less boring
-    box.rotateY( 3 * frame.deltaTime/10000);
-
-})
+    // udpate our scene matrices
+    scene.updateMatrixWorld(false);
+});
     
 // renderEvent is fired whenever argon wants the app to update its display
 app.renderEvent.addEventListener(() => {
-    // set the renderers to know the current size of the viewport.
+    // update the rendering stats
+    stats.update();
+    
+    // get the subviews for the current frame
+    const subviews = app.view.getSubviews();
+
+    // if we have 1 subView, we're in mono mode.  If more, stereo.
+    var monoMode = subviews.length == 1;
+
+    // set the renderer to know the current size of the viewport.
     // This is the full size of the viewport, which would include
-    // both views if we are in stereo viewing mode
+    // both subviews if we are in stereo viewing mode
     const viewport = app.view.getViewport();
     renderer.setSize(viewport.width, viewport.height);
-
+    hud.setSize(viewport.width, viewport.height);
+    
     // there is 1 subview in monocular mode, 2 in stereo mode    
-    for (let subview of app.view.getSubviews()) {
-        var frustum = subview.frustum;
+    for (let subview of subviews) {
         // set the position and orientation of the camera for 
         // this subview
-        camera.position.copy(subview.pose.position);
-        camera.quaternion.copy(subview.pose.orientation);
+        camera.position.copy(<any>subview.pose.position);
+        camera.quaternion.copy(<any>subview.pose.orientation);
         // the underlying system provide a full projection matrix
         // for the camera. 
-        camera.projectionMatrix.fromArray(subview.projectionMatrix);
+        camera.projectionMatrix.fromArray(<any>subview.projectionMatrix);
 
-        // set the viewport for this view
+        // set the viewport for this subview
         let {x,y,width,height} = subview.viewport;
+        renderer.setViewport(x,y,width,height);
 
         // set the webGL rendering parameters and render this view
-        renderer.setViewport(x,y,width,height);
         renderer.setScissor(x,y,width,height);
         renderer.setScissorTest(true);
         renderer.render(scene, camera);
+
+        // adjust the hud, but only in mono
+        if (monoMode) {
+            hud.setViewport(x,y,width,height, subview.index);
+            hud.render(subview.index);
+        }
     }
 })
-

@@ -77,6 +77,7 @@ THREE.CSS3DArgonRenderer = function () {
 	domElements[0].style.display = 'none'; // was 'inline-block';
 	domElements[0].style.overflow = 'hidden';
 	domElements[0].style.position = 'absolute';
+	domElements[0].style.pointerEvents = 'none';
 
 	domElements[0].style.WebkitTransformStyle = 'preserve-3d';
 	domElements[0].style.MozTransformStyle = 'preserve-3d';
@@ -100,6 +101,7 @@ THREE.CSS3DArgonRenderer = function () {
 	domElements[1].style.display = 'none'; // was 'inline-block';
 	domElements[1].style.overflow = 'hidden';
 	domElements[1].style.position = 'absolute';
+	domElements[1].style.pointerEvents = 'none';
 
 	domElements[1].style.WebkitTransformStyle = 'preserve-3d';
 	domElements[1].style.MozTransformStyle = 'preserve-3d';
@@ -209,9 +211,9 @@ THREE.CSS3DArgonRenderer = function () {
 			epsilon( - elements[ 9 ] ) + ',' +
 			epsilon( elements[ 10 ] ) + ',' +
 			epsilon( elements[ 11 ] ) + ',' +
-			epsilon( elements[ 12 ] ) + ',' +
-			epsilon( - elements[ 13 ] ) + ',' +
-			epsilon( elements[ 14 ] ) + ',' +
+			epsilon( elements[ 12 ] * 100 ) + ',' +
+			epsilon( - elements[ 13 ] * 100 ) + ',' +
+			epsilon( elements[ 14 ] * 100 ) + ',' +
 			epsilon( elements[ 15 ] ) +
 		')';
 
