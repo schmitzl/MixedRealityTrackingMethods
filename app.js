@@ -194,12 +194,6 @@ loader.load('../resources/fonts/helvetiker_bold.typeface.js', function (font) {
         uniforms.amplitude.value = 1.0 + Math.sin(Date.now() * 0.001 * 0.5);
     });
 });
-app.vuforia.isAvailable().then(function (available) {
-    // vuforia not available on this platform
-    if (!available) {
-        console.warn("vuforia not available on this platform.");
-        return;
-    }
 
     
 app.vuforia.isAvailable().then(function (available) {
