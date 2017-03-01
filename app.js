@@ -18,6 +18,15 @@ scene.add(camera);
 scene.add(userLocation);
 scene.autoUpdate = false;
 
+// add light to the scene
+scene.add(new THREE.AmbientLight(0x443333));
+var light = new THREE.DirectionalLight(0xffddcc, 1);
+light.position.set(1, 0.75, 0.5);
+scene.add(light);
+var light = new THREE.DirectionalLight(0xccccff, 1);
+light.position.set(-1, 0.75, -0.5);
+scene.add(light);
+
 // set up renderer
 var cssRenderer = new THREE.CSS3DArgonRenderer();
 var hud = new THREE.CSS3DArgonHUD(); // place for fixed html screen content
@@ -182,7 +191,7 @@ function loadTram() {
         tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
         // add the model to the tramModel object, not the scene
         tramModel.add(tramMesh);
-      //  mesh.scale.set(.4, .4, .4);
+        mesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
@@ -197,7 +206,7 @@ function loadTram() {
         frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
         // add the model to the tramModel object, not the scene
         frameModel.add(frameMesh);
-      //  mesh.scale.set(.4, .4, .4);
+        mesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
 }
