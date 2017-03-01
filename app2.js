@@ -1,7 +1,7 @@
 /// <reference types="@argonjs/argon" />
 /// <reference types="three" />
 // grab some handles on APIs we use
-var Cesium = Argon.Cesium;
+/*var Cesium = Argon.Cesium;
 var Cartesian3 = Argon.Cesium.Cartesian3;
 var ReferenceFrame = Argon.Cesium.ReferenceFrame;
 var JulianDate = Argon.Cesium.JulianDate;
@@ -71,6 +71,7 @@ arrow.position.set(0,1.25,0); */
 
 
 // Create a DIV to use to label the position and distance of the tram
+/*
 var tramLocDiv = document.getElementById("box-location");
 var tramLabel = new THREE.CSS3DSprite(tramLocDiv);
 tramLabel.scale.set(0.02, 0.02, 0.02);
@@ -139,10 +140,10 @@ api.objectTracker.createDataSet("resources/datasets/ARStockholm.xml").then(funct
                 tramIconObject.add(tramModel);
                 tramModel.position.z = 0;
             }
-           /* else if (tramObjectPose.poseStatus & Argon.PoseStatus.LOST) {
+            else if (tramObjectPose.poseStatus & Argon.PoseStatus.LOST) {
                 tramModel.position.z = -0.5;
                 userLocation.add(argonTextObject);
-            } */
+            } 
         });
     }).catch(function (err) {
         console.log("could not load dataset: " + err.message);
@@ -250,7 +251,7 @@ app.updateEvent.addEventListener(function (frame) { // called before every rende
    /* var infoText = 'Geospatial Argon example:<br>';
     infoText += 'Your location is lla (' + toFixed(gpsCartographicDeg[0], 6) + ', ';
     infoText += toFixed(gpsCartographicDeg[1], 6) + ', ' + toFixed(gpsCartographicDeg[2], 2) + ')';
-    infoText += 'tram is ' + toFixed(distanceToTram, 2) + ' meters away'; */
+    infoText += 'tram is ' + toFixed(distanceToTram, 2) + ' meters away'; */ /*
     var tramLabelText = 'A tram!<br>lla = ' + toFixed(tramCartographicDeg[0], 6) + ', ';
     tramLabelText += toFixed(tramCartographicDeg[1], 6) + ', ' + toFixed(tramCartographicDeg[2], 2);
 
@@ -333,7 +334,7 @@ function loadTram() {
       //  mesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
-}
+}*/
 
 /*function cameraToClosestObjectPos() {
     // get user postion
