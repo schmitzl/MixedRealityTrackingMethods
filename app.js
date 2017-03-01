@@ -139,10 +139,10 @@ api.objectTracker.createDataSet("resources/datasets/ARStockholm.xml").then(funct
                 tramIconObject.add(tramModel);
                 tramModel.position.z = 0;
             }
-           /* else if (tramObjectPose.poseStatus & Argon.PoseStatus.LOST) {
+            else if (tramObjectPose.poseStatus & Argon.PoseStatus.LOST) {
                 tramModel.position.z = -0.5;
-                userLocation.add(argonTextObject);
-            } */
+                userLocation.add(tramModel);
+            } 
         });
     }).catch(function (err) {
         console.log("could not load dataset: " + err.message);
