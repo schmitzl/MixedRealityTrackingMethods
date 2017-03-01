@@ -55,7 +55,7 @@ loadTram();
 
 // create tram geo object
 var tramGeoObject = new THREE.Object3D();
-tramGeoObject.add(tramModel);
+//tramGeoObject.add(tramModel);
 tramGeoObject.add(frameModel);
 var tramGeoEntity = new Argon.Cesium.Entity({
     name: "I have a box",
