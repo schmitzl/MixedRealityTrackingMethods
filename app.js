@@ -53,7 +53,7 @@ var argonTextObject = new THREE.Object3D();
 argonTextObject.position.z = -0.50;
 userLocation.add(argonTextObject);
 var loader = new THREE.FontLoader();
-loader.load('resources/fonts/helvetiker_bold.typeface.js', function (font) {
+loader.load('../resources/fonts/helvetiker_bold.typeface.js', function (font) {
     var textGeometry = new THREE.TextGeometry("argon.js", {
         font: font,
         size: 40,
@@ -120,7 +120,7 @@ app.vuforia.isAvailable().then(function (available) {
         // the vuforia API is ready, so we can start using it.
         // tell argon to download a vuforia dataset.  The .xml and .dat file must be together
         // in the web directory, even though we just provide the .xml file url here 
-        api.objectTracker.createDataSet("resources/datasets/ArgonTutorial.xml").then(function (dataSet) {
+        api.objectTracker.createDataSet("../resources/datasets/ArgonTutorial.xml").then(function (dataSet) {
             // the data set has been succesfully downloaded
             // tell vuforia to load the dataset.  
             dataSet.load().then(function () {
