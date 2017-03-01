@@ -49,8 +49,11 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 // -- LOAD GEO TRAM --
 // load tram model
 var tramModel = new THREE.Object3D();
-var frameModel = new THREE.Object3D();
+var tramBase = new THREE.Object3D();
+var tramFrame = new THREE.Object3D();
 loadTram();
+tramModel.add(tramBase);
+tramModel.add(tramFrame);
 
 
 // connect to Vuforia
@@ -189,8 +192,8 @@ function loadTram() {
             shininess: 25
         });
         tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
-        // add the model to the tramModel object, not the scene
-        tramModel.add(tramMesh);
+        // add the model to the tramBase object, not the scene
+        tramBase.add(tramMesh);
         mesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
@@ -204,8 +207,8 @@ function loadTram() {
      frameLoader.load('resources/obj/tram/frame.js', function (frameGeometry) {
         var frameMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
         frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
-        // add the model to the tramModel object, not the scene
-        frameModel.add(frameMesh);
+        // add the model to the tramBase object, not the scene
+        tramFrame.add(frameMesh);
         mesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
