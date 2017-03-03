@@ -196,7 +196,7 @@ function loadTram() {
         tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
         // add the model to the tramBase object, not the scene
         tramBase.add(tramMesh);
-        mesh.scale.set(.4, .4, .4);
+        tramMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
@@ -211,7 +211,7 @@ function loadTram() {
         frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
         // add the model to the tramBase object, not the scene
         tramFrame.add(frameMesh);
-        mesh.scale.set(.4, .4, .4);
+        frameMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
@@ -229,7 +229,7 @@ function loadTram() {
         platformMesh = new THREE.Mesh(platformGeometry, platformMaterial);
         // add the model to the tramBase object, not the scene
         platform.add(platformMesh);
-        mesh.scale.set(.4, .4, .4);
+        platformMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
 }
