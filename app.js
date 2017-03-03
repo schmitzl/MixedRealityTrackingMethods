@@ -51,9 +51,11 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 var tramModel = new THREE.Object3D();
 var tramBase = new THREE.Object3D();
 var tramFrame = new THREE.Object3D();
+var platform = new THREE.Object3D();
 loadTram();
 tramModel.add(tramBase);
 tramModel.add(tramFrame);
+tramModel.add(platform);
 
 
 // connect to Vuforia
@@ -84,7 +86,7 @@ app.vuforia.isAvailable().then(function (available) {
                 // about.
                 var tramMarkerEntity = app.context.subscribeToEntityById(trackables["tram"].id);
                 // create a THREE object to put on the trackable
-                var tramMarkerObject = new THREE.Object3D;
+                var tramMarkerObject = new THREE.Object3D();
                 scene.add(tramMarkerObject);
                 // the updateEvent is called each time the 3D world should be
                 // rendered, before the renderEvent.  The state of your application
@@ -105,10 +107,10 @@ app.vuforia.isAvailable().then(function (available) {
                     // is LOST.  Here, we move the 3D text object back to the world
                     if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
                         tramMarkerObject.add(tramModel);
-                        argonTextObject.position.z = 0;
+                        tramModel.position.z = 0;
                     }
                     else if (tramMarkerPose.poseStatus & Argon.PoseStatus.LOST) {
-                        argonTextObject.position.z = -0.50;
+                        tramModel.position.z = -0.50;
                         userLocation.add(tramModel);
                     }
                 });
@@ -209,6 +211,24 @@ function loadTram() {
         frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
         // add the model to the tramBase object, not the scene
         tramFrame.add(frameMesh);
+        mesh.scale.set(.4, .4, .4);
+       // mesh.rotation.x = THREE.Math.degToRad(90);
+    });
+    
+    
+    var platformMesh;
+    var platfromTextureLoader = new THREE.TextureLoader();
+    var platformGeometry = new THREE.Geometry();
+    var platformLoader = new THREE.JSONLoader();
+    platformLoader.load('resources/obj/tram/platform.js', function (platformGeometry) {
+        var platformMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: platformTextureLoader.load('resources/obj/tram/platformTexture.png')
+            //normalScale: new THREE.Vector2(0.75, 0.75),
+        });
+        platformMesh = new THREE.Mesh(platformGeometry, platformMaterial);
+        // add the model to the tramBase object, not the scene
+        platform.add(platformMesh);
         mesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
