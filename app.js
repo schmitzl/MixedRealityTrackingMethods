@@ -57,7 +57,7 @@ tramModel.add(tramBase);
 tramModel.add(tramFrame);
 tramModel.add(platform);
 
-tramModel.rotation.x = Math.PI;
+tramModel.rotation.x = Math.PI / 2;
 
 
 // connect to Vuforia
