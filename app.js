@@ -219,7 +219,7 @@ function loadTram() {
     
     
     var platformMesh;
-    var platfromTextureLoader = new THREE.TextureLoader();
+    var platformTextureLoader = new THREE.TextureLoader();
     var platformGeometry = new THREE.Geometry();
     var platformLoader = new THREE.JSONLoader();
     platformLoader.load('resources/obj/tram/platform.js', function (platformGeometry) {
