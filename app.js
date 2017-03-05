@@ -265,7 +265,7 @@ function loadTram() {
         var windowMaterial = new THREE.MeshPhongMaterial();
         windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
         windowMesh.material.color.set(0x001100);
-        invisibilityContainerMesh.material.colorWrite = true;
+        windowMesh.material.colorWrite = true;
         windowMesh.renderOrder = 2;
         window.add(windowMesh);
         windowMesh.scale.set(.4, .4, .4);
