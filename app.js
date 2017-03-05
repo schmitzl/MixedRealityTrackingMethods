@@ -248,8 +248,8 @@ function loadTram() {
     invisibilityContainerLoader.load('resources/obj/tram/invisibilityContainer.js', function(invisibilityContainerGeometry){
         var invisibilityContainerMaterial = new THREE.MeshPhongMaterial();
         invisibilityContainerMesh = new THREE.Mesh(invisibilityContainerGeometry, invisibilityContainerMaterial);
-        invisibilityContainerMesh.material.color.set(0x000000);
-        invisibilityContainerMesh.material.colorWrite = false;
+        invisibilityContainerMesh.material.color.set(0x001100);
+       // invisibilityContainerMesh.material.colorWrite = false;
         invisibilityContainerMesh.renderOrder = 0;
         invisibilityContainer.add(invisibilityContainerMesh);
         invisibilityContainerMesh.scale.set(.4, .4, .4);
