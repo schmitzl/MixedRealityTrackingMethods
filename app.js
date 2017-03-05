@@ -60,7 +60,7 @@ tramModel.add(platform);
 tramModel.add(invisibilityContainer);
 
 tramModel.rotation.x = Math.PI / 2;
-tramModel.rotation.y = Math.PI;
+//tramModel.rotation.y = Math.PI;
 
 
 // connect to Vuforia
