@@ -262,13 +262,10 @@ function loadTram() {
     var windowGeometry = new THREE.Geometry();
     var windowLoader = THREE.JSONLoader();
     windowLoader.load('resources/obj/tram/window.js', function(windowGeometry){
-        var windowMaterial = new THREE.MeshPhongMaterial({
-            specular: 0x111111,
-            map: platformTextureLoader.load('resources/obj/tram/platformTexture.png')
-            //normalScale: new THREE.Vector2(0.75, 0.75),
-        });
+        var windowMaterial = new THREE.MeshPhongMaterial();
         windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
-        //windowMesh.material.color.set(0x990000);
+        windowMesh.material.color.set(0x001100);
+        invisibilityContainerMesh.material.colorWrite = true;
         windowMesh.renderOrder = 2;
         window.add(windowMesh);
         windowMesh.scale.set(.4, .4, .4);
