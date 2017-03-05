@@ -201,7 +201,7 @@ function loadTram() {
             shininess: 25
         });
         tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
-        tramMesh.renderOrder = 2;
+        tramMesh.renderOrder = 1;
         // add the model to the tramBase object, not the scene
         tramBase.add(tramMesh);
         tramMesh.scale.set(.4, .4, .4);
@@ -217,7 +217,7 @@ function loadTram() {
      frameLoader.load('resources/obj/tram/frame.js', function (frameGeometry) {
         var frameMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
         frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
-         frameMesh.renderOrder = 2;
+         frameMesh.renderOrder = 1;
         // add the model to the tramBase object, not the scene
         tramFrame.add(frameMesh);
         frameMesh.scale.set(.4, .4, .4);
@@ -236,7 +236,7 @@ function loadTram() {
             //normalScale: new THREE.Vector2(0.75, 0.75),
         });
         platformMesh = new THREE.Mesh(platformGeometry, platformMaterial);
-        platformMesh.renderOrder = 2;
+        platformMesh.renderOrder = 1;
         // add the model to the tramBase object, not the scene
         platform.add(platformMesh);
         platformMesh.scale.set(.4, .4, .4);
