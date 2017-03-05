@@ -264,7 +264,7 @@ function loadTram() {
     windowLoader.load('resources/obj/tram/window.js', function(windowGeometry){
         var windowMaterial = new THREE.MeshPhongMaterial();
         windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
-        windowMesh.material.color.set(0x990000);windowMesh.renderOrder = 0;
+        windowMesh.material.color.set(0x990000);
         windowMesh.renderOrder = 0;
         window.add(windowMesh);
         windowMesh.scale.set(.4, .4, .4);
