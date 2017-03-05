@@ -52,10 +52,12 @@ var tramModel = new THREE.Object3D();
 var tramBase = new THREE.Object3D();
 var tramFrame = new THREE.Object3D();
 var platform = new THREE.Object3D();
+var invisibilityContainer = new THREE.Object3D();
 loadTram();
 tramModel.add(tramBase);
 tramModel.add(tramFrame);
 tramModel.add(platform);
+tramModel.add(invisibilityContainer);
 
 tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
@@ -197,6 +199,7 @@ function loadTram() {
             shininess: 25
         });
         tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
+        tramMesh.renderOrder = 0;
         // add the model to the tramBase object, not the scene
         tramBase.add(tramMesh);
         tramMesh.scale.set(.4, .4, .4);
@@ -212,6 +215,7 @@ function loadTram() {
      frameLoader.load('resources/obj/tram/frame.js', function (frameGeometry) {
         var frameMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
         frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
+         frameMesh.renderOrder = 0;
         // add the model to the tramBase object, not the scene
         tramFrame.add(frameMesh);
         frameMesh.scale.set(.4, .4, .4);
@@ -230,9 +234,24 @@ function loadTram() {
             //normalScale: new THREE.Vector2(0.75, 0.75),
         });
         platformMesh = new THREE.Mesh(platformGeometry, platformMaterial);
+        platformMesh.renderOrder = 0;
         // add the model to the tramBase object, not the scene
         platform.add(platformMesh);
         platformMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
+    });
+    
+    var invisibilityContainerMesh;
+    var invisibilityContainerTextureLoader = new THREE.TextureLoader();
+    var invisibilityContainerGeometry = new THREE.Geometry();
+    var invisibilityContainerLoader = new THREE.JSONLoader();
+    invisibilityContainerLoader.load('resources/obj/tram/invisibilityContainer.js', function(invisibilityContainerGeometry){
+        var invisibilityContainerMaterial = new THREE.MeshPhongMaterial();
+        invisibilityContainerMesh = new THREE.Mesh(invisibilityContainerGeometry, invisibilityContainerMaterial);
+        invisibilityContainerMesh.material.color.set(0x000000);
+        invisibilityContainerMesh.material.colorWrite = false;
+        invisibilityContainerMesh.renderOrder = 2;
+        invisibilityContainer.add(invisibilityContainerMesh);
+        invisibilityContainerMesh.scale.set(.4, .4, .4);
     });
 }
