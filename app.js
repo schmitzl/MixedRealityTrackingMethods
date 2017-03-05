@@ -53,13 +53,13 @@ var tramBase = new THREE.Object3D();
 var tramFrame = new THREE.Object3D();
 var platform = new THREE.Object3D();
 var invisibilityContainer = new THREE.Object3D();
-var window = new THREE.Object3D();
+//var window = new THREE.Object3D();
 loadTram();
 tramModel.add(tramBase);
 tramModel.add(tramFrame);
 tramModel.add(platform);
 tramModel.add(invisibilityContainer);
-tramModel.add(window);
+//tramModel.add(window);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
@@ -252,11 +252,11 @@ function loadTram() {
         invisibilityContainerMesh = new THREE.Mesh(invisibilityContainerGeometry, invisibilityContainerMaterial);
         invisibilityContainerMesh.material.color.set(0x001100);
         invisibilityContainerMesh.material.colorWrite = false;
-        invisibilityContainerMesh.renderOrder = 1;
+        invisibilityContainerMesh.renderOrder = 0;
         invisibilityContainer.add(invisibilityContainerMesh);
         invisibilityContainerMesh.scale.set(.4, .4, .4);
     });
-    
+    /*
     var windowMesh;
     var windowTextureLoader = new THREE.TextureLoader();
     var windowGeometry = new THREE.Geometry();
@@ -268,5 +268,5 @@ function loadTram() {
         windowMesh.renderOrder = 3;
         window.add(windowMesh);
         windowMesh.scale.set(.4, .4, .4);
-    });
+    });*/
 }
