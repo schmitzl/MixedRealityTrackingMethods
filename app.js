@@ -53,11 +53,13 @@ var tramBase = new THREE.Object3D();
 var tramFrame = new THREE.Object3D();
 var platform = new THREE.Object3D();
 var invisibilityContainer = new THREE.Object3D();
+var window = new THREE.Object3D();
 loadTram();
 tramModel.add(tramBase);
 tramModel.add(tramFrame);
 tramModel.add(platform);
 tramModel.add(invisibilityContainer);
+tramModel.add(window);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
@@ -199,7 +201,7 @@ function loadTram() {
             shininess: 25
         });
         tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
-        tramMesh.renderOrder = 1;
+        tramMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         tramBase.add(tramMesh);
         tramMesh.scale.set(.4, .4, .4);
@@ -215,7 +217,7 @@ function loadTram() {
      frameLoader.load('resources/obj/tram/frame.js', function (frameGeometry) {
         var frameMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
         frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
-         frameMesh.renderOrder = 1;
+         frameMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         tramFrame.add(frameMesh);
         frameMesh.scale.set(.4, .4, .4);
@@ -234,13 +236,13 @@ function loadTram() {
             //normalScale: new THREE.Vector2(0.75, 0.75),
         });
         platformMesh = new THREE.Mesh(platformGeometry, platformMaterial);
-        platformMesh.renderOrder = 1;
+        platformMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         platform.add(platformMesh);
         platformMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
-    
+
     var invisibilityContainerMesh;
     var invisibilityContainerTextureLoader = new THREE.TextureLoader();
     var invisibilityContainerGeometry = new THREE.Geometry();
@@ -250,8 +252,21 @@ function loadTram() {
         invisibilityContainerMesh = new THREE.Mesh(invisibilityContainerGeometry, invisibilityContainerMaterial);
         invisibilityContainerMesh.material.color.set(0x001100);
         invisibilityContainerMesh.material.colorWrite = false;
-        invisibilityContainerMesh.renderOrder = 0;
+        invisibilityContainerMesh.renderOrder = 1;
         invisibilityContainer.add(invisibilityContainerMesh);
         invisibilityContainerMesh.scale.set(.4, .4, .4);
+    });
+    
+    var windowMesh;
+    var windowTextureLoader = new THREE.TextureLoader();
+    var windowGeometry = new THREE.Geometry();
+    var windowLoader = THREE.JSONLoader();
+    windowLoader.load('resources/obj/tram/window.js', function(windowGeometry){
+        var windowMaterial = new THREE.MeshPhongMaterial();
+        windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
+        windowMesh.material.color.set(0x990000);windowMesh.renderOrder = 0;
+        windowMesh.renderOrder = 0;
+        window.add(windowMesh);
+        windowMesh.scale.set(.4, .4, .4);
     });
 }
