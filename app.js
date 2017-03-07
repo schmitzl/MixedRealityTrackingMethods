@@ -249,7 +249,7 @@ function loadTram() {
     var invisibilityContainerLoader = new THREE.JSONLoader();
     invisibilityContainerLoader.load('resources/obj/tram/invisibilityContainer.js', function(invisibilityContainerGeometry){
         var invisibilityContainerMaterial = new THREE.MeshPhongMaterial();
-        invisibilityContainerMesh = new THREE.Mesh(invisibilityContainerGeometry, invisibilityContainerMaterial);
+        invisibilityContainerMesh = new THREE.Mesh(invisibilityContainerGeometry, invisibilityContainerMasterial);
         invisibilityContainerMesh.material.color.set(0x001100);
         invisibilityContainerMesh.material.colorWrite = false;
         invisibilityContainerMesh.renderOrder = 1;
@@ -268,7 +268,7 @@ function loadTram() {
             //normalScale: new THREE.Vector2(0.75, 0.75),
         });
         windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
-        windowMesh.renderOrder = 2;
+        //windowMesh.renderOrder = 2;
         window.add(windowMesh);
         windowMesh.scale.set(.4, .4, .4);
     });
