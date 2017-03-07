@@ -201,7 +201,7 @@ function loadTram() {
             shininess: 25
         });
         tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
-        tramMesh.renderOrder = 2;
+        //tramMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         tramBase.add(tramMesh);
         tramMesh.scale.set(.4, .4, .4);
