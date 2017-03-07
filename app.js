@@ -59,7 +59,7 @@ tramModel.add(tramBase);
 //tramModel.add(tramFrame);
 //tramModel.add(platform);
 //tramModel.add(invisibilityContainer);
-//tramModel.add(window);
+tramModel.add(window);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
@@ -255,7 +255,7 @@ function loadTram() {
         invisibilityContainerMesh.renderOrder = 1;
         invisibilityContainer.add(invisibilityContainerMesh);
         invisibilityContainerMesh.scale.set(.4, .4, .4);
-    });
+    });*/
     
     var windowMesh;
     var windowTextureLoader = new THREE.TextureLoader();
@@ -271,5 +271,5 @@ function loadTram() {
         //windowMesh.renderOrder = 2;
         window.add(windowMesh);
         windowMesh.scale.set(.4, .4, .4);
-    });*/
+    });
 }
