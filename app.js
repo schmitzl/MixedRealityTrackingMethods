@@ -55,7 +55,7 @@ var platform = new THREE.Object3D();
 var invisibilityContainer = new THREE.Object3D();
 var window = new THREE.Object3D();
 loadTram();
-//tramModel.add(tramBase);
+tramModel.add(tramBase);
 //tramModel.add(tramFrame);
 //tramModel.add(platform);
 //tramModel.add(invisibilityContainer);
@@ -186,7 +186,7 @@ app.renderEvent.addEventListener(function () {
 });
 
 function loadTram() {
-   /* var tramMesh;
+    var tramMesh;
     var tramTextureLoader = new THREE.TextureLoader();
     var tramGeometry = new THREE.Geometry();
     
@@ -207,7 +207,7 @@ function loadTram() {
         tramMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
-    
+    /*
     
     var frameMesh;
     var frameTextureLoader = new THREE.TextureLoader();
