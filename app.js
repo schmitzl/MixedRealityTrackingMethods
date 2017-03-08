@@ -207,12 +207,12 @@ function loadTram() {
         tramMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
-    /*
+    
     var windowMesh;
     var windowTextureLoader = new THREE.TextureLoader();
     var windowGeometry = new THREE.Geometry();
     var windowLoader = THREE.JSONLoader();
-    windowLoader.load('resources/obj/tram/stoneportal.js', function (windowGeometry) {
+  /*  windowLoader.load('resources/obj/tram/stoneportal.js', function (windowGeometry) {
         var windowMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
             map: windowTextureLoader.load('resources/obj/tram/bricks.jpg'),
