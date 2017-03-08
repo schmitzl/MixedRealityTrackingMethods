@@ -211,7 +211,7 @@ function loadTram() {
     var windowMesh;
     var windowTextureLoader = new THREE.TextureLoader();
     var windowGeometry = new THREE.Geometry();
-    var windowLoader = THREE.JSONLoader();
+    var windowLoader = new THREE.JSONLoader();
     /*windowLoader.load('resources/obj/tram/stoneportal.js', function (windowGeometry) {
         var windowMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
