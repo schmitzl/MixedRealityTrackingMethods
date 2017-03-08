@@ -224,10 +224,10 @@ function loadTram() {
         //window.add(windowMesh);
         //windowMesh.scale.set(.4, .4, .4); 
     });*/
-    windowLoader.load('resources/obj/tram/tram.js', function (windowGeometry) {
+    windowLoader.load('resources/obj/tram/stoneportal.js', function (windowGeometry) {
         var windowMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
-            map: windowTextureLoader.load('resources/obj/tram/b_tramBase_Albedo.png')
+            map: windowTextureLoader.load('resources/obj/tram/bricks.jpg')
             //specularMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
             //normalMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
             //normalScale: new THREE.Vector2(0.75, 0.75),
