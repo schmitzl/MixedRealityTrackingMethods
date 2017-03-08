@@ -288,8 +288,12 @@ function loadTram() {
     var canvasGeometry = new THREE.Geometry();
     var canvasLoader = new THREE.JSONLoader();
     canvasLoader.load('resources/obj/tram/canvas.js', function (canvasGeometry) {
-        var canvasMaterial = new THREE.MeshPhongMaterial();
-        canvasMesh 
+        var canvasMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: canvasTextureLoader.load('resources/obj/tram/bg.png')
+            //normalScale: new THREE.Vector2(0.75, 0.75),
+        });
+        canvasMesh = new THREE.Mesh(canvasGeometry, canvasMaterial);
         canvasMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         canvas.add(canvasMesh);
