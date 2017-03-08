@@ -222,7 +222,7 @@ function loadTram() {
        // windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
         //windowMesh.renderOrder = 2;
         //window.add(windowMesh);
-        //windowMesh.scale.set(.4, .4, .4);
+        //windowMesh.scale.set(.4, .4, .4); */
     });
     /*
     
