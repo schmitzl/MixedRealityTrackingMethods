@@ -49,16 +49,16 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 // -- LOAD GEO TRAM --
 // load tram model
 var tramModel = new THREE.Object3D();
-//var tramBase = new THREE.Object3D();
-//var tramFrame = new THREE.Object3D();
-//var platform = new THREE.Object3D();
-//var invisibilityContainer = new THREE.Object3D();
+var tramBase = new THREE.Object3D();
+var tramFrame = new THREE.Object3D();
+var platform = new THREE.Object3D();
+var invisibilityContainer = new THREE.Object3D();
 var portal = new THREE.Object3D();
 loadTram();
-//tramModel.add(tramBase);
-//tramModel.add(tramFrame);
-//tramModel.add(platform);
-//tramModel.add(invisibilityContainer);
+tramModel.add(tramBase);
+tramModel.add(tramFrame);
+tramModel.add(platform);
+tramModel.add(invisibilityContainer);
 tramModel.add(portal);
 
 //tramModel.rotation.x = Math.PI / 2;
