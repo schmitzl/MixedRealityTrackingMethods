@@ -274,7 +274,7 @@ function loadTram() {
         invisibilityContainerMesh = new THREE.Mesh(invisibilityContainerGeometry, invisibilityContainerMasterial);
         invisibilityContainerMesh.material.color.set(0x001100);
         invisibilityContainerMesh.material.colorWrite = false;
-        invisibilityContainerMesh.renderOrder = 0;
+        invisibilityContainerMesh.renderOrder = 3;
         invisibilityContainer.add(invisibilityContainerMesh);
         invisibilityContainerMesh.scale.set(.4, .4, .4);
     });
