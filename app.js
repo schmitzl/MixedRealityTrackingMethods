@@ -55,6 +55,7 @@ var platform = new THREE.Object3D();
 var invisibilityContainer = new THREE.Object3D();
 var portal = new THREE.Object3D();
 var canvas = new THREE.Object3D();
+var sky = new THREE.Object3D();
 loadTram();
 tramModel.add(tramBase);
 tramModel.add(tramFrame);
@@ -62,6 +63,7 @@ tramModel.add(platform);
 tramModel.add(invisibilityContainer);
 tramModel.add(portal);
 tramModel.add(canvas);
+tramModel.add(sky);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
@@ -286,16 +288,26 @@ function loadTram() {
     var canvasGeometry = new THREE.Geometry();
     var canvasLoader = new THREE.JSONLoader();
     canvasLoader.load('resources/obj/tram/canvas.js', function (canvasGeometry) {
-        var canvasMaterial = new THREE.MeshPhongMaterial({
-            specular: 0x111111,
-            map: canvasTextureLoader.load('resources/obj/tram/bg.png')
-            //normalScale: new THREE.Vector2(0.75, 0.75),
-        });
-        canvasMesh = new THREE.Mesh(canvasGeometry, canvasMaterial);
+        var canvasMaterial = new THREE.MeshPhongMaterial();
+        canvasMesh 
         canvasMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         canvas.add(canvasMesh);
         canvasMesh.scale.set(.4, .4, .4);
+       // mesh.rotation.x = THREE.Math.degToRad(90);
+    });
+    
+    var skyMesh;
+    var skyTextureLoader = new THREE.TextureLoader();
+    var skyGeometry = new THREE.Geometry();
+    var skyLoader = new THREE.JSONLoader();
+    skyLoader.load('resources/obj/tram/canvas.js', function (skyGeometry) {
+         var skyMaterial = new THREE.MeshLambertMaterial({color: 0xCCF2FF});
+        skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
+        skyMesh.renderOrder = 2;
+        // add the model to the tramBase object, not the scene
+        sky.add(skyMesh);
+        skyMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
