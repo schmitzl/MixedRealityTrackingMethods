@@ -34,7 +34,7 @@ var renderer = new THREE.WebGLRenderer({
     alpha: true,
     logarithmicDepthBuffer: true
 });
-renderer.setPixelRatio(portal.devicePixelRatio);
+renderer.setPixelRatio(window.devicePixelRatio);
 app.view.element.appendChild(renderer.domElement);
 app.view.element.appendChild(cssRenderer.domElement);
 app.view.element.appendChild(hud.domElement);
