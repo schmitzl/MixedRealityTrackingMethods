@@ -59,7 +59,7 @@ tramModel.add(tramBase);
 tramModel.add(tramFrame);
 tramModel.add(platform);
 tramModel.add(invisibilityContainer);
-tramModel.add(portal);
+//tramModel.add(portal);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
@@ -224,7 +224,6 @@ function loadTram() {
         });
         portalMesh = new THREE.Mesh(portalGeometry, portalMaterial);
         portalMesh.renderOrder = 0;
-        //tramMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         portal.add(portalMesh);
         portalMesh.scale.set(.4, .4, .4);
