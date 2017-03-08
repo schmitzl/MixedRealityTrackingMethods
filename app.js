@@ -53,7 +53,7 @@ var tramBase = new THREE.Object3D();
 //var tramFrame = new THREE.Object3D();
 //var platform = new THREE.Object3D();
 //var invisibilityContainer = new THREE.Object3D();
-//var window = new THREE.Object3D();
+var window = new THREE.Object3D();
 loadTram();
 tramModel.add(tramBase);
 //tramModel.add(tramFrame);
