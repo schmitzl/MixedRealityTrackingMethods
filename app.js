@@ -213,7 +213,7 @@ function loadTram() {
     var windowGeometry = new THREE.Geometry();
     var windowLoader = THREE.JSONLoader();
     windowLoader.load('resources/obj/tram/stoneportal.js', function (windowGeometry) {
-        var windowMaterial = new THREE.MeshPhongMaterial({
+       /* var windowMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
             map: windowTextureLoader.load('resources/obj/tram/bricks.jpg'),
             shininess: 2
