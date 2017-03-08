@@ -302,8 +302,9 @@ function loadTram() {
     var skyGeometry = new THREE.Geometry();
     var skyLoader = new THREE.JSONLoader();
     skyLoader.load('resources/obj/tram/canvas.js', function (skyGeometry) {
-         var skyMaterial = new THREE.MeshLambertMaterial({color: 0xCCF2FF});
+         var skyMaterial = new THREE.MeshPhongMaterial();
         skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
+        skyMesh.material.color.set(0xCCF2FF);
         skyMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         sky.add(skyMesh);
