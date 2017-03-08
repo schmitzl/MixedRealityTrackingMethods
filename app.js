@@ -271,10 +271,10 @@ function loadTram() {
     var invisibilityContainerLoader = new THREE.JSONLoader();
     invisibilityContainerLoader.load('resources/obj/tram/invisibilityContainer.js', function(invisibilityContainerGeometry){
         var invisibilityContainerMaterial = new THREE.MeshPhongMaterial();
-        invisibilityContainerMesh = new THREE.Mesh(invisibilityContainerGeometry, invisibilityContainerMasterial);
+        invisibilityContainerMesh = new THREE.Mesh(invisibilityContainerGeometry, invisibilityContainerMaterial);
         invisibilityContainerMesh.material.color.set(0x001100);
         invisibilityContainerMesh.material.colorWrite = false;
-        invisibilityContainerMesh.renderOrder = 3;
+        invisibilityContainerMesh.renderOrder = 1;
         invisibilityContainer.add(invisibilityContainerMesh);
         invisibilityContainerMesh.scale.set(.4, .4, .4);
     });
