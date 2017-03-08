@@ -186,7 +186,7 @@ app.renderEvent.addEventListener(function () {
 });
 
 function loadTram() {
-   /* var tramMesh;
+    var tramMesh;
     var tramTextureLoader = new THREE.TextureLoader();
     var tramGeometry = new THREE.Geometry();
     
@@ -204,9 +204,10 @@ function loadTram() {
         //tramMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         tramBase.add(tramMesh);
+        tramMesh.renderOrder = 2;
         tramMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
-    });*/
+    });
     
     var portalMesh;
     var portalTextureLoader = new THREE.TextureLoader();
@@ -222,6 +223,7 @@ function loadTram() {
             //shininess: 25
         });
         portalMesh = new THREE.Mesh(portalGeometry, portalMaterial);
+        portalMesh.renderOrder = 0;
         //tramMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         portal.add(portalMesh);
@@ -229,7 +231,7 @@ function loadTram() {
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
-    /*
+    
     var frameMesh;
     var frameTextureLoader = new THREE.TextureLoader();
     var frameGeometry = new THREE.Geometry();
@@ -238,7 +240,7 @@ function loadTram() {
      frameLoader.load('resources/obj/tram/frame.js', function (frameGeometry) {
         var frameMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
         frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
-         frameMesh.renderOrder = 2;
+        frameMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         tramFrame.add(frameMesh);
         frameMesh.scale.set(.4, .4, .4);
@@ -276,7 +278,7 @@ function loadTram() {
         invisibilityContainerMesh.renderOrder = 1;
         invisibilityContainer.add(invisibilityContainerMesh);
         invisibilityContainerMesh.scale.set(.4, .4, .4);
-    });*/
+    });
     
     
 }
