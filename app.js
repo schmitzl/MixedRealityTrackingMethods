@@ -34,7 +34,7 @@ var renderer = new THREE.WebGLRenderer({
     alpha: true,
     logarithmicDepthBuffer: true
 });
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(portal.devicePixelRatio);
 app.view.element.appendChild(renderer.domElement);
 app.view.element.appendChild(cssRenderer.domElement);
 app.view.element.appendChild(hud.domElement);
@@ -53,13 +53,13 @@ var tramModel = new THREE.Object3D();
 //var tramFrame = new THREE.Object3D();
 //var platform = new THREE.Object3D();
 //var invisibilityContainer = new THREE.Object3D();
-var window = new THREE.Object3D();
+var portal = new THREE.Object3D();
 loadTram();
 //tramModel.add(tramBase);
 //tramModel.add(tramFrame);
 //tramModel.add(platform);
 //tramModel.add(invisibilityContainer);
-tramModel.add(window);
+tramModel.add(portal);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
@@ -208,24 +208,24 @@ function loadTram() {
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });*/
     
-    var windowMesh;
-    var windowTextureLoader = new THREE.TextureLoader();
-    var windowGeometry = new THREE.Geometry();
-    var windowLoader = new THREE.JSONLoader();
-    windowLoader.load('resources/obj/tram/stoneportal.js', function (windowGeometry) {
-        var windowMaterial = new THREE.MeshPhongMaterial({
+    var portalMesh;
+    var portalTextureLoader = new THREE.TextureLoader();
+    var portalGeometry = new THREE.Geometry();
+    var portalLoader = new THREE.JSONLoader();
+    portalLoader.load('resources/obj/tram/stoneportal.js', function (portalGeometry) {
+        var portalMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
-            map: windowTextureLoader.load('resources/obj/tram/bricks.jpg')
+            map: portalTextureLoader.load('resources/obj/tram/bricks.jpg')
             //specularMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
             //normalMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
             //normalScale: new THREE.Vector2(0.75, 0.75),
             //shininess: 25
         });
-        windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
+        portalMesh = new THREE.Mesh(portalGeometry, portalMaterial);
         //tramMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
-        window.add(windowMesh);
-        windowMesh.scale.set(.4, .4, .4);
+        portal.add(portalMesh);
+        portalMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
