@@ -223,9 +223,25 @@ function loadTram() {
         //windowMesh.renderOrder = 2;
         //window.add(windowMesh);
         //windowMesh.scale.set(.4, .4, .4); 
+    });*/
+    windowLoader.load('resources/obj/tram/tram.js', function (windowGeometry) {
+        var windowMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: windowTextureLoader.load('resources/obj/tram/b_tramBase_Albedo.png')
+            //specularMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
+            //normalMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
+            //normalScale: new THREE.Vector2(0.75, 0.75),
+            //shininess: 25
+        });
+        windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
+        //tramMesh.renderOrder = 2;
+        // add the model to the tramBase object, not the scene
+        window.add(windowMesh);
+        windowMesh.scale.set(.4, .4, .4);
+       // mesh.rotation.x = THREE.Math.degToRad(90);
     });
-    /*
     
+    /*
     var frameMesh;
     var frameTextureLoader = new THREE.TextureLoader();
     var frameGeometry = new THREE.Geometry();
