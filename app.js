@@ -49,13 +49,13 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 // -- LOAD GEO TRAM --
 // load tram model
 var tramModel = new THREE.Object3D();
-var tramBase = new THREE.Object3D();
+//var tramBase = new THREE.Object3D();
 //var tramFrame = new THREE.Object3D();
 //var platform = new THREE.Object3D();
 //var invisibilityContainer = new THREE.Object3D();
 var window = new THREE.Object3D();
 loadTram();
-tramModel.add(tramBase);
+//tramModel.add(tramBase);
 //tramModel.add(tramFrame);
 //tramModel.add(platform);
 //tramModel.add(invisibilityContainer);
@@ -186,7 +186,7 @@ app.renderEvent.addEventListener(function () {
 });
 
 function loadTram() {
-    var tramMesh;
+   /* var tramMesh;
     var tramTextureLoader = new THREE.TextureLoader();
     var tramGeometry = new THREE.Geometry();
     
@@ -206,24 +206,12 @@ function loadTram() {
         tramBase.add(tramMesh);
         tramMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
-    });
+    });*/
     
     var windowMesh;
     var windowTextureLoader = new THREE.TextureLoader();
     var windowGeometry = new THREE.Geometry();
     var windowLoader = new THREE.JSONLoader();
-    /*windowLoader.load('resources/obj/tram/stoneportal.js', function (windowGeometry) {
-        var windowMaterial = new THREE.MeshPhongMaterial({
-            specular: 0x111111,
-            map: windowTextureLoader.load('resources/obj/tram/bricks.jpg'),
-            shininess: 2
-            //normalScale: new THREE.Vector2(0.75, 0.75),
-        });
-       // windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
-        //windowMesh.renderOrder = 2;
-        //window.add(windowMesh);
-        //windowMesh.scale.set(.4, .4, .4); 
-    });*/
     windowLoader.load('resources/obj/tram/stoneportal.js', function (windowGeometry) {
         var windowMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
