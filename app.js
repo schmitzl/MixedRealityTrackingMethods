@@ -212,17 +212,17 @@ function loadTram() {
     var windowTextureLoader = new THREE.TextureLoader();
     var windowGeometry = new THREE.Geometry();
     var windowLoader = THREE.JSONLoader();
-  /*  windowLoader.load('resources/obj/tram/stoneportal.js', function (windowGeometry) {
+    windowLoader.load('resources/obj/tram/stoneportal.js', function (windowGeometry) {
         var windowMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
             map: windowTextureLoader.load('resources/obj/tram/bricks.jpg'),
             shininess: 2
             //normalScale: new THREE.Vector2(0.75, 0.75),
         });
-        windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
+       // windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
         //windowMesh.renderOrder = 2;
-        window.add(windowMesh);
-        windowMesh.scale.set(.4, .4, .4);
+        //window.add(windowMesh);
+        //windowMesh.scale.set(.4, .4, .4);
     });
     /*
     
