@@ -59,7 +59,7 @@ tramModel.add(tramBase);
 tramModel.add(tramFrame);
 tramModel.add(platform);
 tramModel.add(invisibilityContainer);
-//tramModel.add(portal);
+tramModel.add(portal);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
