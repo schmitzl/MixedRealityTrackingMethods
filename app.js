@@ -54,12 +54,14 @@ var tramFrame = new THREE.Object3D();
 var platform = new THREE.Object3D();
 var invisibilityContainer = new THREE.Object3D();
 var portal = new THREE.Object3D();
+var canvas = new THREE.Object3D();
 loadTram();
 tramModel.add(tramBase);
 tramModel.add(tramFrame);
 tramModel.add(platform);
 tramModel.add(invisibilityContainer);
 tramModel.add(portal);
+tramModel.add(canvas);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
@@ -277,6 +279,24 @@ function loadTram() {
         invisibilityContainerMesh.renderOrder = 1;
         invisibilityContainer.add(invisibilityContainerMesh);
         invisibilityContainerMesh.scale.set(.4, .4, .4);
+    });
+    
+    var canvasMesh;
+    var canvasTextureLoader = new THREE.TextureLoader();
+    var canvasGeometry = new THREE.Geometry();
+    var canvasLoader = new THREE.JSONLoader();
+    canvasLoader.load('resources/obj/tram/canvas.js', function (canvasGeometry) {
+        var canvasMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: canvasTextureLoader.load('resources/obj/tram/bg.png')
+            //normalScale: new THREE.Vector2(0.75, 0.75),
+        });
+        canvasMesh = new THREE.Mesh(canvasGeometry, canvasMaterial);
+        canvasMesh.renderOrder = 2;
+        // add the model to the tramBase object, not the scene
+        canvas.add(canvasMesh);
+        canvasMesh.scale.set(.4, .4, .4);
+       // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
     
