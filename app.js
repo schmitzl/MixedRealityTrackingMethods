@@ -62,7 +62,7 @@ tramModel.add(tramFrame);
 tramModel.add(platform);
 tramModel.add(invisibilityContainer);
 tramModel.add(portal);
-tramModel.add(canvas);
+//tramModel.add(canvas);
 tramModel.add(sky);
 
 //tramModel.rotation.x = Math.PI / 2;
@@ -283,7 +283,7 @@ function loadTram() {
         invisibilityContainerMesh.scale.set(.4, .4, .4);
     });
     
-    var canvasMesh;
+    /*var canvasMesh;
     var canvasTextureLoader = new THREE.TextureLoader();
     var canvasGeometry = new THREE.Geometry();
     var canvasLoader = new THREE.JSONLoader();
@@ -299,14 +299,14 @@ function loadTram() {
         canvas.add(canvasMesh);
         canvasMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
-    });
+    });*/
     
     var skyMesh;
     var skyTextureLoader = new THREE.TextureLoader();
     var skyGeometry = new THREE.Geometry();
     var skyLoader = new THREE.JSONLoader();
-    skyLoader.load('resources/obj/tram/canvas.js', function (skyGeometry) {
-         var skyMaterial = new THREE.MeshPhongMaterial();
+    skyLoader.load('resources/obj/tram/sky.js', function (skyGeometry) {
+        var skyMaterial = new THREE.MeshPhongMaterial();
         skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
         skyMesh.material.color.set(0xCCF2FF);
         skyMesh.renderOrder = 2;
