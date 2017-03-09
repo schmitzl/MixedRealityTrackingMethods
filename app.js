@@ -67,7 +67,7 @@ tramModel.add(portal);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
-tramModel.translateX(2);
+tramModel.translateX(-1);
 
 // connect to Vuforia
 app.vuforia.isAvailable().then(function (available) {
