@@ -139,6 +139,10 @@ app.vuforia.isAvailable().then(function (available) {
 // rendered, before the renderEvent.  The state of your application
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
+    
+    tramBase.translateZ(-1);
+    tramFrame.translateZ(-1);
+    
     // get the position and orientation (the "pose") of the user
     // in the local coordinate frame.
     var userPose = app.context.getEntityPose(app.context.user);
