@@ -140,8 +140,8 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
-    tramBase.translateZ(-0.01);
-    tramFrame.translateZ(-0.01);
+    tramBase.translateZ(0.01);
+    tramFrame.translateZ(0.01);
     
     // get the position and orientation (the "pose") of the user
     // in the local coordinate frame.
