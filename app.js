@@ -143,6 +143,7 @@ app.context.updateEvent.addEventListener(function () {
     tramBase.translateZ(0.01);
     tramFrame.translateZ(0.01);
     
+    
     // get the position and orientation (the "pose") of the user
     // in the local coordinate frame.
     var userPose = app.context.getEntityPose(app.context.user);
@@ -182,8 +183,8 @@ app.renderEvent.addEventListener(function () {
         var _a = subview.viewport, x = _a.x, y = _a.y, width = _a.width, height = _a.height;
         renderer.setViewport(x, y, width, height);
         // set the webGL rendering parameters and render this view
-        renderer.setScissor(x, y, width, height);
-        renderer.setScissorTest(true);
+    //    renderer.setScissor(x, y, width, height);
+      //  renderer.setScissorTest(true);
         renderer.render(scene, camera);
         // adjust the hud, but only in mono
         if (monoMode) {
