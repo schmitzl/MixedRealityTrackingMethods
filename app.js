@@ -176,7 +176,7 @@ app.context.updateEvent.addEventListener(function () {
     } else {
         return;
     }
-    
+  /*  
     if(!tramInit) {
          var defaultFrame = app.context.getDefaultReferenceFrame();
         // First, clone the userPose postion, and add 10 to the X
@@ -199,7 +199,7 @@ app.context.updateEvent.addEventListener(function () {
     var tramPose = app.context.getEntityPose(tramGeoEntity);
     tramGeoObject.position.copy(tramPose.position);
     tramGeoObject.quaternion.copy(tramPose.orientation);
-    
+  */  
     
     // udpate our scene matrices
     scene.updateMatrixWorld(false);
@@ -217,7 +217,7 @@ app.renderEvent.addEventListener(function () {
     // both subviews if we are in stereo viewing mode
     var viewport = app.view.getViewport();
     renderer.setSize(viewport.width, viewport.height);
-    cssRenderer.setSize(viewport.width, viewport.height);
+   // cssRenderer.setSize(viewport.width, viewport.height);
     hud.setSize(viewport.width, viewport.height);
     // there is 1 subview in monocular mode, 2 in stereo mode    
     for (var _i = 0, subviews_1 = subviews; _i < subviews_1.length; _i++) {
@@ -232,9 +232,9 @@ app.renderEvent.addEventListener(function () {
         // set the viewport for this subview
         var _a = subview.viewport, x = _a.x, y = _a.y, width = _a.width, height = _a.height;
         
-        camera.fov = THREE.Math.radToDeg(frustum.fovy);
-        cssRenderer.setViewport(x, y, width, height, subview.index);
-        cssRenderer.render(scene, camera, subview.index);
+       // camera.fov = THREE.Math.radToDeg(frustum.fovy);
+        //cssRenderer.setViewport(x, y, width, height, subview.index);
+        //cssRenderer.render(scene, camera, subview.index);
         
         renderer.setViewport(x, y, width, height);
         // set the webGL rendering parameters and render this view
