@@ -52,7 +52,7 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 // -- LOAD TRAM --
 // load tram model
 
-var tramBaseGeo = new THREE.Mesh(=; 
+var tramBaseGeo = new THREE.Mesh(); 
 var tramFrameGeo = new THREE.Mesh();
 var tramModelGeo = new THREE.Object3D();
 
