@@ -52,7 +52,9 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 // -- LOAD TRAM --
 // load tram model
 
-var tramBaseGeo, tramFrameGeo, tramModelGeo;
+var tramBaseGeo; 
+var tramFrameGeo;
+var tramModelGeo = new THREE.Object3D();
 
 var tramModel = new THREE.Object3D();
 var tramBase = new THREE.Object3D();
@@ -71,8 +73,8 @@ tramModel.add(portal);
 //tramModel.add(canvas);
 //tramModel.add(sky);
 
-//tramModelGeo.add(tramModelGeo);
-//tramModelGeo.add(tramFrameGeo);
+tramModelGeo.add(tramModelGeo);
+tramModelGeo.add(tramFrameGeo);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
