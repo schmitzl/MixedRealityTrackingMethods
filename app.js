@@ -8,6 +8,9 @@ var ReferenceFrame = Argon.Cesium.ReferenceFrame;
 var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
+
+var tramInit = false;
+
 // set up Argon
 var app = Argon.init();
 // set up THREE.  
@@ -41,13 +44,16 @@ app.view.element.appendChild(hud.domElement);
 
 
 // let's show the rendering stats
-var stats = new Stats();
-hud.hudElements[0].appendChild(stats.dom);
+//var stats = new Stats();
+//hud.hudElements[0].appendChild(stats.dom);
 
 app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 
-// -- LOAD GEO TRAM --
+// -- LOAD TRAM --
 // load tram model
+
+var tramBaseGeo, tramFrameGeo, tramModelGeo;
+
 var tramModel = new THREE.Object3D();
 var tramBase = new THREE.Object3D();
 var tramFrame = new THREE.Object3D();
@@ -65,9 +71,25 @@ tramModel.add(portal);
 //tramModel.add(canvas);
 //tramModel.add(sky);
 
+tramModelGeo.add(tramModelGeo);
+tramModelGeo.add(tramFrameGeo);
+
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
 tramModel.translateX(-1);
+
+
+
+
+// create tram geo object
+var tramGeoObject = new THREE.Object3D();
+tramGeoObject.add(tramModelGeo);
+var tramGeoEntity = new Argon.Cesium.Entity({
+    name: "I am a tram",
+    position: Cartesian3.ZERO,
+    orientation: Cesium.Quaternion.IDENTITY
+});
+
 
 // connect to Vuforia
 app.vuforia.isAvailable().then(function (available) {
@@ -151,7 +173,34 @@ app.context.updateEvent.addEventListener(function () {
     // THREE user object to match it
     if (userPose.poseStatus & Argon.PoseStatus.KNOWN) {
         userLocation.position.copy(userPose.position);
+    } else {
+        return;
     }
+    
+    if(!tramInit) {
+         var defaultFrame = app.context.getDefaultReferenceFrame();
+        // First, clone the userPose postion, and add 10 to the X
+        var tramPos_1 = userPose.position.clone();
+        tramPos_1.x += 10;
+        // set the value of the tram Entity to this local position, by
+        // specifying the frame of reference to our local frame
+        tramGeoEntity.position.setValue(tramPos_1, defaultFrame);
+        // orient the tram according to the local world frame
+        tramGeoEntity.orientation.setValue(Cesium.Quaternion.IDENTITY);
+        // now, we want to move the tram's coordinates to the FIXED frame, so
+        // the tram doesn't move if the local coordinate system origin changes.
+        if (Argon.convertEntityReferenceFrame(tramGeoEntity, frame.time, ReferenceFrame.FIXED)) {
+            scene.add(tramGeoObject);
+            tramInit = true;
+        }
+    }
+    
+    // get the local coordinates of the local tram, and set the THREE object
+    var tramPose = app.context.getEntityPose(tramGeoEntity);
+    tramGeoObject.position.copy(tramPose.position);
+    tramGeoObject.quaternion.copy(tramPose.orientation);
+    
+    
     // udpate our scene matrices
     scene.updateMatrixWorld(false);
 });
@@ -168,6 +217,7 @@ app.renderEvent.addEventListener(function () {
     // both subviews if we are in stereo viewing mode
     var viewport = app.view.getViewport();
     renderer.setSize(viewport.width, viewport.height);
+    cssRenderer.setSize(viewport.width, viewport.height);
     hud.setSize(viewport.width, viewport.height);
     // there is 1 subview in monocular mode, 2 in stereo mode    
     for (var _i = 0, subviews_1 = subviews; _i < subviews_1.length; _i++) {
@@ -181,10 +231,15 @@ app.renderEvent.addEventListener(function () {
         camera.projectionMatrix.fromArray(subview.projectionMatrix);
         // set the viewport for this subview
         var _a = subview.viewport, x = _a.x, y = _a.y, width = _a.width, height = _a.height;
+        
+        camera.fov = THREE.Math.radToDeg(frustum.fovy);
+        cssRenderer.setViewport(x, y, width, height, subview.index);
+        cssRenderer.render(scene, camera, subview.index);
+        
         renderer.setViewport(x, y, width, height);
         // set the webGL rendering parameters and render this view
-    //    renderer.setScissor(x, y, width, height);
-      //  renderer.setScissorTest(true);
+        renderer.setScissor(x, y, width, height);
+        renderer.setScissorTest(true);
         renderer.render(scene, camera);
         // adjust the hud, but only in mono
         if (monoMode) {
@@ -217,6 +272,8 @@ function loadTram() {
         tramMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
+    
+    tramBaseGeo = tramMesh.clone();
     
     var portalMesh;
     var portalTextureLoader = new THREE.TextureLoader();
@@ -254,6 +311,8 @@ function loadTram() {
         frameMesh.scale.set(.4, .4, .4);
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
+    
+    tramFrameGeo = frameMesh.clone();
     
     
     var platformMesh;
