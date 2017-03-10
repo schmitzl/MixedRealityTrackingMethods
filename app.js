@@ -207,7 +207,7 @@ app.context.updateEvent.addEventListener(function () {
 // renderEvent is fired whenever argon wants the app to update its display
 app.renderEvent.addEventListener(function () {
     // update the rendering stats
-    stats.update();
+    //stats.update();
     // get the subviews for the current frame
     var subviews = app.view.getSubviews();
     // if we have 1 subView, we're in mono mode.  If more, stereo.
