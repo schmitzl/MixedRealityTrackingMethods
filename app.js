@@ -52,8 +52,8 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 // -- LOAD TRAM --
 // load tram model
 
-var tramBaseGeo; 
-var tramFrameGeo;
+var tramBaseGeo = new THREE.Mesh(=; 
+var tramFrameGeo = new THREE.Mesh();
 var tramModelGeo = new THREE.Object3D();
 
 var tramModel = new THREE.Object3D();
@@ -275,7 +275,7 @@ function loadTram() {
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
-   // tramBaseGeo = tramMesh.clone();
+    tramBaseGeo = tramMesh.clone();
     
     var portalMesh;
     var portalTextureLoader = new THREE.TextureLoader();
