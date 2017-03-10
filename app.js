@@ -84,13 +84,13 @@ tramModel.translateX(-1);
 
 
 // create tram geo object
-var tramGeoObject = new THREE.Object3D();
+/*var tramGeoObject = new THREE.Object3D();
 tramGeoObject.add(tramModelGeo);
 var tramGeoEntity = new Argon.Cesium.Entity({
     name: "I am a tram",
     position: Cartesian3.ZERO,
     orientation: Cesium.Quaternion.IDENTITY
-});
+});*/
 
 
 // connect to Vuforia
