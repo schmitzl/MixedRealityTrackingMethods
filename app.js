@@ -73,12 +73,12 @@ tramModel.add(portal);
 //tramModel.add(canvas);
 //tramModel.add(sky);
 
-tramModelGeo.add(tramModelGeo);
-tramModelGeo.add(tramFrameGeo);
+//tramModelGeo.add(tramModelGeo);
+//tramModelGeo.add(tramFrameGeo);
 
 //tramModel.rotation.x = Math.PI / 2;
-//tramModel.rotation.y = Math.PI;
-//tramModel.translateX(-1);
+tramModel.rotation.y = Math.PI;
+tramModel.translateX(-1);
 
 
 
