@@ -52,9 +52,9 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 // -- LOAD TRAM --
 // load tram model
 
-var tramBaseGeo = new THREE.Mesh(); 
-var tramFrameGeo = new THREE.Mesh();
-var tramModelGeo = new THREE.Object3D();
+//var tramBaseGeo = new THREE.Mesh(); 
+//var tramFrameGeo = new THREE.Mesh();
+//var tramModelGeo = new THREE.Object3D();
 
 var tramModel = new THREE.Object3D();
 var tramBase = new THREE.Object3D();
@@ -77,8 +77,8 @@ tramModelGeo.add(tramModelGeo);
 tramModelGeo.add(tramFrameGeo);
 
 //tramModel.rotation.x = Math.PI / 2;
-tramModel.rotation.y = Math.PI;
-tramModel.translateX(-1);
+//tramModel.rotation.y = Math.PI;
+//tramModel.translateX(-1);
 
 
 
@@ -275,7 +275,7 @@ function loadTram() {
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
-    tramBaseGeo = tramMesh.clone();
+   // tramBaseGeo = tramMesh.clone();
     
     var portalMesh;
     var portalTextureLoader = new THREE.TextureLoader();
