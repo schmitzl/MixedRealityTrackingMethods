@@ -71,8 +71,8 @@ tramModel.add(portal);
 //tramModel.add(canvas);
 //tramModel.add(sky);
 
-tramModelGeo.add(tramModelGeo);
-tramModelGeo.add(tramFrameGeo);
+//tramModelGeo.add(tramModelGeo);
+//tramModelGeo.add(tramFrameGeo);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramModel.rotation.y = Math.PI;
@@ -273,7 +273,7 @@ function loadTram() {
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
-    tramBaseGeo = tramMesh.clone();
+  //  tramBaseGeo = tramMesh.clone();
     
     var portalMesh;
     var portalTextureLoader = new THREE.TextureLoader();
@@ -312,7 +312,7 @@ function loadTram() {
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
-    tramFrameGeo = frameMesh.clone();
+   // tramFrameGeo = frameMesh.clone();
     
     
     var platformMesh;
