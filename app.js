@@ -139,7 +139,7 @@ app.vuforia.isAvailable().then(function (available) {
                         tramMarkerObject.add(tramScene);
                         tramScene.position.z = 0;
                     }
-                    else if (isUsingLocationTracking || (tramMarkerPose.poseStatus & Argon.PoseStatus.LOST)  {
+                    else if (isUsingLocationTracking || (tramMarkerPose.poseStatus & Argon.PoseStatus.LOST) )  {
                         tramScene.position.z = -0.50;
                         userLocation.add(tramScene);
                     }
