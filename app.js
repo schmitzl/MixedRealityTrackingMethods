@@ -252,28 +252,31 @@ app.renderEvent.addEventListener(function () {
 });
 
 function loadTram() {
-    var tramMesh;
-    var tramTextureLoader = new THREE.TextureLoader();
-    var tramGeometry = new THREE.Geometry();
     
-    var tramLoader = new THREE.JSONLoader();
-    tramLoader.load('resources/obj/tram/tram.js', function (tramGeometry) {
-        var tramMaterial = new THREE.MeshPhongMaterial({
-            specular: 0x111111,
-            map: tramTextureLoader.load('resources/obj/tram/b_tramBase_Albedo.png')
-            //specularMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
-            //normalMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
-            //normalScale: new THREE.Vector2(0.75, 0.75),
-            //shininess: 25
-        });
-        tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
-        //tramMesh.renderOrder = 2;
-        // add the model to the tramBase object, not the scene
-        tramBase.add(tramMesh);
-        tramMesh.renderOrder = 2;
-        tramMesh.scale.set(.4, .4, .4);
-       // mesh.rotation.x = THREE.Math.degToRad(90);
-    });
+    var tramMesh = loadObject('resources/obj/tram/tram.js', 2, 'resources/obj/tram/b_tramBase_Albedo.png');
+    tramBase.add(tramMesh);
+
+    
+//    var tramTextureLoader = new THREE.TextureLoader();
+//    var tramGeometry = new THREE.Geometry();
+//    
+//    var tramLoader = new THREE.JSONLoader();
+//    tramLoader.load('resources/obj/tram/tram.js', function (tramGeometry) {
+//        var tramMaterial = new THREE.MeshPhongMaterial({
+//            specular: 0x111111,
+//            map: tramTextureLoader.load('resources/obj/tram/b_tramBase_Albedo.png')
+//            //specularMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
+//            //normalMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
+//            //normalScale: new THREE.Vector2(0.75, 0.75),
+//            //shininess: 25
+//        });
+//        tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
+//        //tramMesh.renderOrder = 2;
+//        // add the model to the tramBase object, not the scene
+//        
+//        tramMesh.scale.set(.4, .4, .4);
+//       // mesh.rotation.x = THREE.Math.degToRad(90);
+//    });
     
    // tramBaseGeo = tramMesh.clone();
     
@@ -382,5 +385,26 @@ function loadTram() {
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
+}
+
+function loadObject(meshPath, renderingOrder, texturePath = null) {
+ 
+    var mesh;
+    var textureLoader = new THREE.TextureLoader();
+    var geometry = new THREE.Geometry();
     
+    var loader = new THREE.JSONLoader();
+    loader.load(meshPath, function (geometry) {
+        if(material) {
+            var material = new THREE.MeshPhongMaterial({
+                specular: 0x111111,
+                map: tramTextureLoader.load(texturePath)
+            });
+        }
+        mesh = new THREE.Mesh(geometry, material);
+        mesh.renderOrder = renderingOrder;       
+        mesh.renderOrder = 2;
+    });
+    
+    return mesh;
 }
