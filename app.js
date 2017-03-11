@@ -140,7 +140,8 @@ app.vuforia.isAvailable().then(function (available) {
                         tramScene.position.z = 0;
                     }
                     else if (isUsingLocationTracking || (tramMarkerPose.poseStatus & Argon.PoseStatus.LOST) )  {
-                        tramScene.position.z = -0.50;
+                        tramScene.position.z = -3;
+                        tramScene.scale.set(0.5,0.5,0.5);
                         userLocation.add(tramScene);
                     }
                 });
