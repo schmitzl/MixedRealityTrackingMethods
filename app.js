@@ -388,4 +388,5 @@ function loadTramScene() {
     tramScene.add(platform);
     tramScene.add(invisibilityContainer);
     tramScene.add(portal);
+    tramScene.add(sky);
 }
