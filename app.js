@@ -115,7 +115,7 @@ app.vuforia.isAvailable().then(function (available) {
                 // coordinate frame relative to the camera.  Because they are Cesium
                 // entities, we can ask for their pose in any coordinate frame we know
                 // about.
-                var tramMarkerEntity = app.context.subscribeToEntityById(trackables["markerTram"].id);
+                var tramMarkerEntity = app.context.subscribeToEntityById(trackables["markerTram2"].id);
                 // create a THREE object to put on the trackable
                 var tramMarkerObject = new THREE.Object3D();
                 scene.add(tramMarkerObject);
