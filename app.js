@@ -9,7 +9,7 @@ var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
 
-var tramInit = false;
+var isUsingLocationTracking = true;
 
 // set up Argon
 var app = Argon.init();
@@ -126,7 +126,7 @@ app.vuforia.isAvailable().then(function (available) {
                     var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
                     // if the pose is known the target is visible, so set the
                     // THREE object to the location and orientation
-                    if (tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
+                    if (!isUsingLocationTracking & tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                         tramMarkerObject.position.copy(tramMarkerPose.position);
                         tramMarkerObject.quaternion.copy(tramMarkerPose.orientation);
                     }
@@ -135,11 +135,11 @@ app.vuforia.isAvailable().then(function (available) {
                     // world to the target.
                     // when the target is first lost after being seen, the status 
                     // is LOST.  Here, we move the 3D text object back to the world
-                    if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
+                    if (!isUsingLocationTracking & tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
                         tramMarkerObject.add(tramScene);
                         tramScene.position.z = 0;
                     }
-                    else if (tramMarkerPose.poseStatus & Argon.PoseStatus.LOST) {
+                    else if (isUsingLocationTracking || (tramMarkerPose.poseStatus & Argon.PoseStatus.LOST)  {
                         tramScene.position.z = -0.50;
                         userLocation.add(tramScene);
                     }
