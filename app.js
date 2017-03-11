@@ -376,6 +376,7 @@ function loadTramScene() {
             //normalScale: new THREE.Vector2(0.75, 0.75),
         });
         skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
+        skyMesh.material.side = THREE.BackSide;
         skyMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         sky.add(skyMesh);
