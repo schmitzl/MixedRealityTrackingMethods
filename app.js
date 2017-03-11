@@ -126,7 +126,7 @@ app.vuforia.isAvailable().then(function (available) {
                     var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
                     // if the pose is known the target is visible, so set the
                     // THREE object to the location and orientation
-                    if (!isUsingLocationTracking & tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
+                    if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                         tramMarkerObject.position.copy(tramMarkerPose.position);
                         tramMarkerObject.quaternion.copy(tramMarkerPose.orientation);
                     }
@@ -135,7 +135,7 @@ app.vuforia.isAvailable().then(function (available) {
                     // world to the target.
                     // when the target is first lost after being seen, the status 
                     // is LOST.  Here, we move the 3D text object back to the world
-                    if (!isUsingLocationTracking & tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
+                    if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
                         tramMarkerObject.add(tramScene);
                         tramScene.position.z = 0;
                     }
