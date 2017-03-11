@@ -56,29 +56,16 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 //var tramFrameGeo = new THREE.Mesh();
 //var tramModelGeo = new THREE.Object3D();
 
-var tramModel = new THREE.Object3D();
-var tramBase = new THREE.Object3D();
-var tramFrame = new THREE.Object3D();
-var platform = new THREE.Object3D();
-var invisibilityContainer = new THREE.Object3D();
-var portal = new THREE.Object3D();
-var canvas = new THREE.Object3D();
-var sky = new THREE.Object3D();
-loadTram();
-tramModel.add(tramBase);
-tramModel.add(tramFrame);
-tramModel.add(platform);
-tramModel.add(invisibilityContainer);
-tramModel.add(portal);
+var tramScene = new THREE.Object3D();
+
+loadTramScene();
+
 //tramModel.add(canvas);
 //tramModel.add(sky);
 
-//tramModelGeo.add(tramModelGeo);
-//tramModelGeo.add(tramFrameGeo);
-
 //tramModel.rotation.x = Math.PI / 2;
-tramModel.rotation.y = Math.PI;
-tramModel.translateX(-1);
+tramScene.rotation.y = Math.PI;
+tramScene.translateX(-1);
 
 
 
@@ -141,12 +128,12 @@ app.vuforia.isAvailable().then(function (available) {
                     // when the target is first lost after being seen, the status 
                     // is LOST.  Here, we move the 3D text object back to the world
                     if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
-                        tramMarkerObject.add(tramModel);
-                        tramModel.position.z = 0;
+                        tramMarkerObject.add(tramScene);
+                        tramScene.position.z = 0;
                     }
                     else if (tramMarkerPose.poseStatus & Argon.PoseStatus.LOST) {
-                        tramModel.position.z = -0.50;
-                        userLocation.add(tramModel);
+                        tramScene.position.z = -0.50;
+                        userLocation.add(tramScene);
                     }
                 });
             })["catch"](function (err) {
@@ -251,32 +238,39 @@ app.renderEvent.addEventListener(function () {
     }
 });
 
-function loadTram() {
+function loadTramScene() {
     
-    var tramMesh = loadObject('resources/obj/tram/tram.js', 2, 'resources/obj/tram/b_tramBase_Albedo.png');
-    tramBase.add(tramMesh);
-
+    var tramBase = new THREE.Object3D();
+    var tramFrame = new THREE.Object3D();
+    var platform = new THREE.Object3D();
+    var invisibilityContainer = new THREE.Object3D();
+    var portal = new THREE.Object3D();
+    var canvas = new THREE.Object3D();
+    var sky = new THREE.Object3D();
     
-//    var tramTextureLoader = new THREE.TextureLoader();
-//    var tramGeometry = new THREE.Geometry();
-//    
-//    var tramLoader = new THREE.JSONLoader();
-//    tramLoader.load('resources/obj/tram/tram.js', function (tramGeometry) {
-//        var tramMaterial = new THREE.MeshPhongMaterial({
-//            specular: 0x111111,
-//            map: tramTextureLoader.load('resources/obj/tram/b_tramBase_Albedo.png')
-//            //specularMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
-//            //normalMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
-//            //normalScale: new THREE.Vector2(0.75, 0.75),
-//            //shininess: 25
-//        });
-//        tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
-//        //tramMesh.renderOrder = 2;
-//        // add the model to the tramBase object, not the scene
-//        
-//        tramMesh.scale.set(.4, .4, .4);
-//       // mesh.rotation.x = THREE.Math.degToRad(90);
-//    });
+    
+    var tramMesh;
+    var tramTextureLoader = new THREE.TextureLoader();
+    var tramGeometry = new THREE.Geometry();
+    
+    var tramLoader = new THREE.JSONLoader();
+    tramLoader.load('resources/obj/tram/tram.js', function (tramGeometry) {
+        var tramMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: tramTextureLoader.load('resources/obj/tram/b_tramBase_Albedo.png')
+            //specularMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Metallic.png'),
+            //normalMap: tramTextureLoader.load('resources/obj/tram/b_tramBase_Normal.png'),
+            //normalScale: new THREE.Vector2(0.75, 0.75),
+            //shininess: 25
+        });
+        tramMesh = new THREE.Mesh(tramGeometry, tramMaterial);
+        //tramMesh.renderOrder = 2;
+        // add the model to the tramBase object, not the scene
+        tramBase.add(tramMesh);
+        tramMesh.renderOrder = 2;
+        tramMesh.scale.set(.4, .4, .4);
+       // mesh.rotation.x = THREE.Math.degToRad(90);
+    });
     
    // tramBaseGeo = tramMesh.clone();
     
@@ -385,26 +379,9 @@ function loadTram() {
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
-}
-
-function loadObject(meshPath, renderingOrder, texturePath = null) {
- 
-    var mesh;
-    var textureLoader = new THREE.TextureLoader();
-    var geometry = new THREE.Geometry();
-    
-    var loader = new THREE.JSONLoader();
-    loader.load(meshPath, function (geometry) {
-        if(material) {
-            var material = new THREE.MeshPhongMaterial({
-                specular: 0x111111,
-                map: tramTextureLoader.load(texturePath)
-            });
-        }
-        mesh = new THREE.Mesh(geometry, material);
-        mesh.renderOrder = renderingOrder;       
-        mesh.renderOrder = 2;
-    });
-    
-    return mesh;
+    tramScene.add(tramBase);
+    tramScene.add(tramFrame);
+    tramScene.add(platform);
+    tramScene.add(invisibilityContainer);
+    tramScene.add(portal);
 }
