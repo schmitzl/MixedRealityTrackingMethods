@@ -372,7 +372,7 @@ function loadTramScene() {
     skyLoader.load('resources/obj/tram/SkyBox.js', function (skyGeometry) {
         var skyMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
-            map: skyTextureLoader.load('resources/obj/tram/BlueSky.png')
+            map: skyTextureLoader.load('resources/obj/tram/BlueSky.jpg')
             //normalScale: new THREE.Vector2(0.75, 0.75),
         });
         skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
