@@ -65,6 +65,7 @@ var invisibilityContainer = new THREE.Object3D();
 var portal = new THREE.Object3D();
 var canvas = new THREE.Object3D();
 var sky = new THREE.Object3D();
+var ground = new THREE.Object3D();
 
 loadTramScene();
 
@@ -384,10 +385,29 @@ function loadTramScene() {
        // mesh.rotation.x = THREE.Math.degToRad(90);
     });
     
+    var groundMesh;
+    var groundTextureLoader = new THREE.TextureLoader();
+    var groundGeometry = new THREE.Geometry();
+    var groundLoader = new THREE.JSONLoader();
+    groundLoader.load('resources/obj/tram/ground.js', function (groundGeometry) {
+        var groundMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: groundTextureLoader.load('resources/obj/tram/Ground_basecolor.png')
+            //normalScale: new THREE.Vector2(0.75, 0.75),
+        });
+        groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
+        groundMesh.renderOrder = 2;
+        // add the model to the tramBase object, not the scene
+        ground.add(groundMesh);
+        groundMesh.scale.set(.4, .4, .4);
+       // mesh.rotation.x = THREE.Math.degToRad(90);
+    });
+    
     tramScene.add(tramBase);
     tramScene.add(tramFrame);
     tramScene.add(platform);
     tramScene.add(invisibilityContainer);
     tramScene.add(portal);
     tramScene.add(sky);
+    tramScene.add(ground);
 }
