@@ -9,7 +9,7 @@ var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
 
-var isUsingLocationTracking = true;
+var isUsingLocationTracking = false;
 
 // set up Argon
 var app = Argon.init();
@@ -140,7 +140,7 @@ app.vuforia.isAvailable().then(function (available) {
                         tramScene.position.z = 0;
                     }
                     else if (isUsingLocationTracking || (tramMarkerPose.poseStatus & Argon.PoseStatus.LOST) )  {
-                        tramScene.position.z = -3;
+                        tramScene.position.z = -1;
                         tramScene.scale.set(0.5,0.5,0.5);
                         userLocation.add(tramScene);
                     }
@@ -369,10 +369,13 @@ function loadTramScene() {
     var skyTextureLoader = new THREE.TextureLoader();
     var skyGeometry = new THREE.Geometry();
     var skyLoader = new THREE.JSONLoader();
-    skyLoader.load('resources/obj/tram/sky.js', function (skyGeometry) {
-        var skyMaterial = new THREE.MeshPhongMaterial();
+    skyLoader.load('resources/obj/tram/SkyBox.js', function (skyGeometry) {
+        var skyMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: skyTextureLoader.load('resources/obj/tram/BlueSky.png')
+            //normalScale: new THREE.Vector2(0.75, 0.75),
+        });
         skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
-        skyMesh.material.color.set(0xCCF2FF);
         skyMesh.renderOrder = 2;
         // add the model to the tramBase object, not the scene
         sky.add(skyMesh);
