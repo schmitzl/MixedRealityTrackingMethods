@@ -58,6 +58,14 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 
 var tramScene = new THREE.Object3D();
 
+var tramBase = new THREE.Object3D();
+var tramFrame = new THREE.Object3D();
+var platform = new THREE.Object3D();
+var invisibilityContainer = new THREE.Object3D();
+var portal = new THREE.Object3D();
+var canvas = new THREE.Object3D();
+var sky = new THREE.Object3D();
+
 loadTramScene();
 
 //tramModel.add(canvas);
@@ -239,14 +247,6 @@ app.renderEvent.addEventListener(function () {
 });
 
 function loadTramScene() {
-    
-    var tramBase = new THREE.Object3D();
-    var tramFrame = new THREE.Object3D();
-    var platform = new THREE.Object3D();
-    var invisibilityContainer = new THREE.Object3D();
-    var portal = new THREE.Object3D();
-    var canvas = new THREE.Object3D();
-    var sky = new THREE.Object3D();
     
     
     var tramMesh;
