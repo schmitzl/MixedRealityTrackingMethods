@@ -140,6 +140,7 @@ app.vuforia.isAvailable().then(function (available) {
                     if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
                         tramMarkerObject.add(tramScene);
                         tramScene.position.z = 0;
+                        animationStep = 0;
                     }
                     else if (isUsingLocationTracking || (tramMarkerPose.poseStatus & Argon.PoseStatus.LOST) )  {
                         tramScene.position.z = -1;
@@ -162,21 +163,23 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
+    if(animationStep == 0 || animationStep > 1000) {
+        tramBase.position.z = 0;
+        tramFrame.position.z = 0;
+        animationStep = 0;
+    }
+    
     animationStep = animationStep + 1;
     
     tramBase.translateZ(0.01);
     tramFrame.translateZ(0.01);
     
-    if(animationStep > 300  && animationStep < 350) {
-        tramBase.rotation.y = tramBase.rotation.y - 0.00872665;
-        tramFrame.rotation.y = tramFrame.rotation.y - 0.00872665;
+    if(animationStep > 300  && animationStep < 400) {
+        tramBase.rotation.y = tramBase.rotation.y - 0.00472665;
+        tramFrame.rotation.y = tramFrame.rotation.y - 0.00472665;
     }
     
-    if(animationStep > 1000) {
-        tramBase.position.z = 0;
-        tramFrame.position.z = 0;
-        animationStep = 0;
-    }
+    
     
     
     // get the position and orientation (the "pose") of the user
