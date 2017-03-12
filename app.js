@@ -77,7 +77,7 @@ tramScene.rotation.y = Math.PI;
 tramScene.translateX(-1);
 
 
-
+var tramBasePosZ = tramBase.position.z;
 
 
 // create tram geo object
@@ -164,8 +164,8 @@ app.vuforia.isAvailable().then(function (available) {
 app.context.updateEvent.addEventListener(function () {
     
     if(animationStep == 0 || animationStep > 700) {
-        tramBase.position.z = 0;
-        tramFrame.position.z = 0;
+        tramBase.position.z = tramBasePosZ;
+        tramFrame.position.z = tramBasePosZ;
         animationStep = 0;
         tramBase.rotation.y = 0;
         tramFrame.rotation.y = 0;
