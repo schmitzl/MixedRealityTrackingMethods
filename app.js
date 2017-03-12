@@ -167,10 +167,15 @@ app.context.updateEvent.addEventListener(function () {
     tramBase.translateZ(0.01);
     tramFrame.translateZ(0.01);
     
+    if(animationStep > 300  && animationStep < 350) {
+        tramBase.rotation.y = tramBase.rotation.y + 0.5;
+        tramFrame.rotation.y = tramFrame.rotation.y + 0.5;
+    }
     
     if(animationStep > 1000) {
         tramBase.position.z = 0;
         tramFrame.position.z = 0;
+        animationStep = 0;
     }
     
     
