@@ -76,8 +76,8 @@ tramScene.rotation.y = Math.PI;
 tramScene.translateX(-1);
 
 var speed = 0.0;
-var tramStartPositionX = tramBase.position.x;
-var tramStartPositionZ = tramBase.position.z;
+//var tramStartPositionX = tramBase.position.x;
+//var tramStartPositionZ = tramBase.position.z;
 
 alert(tramStartPositionZ);
 
