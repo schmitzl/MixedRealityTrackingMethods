@@ -8,7 +8,7 @@ var ReferenceFrame = Argon.Cesium.ReferenceFrame;
 var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
-
+var animationStep = 0;
 var isUsingLocationTracking = false;
 
 // set up Argon
@@ -162,12 +162,16 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
+    animationStep = animationStep + 1;
     
     tramBase.translateZ(0.01);
     tramFrame.translateZ(0.01);
     
-    tramBase.translateX(-0.01);
-    tramFrame.translateX(-0.01);
+    
+    if(animationStep > 1000) {
+        tramBase.position.z = 0;
+        tramFrame.position.z = 0;
+    }
     
     
     // get the position and orientation (the "pose") of the user
