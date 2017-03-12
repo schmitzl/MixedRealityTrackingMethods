@@ -163,10 +163,12 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
-    if(animationStep == 0 || animationStep > 1000) {
+    if(animationStep == 0 || animationStep > 700) {
         tramBase.position.z = 0;
         tramFrame.position.z = 0;
         animationStep = 0;
+        tramBase.rotation.y = 0;
+        tramFrame.rotation.y = 0;
     }
     
     animationStep = animationStep + 1;
@@ -174,9 +176,9 @@ app.context.updateEvent.addEventListener(function () {
     tramBase.translateZ(0.01);
     tramFrame.translateZ(0.01);
     
-    if(animationStep > 300  && animationStep < 400) {
-        tramBase.rotation.y = tramBase.rotation.y - 0.00472665;
-        tramFrame.rotation.y = tramFrame.rotation.y - 0.00472665;
+    if(animationStep > 300  && animationStep < 500) {
+        tramBase.rotation.y = tramBase.rotation.y - 0.00272665;
+        tramFrame.rotation.y = tramFrame.rotation.y - 0.00272665;
     }
     
     
