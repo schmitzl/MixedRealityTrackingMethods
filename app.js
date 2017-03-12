@@ -167,8 +167,8 @@ app.context.updateEvent.addEventListener(function () {
     if(moveTram) {
         speed += 0.01;
 
-        tramBase.translateZ(speed);
-        tramFrame.translateZ(speed);
+      //  tramBase.translateZ(speed);
+    //    tramFrame.translateZ(speed);
 
         tramBase.translateX(0.01);
         tramFrame.translateX(0.01);
