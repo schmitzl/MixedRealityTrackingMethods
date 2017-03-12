@@ -79,7 +79,6 @@ var speed = 0.0;
 //var tramStartPositionX = tramBase.position.x;
 //var tramStartPositionZ = tramBase.position.z;
 
-alert(tramStartPositionZ);
 
 
 
