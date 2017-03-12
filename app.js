@@ -10,6 +10,7 @@ var CesiumMath = Argon.Cesium.CesiumMath;
 
 
 var isUsingLocationTracking = false;
+var moveTram = true;
 
 // set up Argon
 var app = Argon.init();
@@ -76,6 +77,11 @@ loadTramScene();
 tramScene.rotation.y = Math.PI;
 tramScene.translateX(-1);
 
+var speed = 0.0;
+var tramStartPositionX = tramBase.position.x;
+var tramStartPositionZ = tramBase.position.z;
+
+alert(tramStartPositionZ);
 
 
 
@@ -161,9 +167,15 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
-    tramBase.translateZ(0.01);
-    tramFrame.translateZ(0.01);
-    
+    if(moveTram) {
+        speed += 0.01;
+
+        tramBase.translateZ(speed);
+        tramFrame.translateZ(speed);
+
+        tramBase.translateX(0.01);
+        tramFrame.translateX(0.01);
+    }
     
     // get the position and orientation (the "pose") of the user
     // in the local coordinate frame.
