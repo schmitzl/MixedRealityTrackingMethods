@@ -10,7 +10,6 @@ var CesiumMath = Argon.Cesium.CesiumMath;
 
 
 var isUsingLocationTracking = false;
-var moveTram = true;
 
 // set up Argon
 var app = Argon.init();
@@ -64,20 +63,19 @@ var tramFrame = new THREE.Object3D();
 var platform = new THREE.Object3D();
 var invisibilityContainer = new THREE.Object3D();
 var portal = new THREE.Object3D();
+var canvas = new THREE.Object3D();
 var sky = new THREE.Object3D();
 var ground = new THREE.Object3D();
 
 loadTramScene();
 
-
+//tramModel.add(canvas);
+//tramModel.add(sky);
 
 //tramModel.rotation.x = Math.PI / 2;
 tramScene.rotation.y = Math.PI;
 tramScene.translateX(-1);
 
-var speed = 0.0;
-//var tramStartPositionX = tramBase.position.x;
-//var tramStartPositionZ = tramBase.position.z;
 
 
 
@@ -164,15 +162,10 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
-    if(moveTram) {
-        speed += 0.01;
-
-      //  tramBase.translateZ(speed);
-    //    tramFrame.translateZ(speed);
-
-        tramBase.translateX(0.01);
-        tramFrame.translateX(0.01);
-    }
+    
+    tramBase.translateZ(0.01);
+    tramFrame.translateZ(0.01);
+    
     
     // get the position and orientation (the "pose") of the user
     // in the local coordinate frame.
@@ -357,6 +350,23 @@ function loadTramScene() {
         invisibilityContainerMesh.scale.set(.4, .4, .4);
     });
     
+    /*var canvasMesh;
+    var canvasTextureLoader = new THREE.TextureLoader();
+    var canvasGeometry = new THREE.Geometry();
+    var canvasLoader = new THREE.JSONLoader();
+    canvasLoader.load('resources/obj/tram/canvas.js', function (canvasGeometry) {
+        var canvasMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: canvasTextureLoader.load('resources/obj/tram/bg.png')
+            //normalScale: new THREE.Vector2(0.75, 0.75),
+        });
+        canvasMesh = new THREE.Mesh(canvasGeometry, canvasMaterial);
+        canvasMesh.renderOrder = 2;
+        // add the model to the tramBase object, not the scene
+        canvas.add(canvasMesh);
+        canvasMesh.scale.set(.4, .4, .4);
+       // mesh.rotation.x = THREE.Math.degToRad(90);
+    });*/
     
     var skyMesh;
     var skyTextureLoader = new THREE.TextureLoader();
