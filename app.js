@@ -186,6 +186,10 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
+    graffitiTram.translateY(0.1);
+    graffitiTram.translateX(0.1);
+    
+    
     if(animationStep > 700) {
         tramBase.rotation.y = 0;
         tramFrame.rotation.y = 0;
