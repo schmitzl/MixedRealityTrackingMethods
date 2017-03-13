@@ -187,15 +187,15 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
-    graffitiTram.translateY(0.003);
+    graffitiTram.translateY(0.0035);
     graffitiTram.translateX(0.005);
     
-    if (graffitiStep > 300) {
+    if (graffitiStep > 500) {
         graffitiStep = 0;
         graffitiTram.position.x = 0;
         graffitiTram.position.y = 0;
-        graffitiTram.translateY(-300 * 0.003);
-        graffitiTram.translateX(-300 * 0.005);
+        graffitiTram.translateY(-500 * 0.0035);
+        graffitiTram.translateX(-500 * 0.005);
     }
     
     graffitiStep = graffitiStep + 1;
