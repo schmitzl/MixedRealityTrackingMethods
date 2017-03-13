@@ -21,6 +21,21 @@ scene.add(camera);
 scene.add(userLocation);
 scene.autoUpdate = false;
 
+
+
+
+/*var tramGeoObject = new THREE.Object3D();
+//tramGeoObject.add(tramModel);
+//tramGeoObject.add(frameModel);
+var tramGeoEntity = new Argon.Cesium.Entity({
+    name: "TramGeo",
+    position: Cartesian3.ZERO,
+    orientation: Cesium.Quaternion.IDENTITY
+});*/
+
+
+
+
 // add light to the scene
 scene.add(new THREE.AmbientLight(0x443333));
 var light = new THREE.DirectionalLight(0xffddcc, 1);
@@ -76,6 +91,13 @@ loadTramScene();
 tramScene.rotation.y = Math.PI;
 tramScene.translateX(-1);
 
+
+
+var graffitiTramScene = new THREE.Object3D();
+var graffitiTramBg = new THREE.Object3D();
+var graffitiTram = new THREE.Object3D();
+
+loadgraffitiScene();
 
 
 
@@ -162,7 +184,7 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
-    if(animationStep == 0 || animationStep > 700) {
+    if(animationStep > 700) {
         tramBase.rotation.y = 0;
         tramFrame.rotation.y = 0;
         tramBase.position.z = 0;
@@ -428,4 +450,40 @@ function loadTramScene() {
     tramScene.add(portal);
     tramScene.add(sky);
     tramScene.add(ground);
+}
+
+function loadgraffitiScene() {
+    
+    var graffitiTramScene = new THREE.Object3D();
+    var graffitiTramBg = new THREE.Object3D();
+    var graffitiTram = new THREE.Object3D();
+    
+    var graffitiBgMesh;
+    var graffitiBgTextureLoader = new THREE.TextureLoader();
+    var graffitiBgGeometry = new THREE.Geometry();
+    
+    var graffitiBgLoader = new THREE.JSONLoader();
+    graffitiBgLoader.load('resources/obj/tram/banksyTramBg.js', function (graffitiBgGeometry) {
+        var graffitiBgMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: graffitiBgTextureLoader.load('resources/obj/tram/banksyTrainBackground.png')
+          
+        });
+        graffitiBgMesh = new THREE.Mesh(graffitiBgGeometry, graffitiBgMaterial);
+        graffitiTramBg.add(graffitiBgMesh);
+    });
+  
+    var graffitiTramLoader = new THREE.JSONLoader();
+    graffitiTramLoader.load('resources/obj/tram/banksyTram.js', function (graffitiTramGeometry) {
+        var graffitiTramMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: graffitiTramTextureLoader.load('resources/obj/tram/banksyTrain.png')
+          
+        });
+        graffitiTramMesh = new THREE.Mesh(graffitiTramGeometry, graffitiTramMaterial);
+        graffitiTram.add(graffitiTramMesh);
+    });
+
+    graffitiTramScene.add(graffitiTramBg);
+    graffitiTramScene.add(graffitiTram);
 }
