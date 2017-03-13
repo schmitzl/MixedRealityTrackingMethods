@@ -9,6 +9,7 @@ var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
 var animationStep = 0;
+var graffitiStep = 0;
 var isUsingLocationTracking = false;
 
 // set up Argon
@@ -189,6 +190,15 @@ app.context.updateEvent.addEventListener(function () {
     graffitiTram.translateY(0.003);
     graffitiTram.translateX(0.005);
     
+    if (graffitiStep > 300) {
+        graffitiStep = 0;
+        graffitiTram.position.x = 0;
+        graffitiTram.position.y = 0;
+        graffitiTram.translateY(-300 * 0.003);
+        graffitiTram.translateX(-300 * 0.005);
+    }
+    
+    graffitiStep = graffitiStep + 1;
     
     if(animationStep > 700) {
         tramBase.rotation.y = 0;
@@ -202,6 +212,8 @@ app.context.updateEvent.addEventListener(function () {
     
     tramBase.translateZ(0.01);
     tramFrame.translateZ(0.01);
+    
+
     
     if(animationStep > 300  && animationStep < 500) {
         tramBase.rotation.y = tramBase.rotation.y - 0.00272665;
