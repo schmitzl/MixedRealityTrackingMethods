@@ -99,7 +99,7 @@ var graffitiTram = new THREE.Object3D();
 
 loadgraffitiScene();
 graffitiTramScene.scale.set(0.3,0.3,0.3);
-graffitiTramScene.translateZ(0.5);
+//graffitiTramScene.translateZ(0.5);
 
 
 // create tram geo object
@@ -467,6 +467,7 @@ function loadgraffitiScene() {
           
         });
         graffitiBgMesh = new THREE.Mesh(graffitiBgGeometry, graffitiBgMaterial);
+        graffitiBgMesh.renderOrder = 1;
         graffitiTramBg.add(graffitiBgMesh);
     });
     
@@ -484,6 +485,7 @@ function loadgraffitiScene() {
           
         });
         graffitiTramMesh = new THREE.Mesh(graffitiTramGeometry, graffitiTramMaterial);
+        graffitiTramMesh.renderOrder = 2;
         graffitiTram.add(graffitiTramMesh);
     });
 
