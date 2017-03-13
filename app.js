@@ -454,10 +454,6 @@ function loadTramScene() {
 
 function loadgraffitiScene() {
     
-    var graffitiTramScene = new THREE.Object3D();
-    var graffitiTramBg = new THREE.Object3D();
-    var graffitiTram = new THREE.Object3D();
-    
     var graffitiBgMesh;
     var graffitiBgTextureLoader = new THREE.TextureLoader();
     var graffitiBgGeometry = new THREE.Geometry();
@@ -472,6 +468,12 @@ function loadgraffitiScene() {
         graffitiBgMesh = new THREE.Mesh(graffitiBgGeometry, graffitiBgMaterial);
         graffitiTramBg.add(graffitiBgMesh);
     });
+    
+    
+    
+    var graffitiTramMesh;
+    var graffitiTramTextureLoader = new THREE.TextureLoader();
+    var graffitiTramGeometry = new THREE.Geometry();
   
     var graffitiTramLoader = new THREE.JSONLoader();
     graffitiTramLoader.load('resources/obj/tram/banksyTram.js', function (graffitiTramGeometry) {
