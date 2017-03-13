@@ -8,7 +8,7 @@ var ReferenceFrame = Argon.Cesium.ReferenceFrame;
 var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
-var animationStep = 650;
+var animationStep = 800;
 var graffitiStep = 0;
 var isUsingLocationTracking = false;
 
@@ -100,7 +100,7 @@ var graffitiTram = new THREE.Object3D();
 var graffitiMaskingPlane = new THREE.Object3D();
 
 loadgraffitiScene();
-graffitiTramScene.scale.set(0.25,0.3,0.25);
+graffitiTramScene.scale.set(0.25,0.35,0.25);
 //graffitiTramScene.translateZ(0.5);
 
 
@@ -213,12 +213,12 @@ app.context.updateEvent.addEventListener(function () {
     graffitiTram.translateY(0.003);
     graffitiTram.translateX(0.005);
     
-    if (graffitiStep > 1040) {
+    if (graffitiStep > 1060) {
         graffitiStep = 0;
         graffitiTram.position.x = 0;
         graffitiTram.position.y = 0;
-        graffitiTram.translateY(-540 * 0.003);
-        graffitiTram.translateX(-540 * 0.005);
+        graffitiTram.translateY(-560 * 0.003);
+        graffitiTram.translateX(-560 * 0.005);
     }
     
     graffitiStep = graffitiStep + 1;
