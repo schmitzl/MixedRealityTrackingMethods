@@ -186,8 +186,8 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
-    graffitiTram.translateY(0.1);
-    graffitiTram.translateX(0.1);
+    graffitiTram.translateY(0.01);
+    graffitiTram.translateX(0.01);
     
     
     if(animationStep > 700) {
