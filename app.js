@@ -99,7 +99,7 @@ var graffitiTram = new THREE.Object3D();
 
 loadgraffitiScene();
 graffitiTramScene.scale.set(0.3,0.3,0.3);
-
+graffitiTramScene.translateZ(0.5);
 
 
 // create tram geo object
