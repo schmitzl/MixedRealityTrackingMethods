@@ -8,7 +8,7 @@ var ReferenceFrame = Argon.Cesium.ReferenceFrame;
 var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
-var animationStep = 0;
+var animationStep = 520;
 var graffitiStep = 0;
 var isUsingLocationTracking = false;
 
@@ -210,14 +210,14 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
-    graffitiTram.translateY(0.0032);
+    graffitiTram.translateY(0.0031);
     graffitiTram.translateX(0.005);
     
-    if (graffitiStep > 520) {
+    if (graffitiStep > 1100) {
         graffitiStep = 0;
         graffitiTram.position.x = 0;
         graffitiTram.position.y = 0;
-        graffitiTram.translateY(-520 * 0.0032);
+        graffitiTram.translateY(-520 * 0.0031);
         graffitiTram.translateX(-520 * 0.005);
     }
     
