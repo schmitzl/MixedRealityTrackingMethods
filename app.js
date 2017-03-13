@@ -98,7 +98,7 @@ var graffitiTramBg = new THREE.Object3D();
 var graffitiTram = new THREE.Object3D();
 
 loadgraffitiScene();
-graffitiTramScene.scale.set(0.5,0.5,0.5);
+graffitiTramScene.scale.set(0.3,0.3,0.3);
 
 
 
