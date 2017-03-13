@@ -159,7 +159,7 @@ app.vuforia.isAvailable().then(function (available) {
                     // when the target is first lost after being seen, the status 
                     // is LOST.  Here, we move the 3D text object back to the world
                     if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
-                        tramMarkerObject.add(tramScene);
+                        tramMarkerObject.add(graffitiTramScene);
                         tramScene.position.z = 0;
                         animationStep = 0;
                     }
