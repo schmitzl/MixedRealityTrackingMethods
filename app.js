@@ -96,6 +96,7 @@ tramScene.translateX(-1);
 var graffitiTramScene = new THREE.Object3D();
 var graffitiTramBg = new THREE.Object3D();
 var graffitiTram = new THREE.Object3D();
+var graffitiMaskingPlane = new THREE.Object3D();
 
 loadgraffitiScene();
 graffitiTramScene.scale.set(0.3,0.3,0.3);
@@ -467,7 +468,7 @@ function loadgraffitiScene() {
           
         });
         graffitiBgMesh = new THREE.Mesh(graffitiBgGeometry, graffitiBgMaterial);
-        graffitiBgMesh.renderOrder = 1;
+        graffitiBgMesh.renderOrder = 2;
         graffitiTramBg.add(graffitiBgMesh);
     });
     
@@ -490,7 +491,21 @@ function loadgraffitiScene() {
         graffitiTramMesh.renderOrder = 2;
         graffitiTram.add(graffitiTramMesh);
     });
+    
+    var maskingPlaneMesh;
+    var maskingPlaneTextureLoader = new THREE.TextureLoader();
+    var maskingPlaneGeometry = new THREE.Geometry();
+    var maskingPlaneLoader = new THREE.JSONLoader();
+    maskingPlaneLoader.load('resources/obj/tram/maskingPlane.js', function(maskingPlaneGeometry){
+        var maskingPlaneMaterial = new THREE.MeshPhongMaterial();
+        maskingPlaneMesh = new THREE.Mesh(maskingPlaneGeometry, maskingPlaneMaterial);
+        maskingPlaneMesh.material.color.set(0x001100);
+        maskingPlaneMesh.material.colorWrite = false;
+        maskingPlaneMesh.renderOrder = 1;
+        graffitiMaskingPlane.add(maskingPlaneMesh);
+    });
 
     graffitiTramScene.add(graffitiTramBg);
     graffitiTramScene.add(graffitiTram);
+    graffitiTramScene.add(graffitiMaskingPlane);
 }
