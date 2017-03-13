@@ -482,7 +482,8 @@ function loadgraffitiScene() {
         var graffitiTramMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
             map: graffitiTramTextureLoader.load('resources/obj/tram/banksyTrain.png'),
-            transparent: true
+            transparent: true,
+            alphaTest: 1
           
         });
         graffitiTramMesh = new THREE.Mesh(graffitiTramGeometry, graffitiTramMaterial);
