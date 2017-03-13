@@ -141,15 +141,21 @@ app.vuforia.isAvailable().then(function (available) {
                 // entities, we can ask for their pose in any coordinate frame we know
                 // about.
                 var tramMarkerEntity = app.context.subscribeToEntityById(trackables["markerTram2"].id);
+                var graffitiMarkerEntity = app.context.subscribeToEntityById(trackables["markerTram"].id);
                 // create a THREE object to put on the trackable
                 var tramMarkerObject = new THREE.Object3D();
                 scene.add(tramMarkerObject);
+                
+                var graffitiMarkerObject = new THREE.Object3D();
+                scene.add(graffitiMarkerObject);
+                
                 // the updateEvent is called each time the 3D world should be
                 // rendered, before the renderEvent.  The state of your application
                 // should be updated here.
                 app.context.updateEvent.addEventListener(function () {
                     // get the pose (in local coordinates) of the tramMarker target
                     var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
+                    
                     // if the pose is known the target is visible, so set the
                     // THREE object to the location and orientation
                     if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -171,6 +177,23 @@ app.vuforia.isAvailable().then(function (available) {
                         tramScene.scale.set(0.5,0.5,0.5);
                         userLocation.add(tramScene);
                     }
+                    
+                    var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
+                    
+                    if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
+                        graffitiMarkerObject.position.copy(tramMarkerPose.position);
+                        graffitiMarkerObject.quaternion.copy(tramMarkerPose.orientation);
+                    }
+                    // when the target is first seen after not being seen, the 
+                    // status is FOUND.  Here, we move the 3D text object from the
+                    // world to the target.
+                    // when the target is first lost after being seen, the status 
+                    // is LOST.  Here, we move the 3D text object back to the world
+                    if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
+                        graffitiMarkerObject.add(graffitiTramScene);
+                        
+                    }
+                    
                 });
             })["catch"](function (err) {
                 console.log("could not load dataset: " + err.message);
@@ -187,15 +210,15 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
-    graffitiTram.translateY(0.0035);
+    graffitiTram.translateY(0.0032);
     graffitiTram.translateX(0.005);
     
-    if (graffitiStep > 500) {
+    if (graffitiStep > 520) {
         graffitiStep = 0;
         graffitiTram.position.x = 0;
         graffitiTram.position.y = 0;
-        graffitiTram.translateY(-500 * 0.0035);
-        graffitiTram.translateX(-500 * 0.005);
+        graffitiTram.translateY(-520 * 0.0032);
+        graffitiTram.translateX(-520 * 0.005);
     }
     
     graffitiStep = graffitiStep + 1;
