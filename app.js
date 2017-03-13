@@ -181,8 +181,8 @@ app.vuforia.isAvailable().then(function (available) {
                     var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
                     
                     if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
-                        graffitiMarkerObject.position.copy(tramMarkerPose.position);
-                        graffitiMarkerObject.quaternion.copy(tramMarkerPose.orientation);
+                        graffitiMarkerObject.position.copy(graffitiMarkerPose.position);
+                        graffitiMarkerObject.quaternion.copy(graffitiMarkerPose.orientation);
                     }
                     // when the target is first seen after not being seen, the 
                     // status is FOUND.  Here, we move the 3D text object from the
@@ -210,14 +210,14 @@ app.vuforia.isAvailable().then(function (available) {
 // should be updated here.
 app.context.updateEvent.addEventListener(function () {
     
-    graffitiTram.translateY(0.0031);
+    graffitiTram.translateY(0.003);
     graffitiTram.translateX(0.005);
     
-    if (graffitiStep > 1100) {
+    if (graffitiStep > 1040) {
         graffitiStep = 0;
         graffitiTram.position.x = 0;
         graffitiTram.position.y = 0;
-        graffitiTram.translateY(-520 * 0.0031);
+        graffitiTram.translateY(-520 * 0.003);
         graffitiTram.translateX(-520 * 0.005);
     }
     
