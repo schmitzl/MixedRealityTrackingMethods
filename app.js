@@ -8,8 +8,8 @@ var ReferenceFrame = Argon.Cesium.ReferenceFrame;
 var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
-var animationStep = 800;
-var graffitiStep = 0;
+var animationStep = 0;
+var graffitiStep = 520;
 var isUsingLocationTracking = false;
 
 // set up Argon
@@ -141,7 +141,7 @@ app.vuforia.isAvailable().then(function (available) {
                 // entities, we can ask for their pose in any coordinate frame we know
                 // about.
                 var tramMarkerEntity = app.context.subscribeToEntityById(trackables["markerTram2"].id);
-                var graffitiMarkerEntity = app.context.subscribeToEntityById(trackables["markerTram"].id);
+                var graffitiMarkerEntity = app.context.subscribeToEntityById(trackables["banksyBgMarker"].id);
                 // create a THREE object to put on the trackable
                 var tramMarkerObject = new THREE.Object3D();
                 scene.add(tramMarkerObject);
@@ -213,12 +213,12 @@ app.context.updateEvent.addEventListener(function () {
     graffitiTram.translateY(0.003);
     graffitiTram.translateX(0.005);
     
-    if (graffitiStep > 1060) {
+    if (graffitiStep > 1080) {
         graffitiStep = 0;
         graffitiTram.position.x = 0;
         graffitiTram.position.y = 0;
-        graffitiTram.translateY(-560 * 0.003);
-        graffitiTram.translateX(-560 * 0.005);
+        graffitiTram.translateY(-580 * 0.003);
+        graffitiTram.translateX(-580 * 0.005);
     }
     
     graffitiStep = graffitiStep + 1;
@@ -544,7 +544,7 @@ function loadgraffitiScene() {
         graffitiMaskingPlane.add(maskingPlaneMesh);
     });
 
-    graffitiTramScene.add(graffitiTramBg);
+  //  graffitiTramScene.add(graffitiTramBg);
     graffitiTramScene.add(graffitiTram);
     graffitiTramScene.add(graffitiMaskingPlane);
 }
