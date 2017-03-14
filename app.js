@@ -230,6 +230,8 @@ app.context.updateEvent.addEventListener(function () {
         tramFrame.translateZ(199*0.01);
         tramBase.position.z = 0;
         tramFrame.position.z = 0;
+        tramBase.rotation.y = 0;
+        tramFrame.rotation.y = 0: 
         animationStep = 0;
         
     }
