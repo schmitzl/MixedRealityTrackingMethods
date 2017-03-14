@@ -93,8 +93,8 @@ tramScene.rotation.y = Math.PI;
 tramScene.translateX(-1);
 tramBase.scale.set(1.6, 1.6, 1.6);
 tramFrame.scale.set(1.6, 1.6, 1.6);
-tramBase.position.x = 1;
-tramFrame.position.x = 1;
+tramBase.position.x = -0.3;
+tramFrame.position.x = -0.3;
 
 
 var graffitiTramScene = new THREE.Object3D();
