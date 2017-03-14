@@ -91,8 +91,8 @@ loadTramScene();
 //tramModel.rotation.x = Math.PI / 2;
 tramScene.rotation.y = Math.PI;
 tramScene.translateX(-1);
-tramBase.scale.set(1.2, 1.2, 1.2);
-tramFrame.scale.set(1.2, 1.2, 1.2);
+tramBase.scale.set(1.8, 1.8, 1.8);
+tramFrame.scale.set(1.8, 1.8, 1.8);
 
 
 
