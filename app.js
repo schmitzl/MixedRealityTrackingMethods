@@ -226,12 +226,12 @@ app.context.updateEvent.addEventListener(function () {
     if(animationStep > 700) {
         tramBase.rotation.y = 199 * 0.00272665;
         tramFrame.rotation.y = 199 * 0.00272665;
-        tramBase.translateZ(199*0.01);
-        tramFrame.translateZ(199*0.01);
         tramBase.position.z = 0;
         tramFrame.position.z = 0;
         tramBase.rotation.y = 0;
         tramFrame.rotation.y = 0;
+        tramBase.position.x = 0;
+        tramFrame.position.x = 0;
         animationStep = 0;
         
     }
