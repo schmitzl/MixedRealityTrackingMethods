@@ -82,6 +82,7 @@ var portal = new THREE.Object3D();
 var canvas = new THREE.Object3D();
 var sky = new THREE.Object3D();
 var ground = new THREE.Object3D();
+var stadshuset = new THREE.Object3D();
 
 loadTramScene();
 
@@ -101,7 +102,7 @@ var graffitiTramScene = new THREE.Object3D();
 var graffitiTramBg = new THREE.Object3D();
 var graffitiTram = new THREE.Object3D();
 var graffitiMaskingPlane = new THREE.Object3D();
-var stadshuset = new THREE.Object3D();
+
 
 loadgraffitiScene();
 graffitiTramScene.scale.set(0.25,0.35,0.25);
