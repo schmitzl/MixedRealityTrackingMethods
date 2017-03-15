@@ -92,10 +92,9 @@ loadTramScene();
 //tramModel.rotation.x = Math.PI / 2;
 tramScene.rotation.y = Math.PI;
 tramScene.translateX(-1);
-tramBase.scale.set(1.6, 1.6, 1.6);
-tramFrame.scale.set(1.6, 1.6, 1.6);
+/*mFrame.scale.set(1.6, 1.6, 1.6);
 tramBase.position.x = -0.3;
-tramFrame.position.x = -0.3;
+tramFrame.position.x = -0.3;*/
 
 
 var graffitiTramScene = new THREE.Object3D();
@@ -235,8 +234,8 @@ app.context.updateEvent.addEventListener(function () {
         tramFrame.position.z = 0;
         tramBase.rotation.y = 0;
         tramFrame.rotation.y = 0;
-        tramBase.position.x = -0.3;
-        tramFrame.position.x = -0.3;
+        tramBase.position.x = 0;
+        tramFrame.position.x = 0;
         animationStep = 0;
         
     }
@@ -502,7 +501,7 @@ function loadTramScene() {
     stadshusetLoader.load('resources/obj/tram/stadshuset.js', function (stadshusetGeometry) {
         var stadshusetMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
-            map: stadshusetTextureLoader.load('resources/obj/tram/stadshuset.png'),
+            map: stadshusetTextureLoader.load('resources/obj/tram/stadshuset.png')
            // transparent: true,
             //alphaTest: 1
           
