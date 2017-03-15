@@ -503,7 +503,7 @@ function loadTramScene() {
         var stadshusetMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
             map: stadshusetTextureLoader.load('resources/obj/tram/stadshuset.png'),
-            transparent: true,
+           // transparent: true,
             //alphaTest: 1
           
         });
