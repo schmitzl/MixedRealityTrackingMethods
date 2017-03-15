@@ -509,6 +509,7 @@ function loadTramScene() {
         stadshusetMesh = new THREE.Mesh(stadshusetGeometry, stadshusetMaterial);
         stadshusetMesh.renderOrder = 2;
         stadshuset.add(stadshusetMesh);
+        stadshusetMesh.scale.set(.4, .4, .4);
     });
     
     tramScene.add(tramBase);
