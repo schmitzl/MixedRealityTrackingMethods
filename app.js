@@ -516,9 +516,9 @@ function loadTramScene() {
     tramScene.add(tramFrame);
     tramScene.add(platform);
     tramScene.add(invisibilityContainer);
-    tramScene.add(portal);
+    tramScene.add(portal);*/
     tramScene.add(sky);
-    tramScene.add(ground);*/
+//    tramScene.add(ground);
     tramScene.add(stadshuset);
 }
 
