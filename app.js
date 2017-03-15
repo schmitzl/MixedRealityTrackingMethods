@@ -512,11 +512,11 @@ function loadTramScene() {
         stadshusetMesh.scale.set(.4, .4, .4);
     });
     
-   /* tramScene.add(tramBase);
-    tramScene.add(tramFrame);
+   // tramScene.add(tramBase);
+    //tramScene.add(tramFrame);
     tramScene.add(platform);
-    tramScene.add(invisibilityContainer);
-    tramScene.add(portal);*/
+    //tramScene.add(invisibilityContainer);
+    tramScene.add(portal);
     tramScene.add(sky);
     tramScene.add(ground);
     tramScene.add(stadshuset);
