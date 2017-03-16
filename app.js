@@ -65,7 +65,10 @@ var graffitiMaskingPlane = new THREE.Object3D();
 loadgraffitiScene();
 graffitiTramScene.scale.set(0.25,0.35,0.25);
 
-
+var tramObj = new THREE.Object3D();
+var tramObjBase = new THREE.Object3D();
+var tramObjFrame = new THREE.Object3D();
+loadTramObj();
 
 
 // connect to Vuforia
@@ -212,7 +215,6 @@ function loadTramScene() {
     var tramMesh;
     var tramTextureLoader = new THREE.TextureLoader();
     var tramGeometry = new THREE.Geometry();
-    
     var tramLoader = new THREE.JSONLoader();
     tramLoader.load('resources/obj/tram/tram.js', function (tramGeometry) {
         var tramMaterial = new THREE.MeshPhongMaterial({
@@ -244,9 +246,8 @@ function loadTramScene() {
     var frameMesh;
     var frameTextureLoader = new THREE.TextureLoader();
     var frameGeometry = new THREE.Geometry();
-
-     var frameLoader = new THREE.JSONLoader();
-     frameLoader.load('resources/obj/tram/frame.js', function (frameGeometry) {
+    var frameLoader = new THREE.JSONLoader();
+    frameLoader.load('resources/obj/tram/frame.js', function (frameGeometry) {
         var frameMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
         frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
         frameMesh.renderOrder = 2;
@@ -317,7 +318,6 @@ function loadTramScene() {
     var stadshusetMesh;
     var stadshusetTextureLoader = new THREE.TextureLoader();
     var stadshusetGeometry = new THREE.Geometry();
-  
     var stadshusetLoader = new THREE.JSONLoader();
     stadshusetLoader.load('resources/obj/tram/stadshuset.js', function (stadshusetGeometry) {
         var stadshusetMaterial = new THREE.MeshPhongMaterial({
@@ -346,7 +346,6 @@ function loadgraffitiScene() {
     var graffitiBgMesh;
     var graffitiBgTextureLoader = new THREE.TextureLoader();
     var graffitiBgGeometry = new THREE.Geometry();
-    
     var graffitiBgLoader = new THREE.JSONLoader();
     graffitiBgLoader.load('resources/obj/tram/banksyTramBg.js', function (graffitiBgGeometry) {
         var graffitiBgMaterial = new THREE.MeshPhongMaterial({
@@ -359,12 +358,9 @@ function loadgraffitiScene() {
         graffitiTramBg.add(graffitiBgMesh);
     });
     
-    
-    
     var graffitiTramMesh;
     var graffitiTramTextureLoader = new THREE.TextureLoader();
     var graffitiTramGeometry = new THREE.Geometry();
-  
     var graffitiTramLoader = new THREE.JSONLoader();
     graffitiTramLoader.load('resources/obj/tram/banksyTram.js', function (graffitiTramGeometry) {
         var graffitiTramMaterial = new THREE.MeshPhongMaterial({
@@ -393,4 +389,32 @@ function loadgraffitiScene() {
   //  graffitiTramScene.add(graffitiTramBg);
     graffitiTramScene.add(graffitiTram);
     graffitiTramScene.add(graffitiMaskingPlane);
+}
+
+function loadTramObj() {
+    var tramObjMesh;
+    var tramObjTextureLoader = new THREE.TextureLoader();
+    var tramObjGeometry = new THREE.Geometry();
+    var tramObjLoader = new THREE.JSONLoader();
+    tramObjLoader.load('resources/obj/tram/tram.js', function (tramObjGeometry) {
+        var tramObjMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: tramObjTextureLoader.load('resources/obj/tram/b_tramBase_Albedo.png')
+        });
+        tramObjMesh = new THREE.Mesh(tramObjGeometry, tramObjMaterial);
+        tramObjBase.add(tramObjMesh);
+    });
+    
+    var tramFrameMesh;
+    var tramFrameTextureLoader = new THREE.TextureLoader();
+    var tramFrameGeometry = new THREE.Geometry();
+    var tramFrameLoader = new THREE.JSONLoader();
+    tramFrameLoader.load('resources/obj/tram/frame.js', function (tramFrameGeometry) {
+        var tramFrameMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
+        tramFrameMesh = new THREE.Mesh(tramFrameGeometry, tramFrameMaterial);
+        tramObjFrame.add(tramFrameMesh);
+    });
+    
+    tramObj.add(tramObjFrame);
+    tramObj.add(tramObjBase);
 }
