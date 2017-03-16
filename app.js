@@ -71,8 +71,8 @@ var tramObjFrame = new THREE.Object3D();
 loadTramObj();
 tramObj.scale.set(8.0, 8.0, 8.0);
 tramObj.translateX(-16);
-tramObj.translateZ(-20);
-tramObj.translateY(-10);
+tramObj.translateZ(-40);
+tramObj.translateY(-20);
 
 // connect to Vuforia
 app.vuforia.isAvailable().then(function (available) {
