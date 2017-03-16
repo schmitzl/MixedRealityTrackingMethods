@@ -14,6 +14,7 @@ const GRAFFITI_NUM = 1;
 const PORTAL_NUM = 2;
 const TRAM_NUM = 3;
 
+var isInitialized = false;
 
 
 var animationStep = 0;
@@ -157,6 +158,11 @@ app.vuforia.isAvailable().then(function (available) {
 });
 
 app.context.updateEvent.addEventListener(function () {
+    
+    if(!isInitialized) {
+        var order = prompt("Enter order", "1,2,3").split(",");
+        isInitialized = true;
+    }
     
     graffitiTram.translateY(0.003);
     graffitiTram.translateX(0.005);
