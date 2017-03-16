@@ -15,7 +15,7 @@ const PORTAL_NUM = 2;
 const TRAM_NUM = 3;
 
 var isInitialized = false;
-
+var person = prompt("Please enter your name", "Harry Potter");
 
 var animationStep = 0;
 var graffitiStep = 520;
