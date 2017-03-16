@@ -8,14 +8,13 @@ var ReferenceFrame = Argon.Cesium.ReferenceFrame;
 var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
-var order;
+var order = [1,2,3];
 var i = 0;
 const GRAFFITI_NUM = 1;
 const PORTAL_NUM = 2;
 const TRAM_NUM = 3;
 
 var isInitialized = false;
-var person = prompt("Please enter your name", "Harry Potter");
 
 var animationStep = 0;
 var graffitiStep = 520;
@@ -112,7 +111,7 @@ app.vuforia.isAvailable().then(function (available) {
                 
                 app.context.updateEvent.addEventListener(function () {
                     
-                  //  if( PORTAL_NUM == parseInt(order[i])) {
+                    if( PORTAL_NUM == parseInt(order[i])) {
 
                         var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
                         if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -124,7 +123,7 @@ app.vuforia.isAvailable().then(function (available) {
                             tramScene.position.z = 0;
                             animationStep = 0;
                         }
-                    //} else if ( GRAFFITI_NUM == parseInt(order[i])) {
+                    } else if ( GRAFFITI_NUM == parseInt(order[i])) {
                         
                         var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
                         if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -134,7 +133,7 @@ app.vuforia.isAvailable().then(function (available) {
                         if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
                             graffitiMarkerObject.add(graffitiTramScene); 
                         }
-                    //} else if (TRAM_NUM == parseInt(order[i]) ) {
+                    } else if (TRAM_NUM == parseInt(order[i]) ) {
                         
                         var markerPose = app.context.getEntityPose(markerEntity);
                         if ( markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -144,7 +143,7 @@ app.vuforia.isAvailable().then(function (available) {
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
                             markerObject.add(tramObj); 
                         }
-                    //}
+                    }
                 });
             })["catch"](function (err) {
                 console.log("could not load dataset: " + err.message);
