@@ -70,7 +70,7 @@ var tramObjBase = new THREE.Object3D();
 var tramObjFrame = new THREE.Object3D();
 loadTramObj();
 tramObj.translateX(-210);
-tramObj.translateZ(-600);
+tramObj.translateZ(-2400);
 tramObj.translateY(-100);
 tramObj.scale.set(210.0, 210.0, 210.0);
 
