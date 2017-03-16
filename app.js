@@ -8,6 +8,14 @@ var ReferenceFrame = Argon.Cesium.ReferenceFrame;
 var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
+var order = prompt("Enter order", "1,2,3").split(",");
+var i = 0;
+const GRAFFITI_NUM = 1;
+const PORTAL_NUM = 2;
+const TRAM_NUM = 3;
+
+
+
 var animationStep = 0;
 var graffitiStep = 520;
 
@@ -69,10 +77,10 @@ var tramObj = new THREE.Object3D();
 var tramObjBase = new THREE.Object3D();
 var tramObjFrame = new THREE.Object3D();
 loadTramObj();
-tramObj.translateX(-210);
-tramObj.translateZ(-7200);
-tramObj.translateY(-100);
-tramObj.scale.set(630.0, 630.0, 630.0);
+tramObj.translateX(-5);
+tramObj.translateZ(-10);
+tramObj.translateY(-10);
+tramObj.scale.set(10.0, 10.0, 10.0);
 
 // connect to Vuforia
 app.vuforia.isAvailable().then(function (available) {
@@ -102,34 +110,39 @@ app.vuforia.isAvailable().then(function (available) {
                 scene.add(markerObject);
                 
                 app.context.updateEvent.addEventListener(function () {
+                    
+                    if( PORTAL_NUM == parseInt(order[i])) {
 
-                    var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
-                    if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
-                        tramMarkerObject.position.copy(tramMarkerPose.position);
-                        tramMarkerObject.quaternion.copy(tramMarkerPose.orientation);
-                    }
-                    if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
-                        tramMarkerObject.add(tramScene);
-                        tramScene.position.z = 0;
-                        animationStep = 0;
-                    }
-                    
-                    var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
-                    if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
-                        graffitiMarkerObject.position.copy(graffitiMarkerPose.position);
-                        graffitiMarkerObject.quaternion.copy(graffitiMarkerPose.orientation);
-                    }
-                    if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
-                        graffitiMarkerObject.add(graffitiTramScene); 
-                    }
-                    
-                    var markerPose = app.context.getEntityPose(markerEntity);
-                    if ( markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
-                        markerObject.position.copy(markerPose.position);
-                        markerObject.quaternion.copy(markerPose.orientation);
-                    }
-                    if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
-                        markerObject.add(tramObj); 
+                        var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
+                        if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
+                            tramMarkerObject.position.copy(tramMarkerPose.position);
+                            tramMarkerObject.quaternion.copy(tramMarkerPose.orientation);
+                        }
+                        if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
+                            tramMarkerObject.add(tramScene);
+                            tramScene.position.z = 0;
+                            animationStep = 0;
+                        }
+                    } else if ( GRAFFITI_NUM == parseInt(order[i])) {
+                        
+                        var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
+                        if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
+                            graffitiMarkerObject.position.copy(graffitiMarkerPose.position);
+                            graffitiMarkerObject.quaternion.copy(graffitiMarkerPose.orientation);
+                        }
+                        if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
+                            graffitiMarkerObject.add(graffitiTramScene); 
+                        }
+                    } else if (TRAM_NUM == parseInt(order[i]) ) {
+                        
+                        var markerPose = app.context.getEntityPose(markerEntity);
+                        if ( markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
+                            markerObject.position.copy(markerPose.position);
+                            markerObject.quaternion.copy(markerPose.orientation);
+                        }
+                        if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
+                            markerObject.add(tramObj); 
+                        }
                     }
                 });
             })["catch"](function (err) {
