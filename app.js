@@ -9,7 +9,7 @@ var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
 var order = [1,2,3];
-var i = 0;
+var orderCounter = 0;
 const GRAFFITI_NUM = 1;
 const PORTAL_NUM = 2;
 const TRAM_NUM = 3;
@@ -111,7 +111,7 @@ app.vuforia.isAvailable().then(function (available) {
                 
                 app.context.updateEvent.addEventListener(function () {
                     
-                    if( PORTAL_NUM == parseInt(order[i])) {
+                    if( PORTAL_NUM == order[orderCounter]) {
 
                         var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
                         if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -123,7 +123,7 @@ app.vuforia.isAvailable().then(function (available) {
                             tramScene.position.z = 0;
                             animationStep = 0;
                         }
-                    } else if ( GRAFFITI_NUM == parseInt(order[i])) {
+                    } else if ( GRAFFITI_NUM == order[orderCounter]) {
                         
                         var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
                         if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -133,7 +133,7 @@ app.vuforia.isAvailable().then(function (available) {
                         if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
                             graffitiMarkerObject.add(graffitiTramScene); 
                         }
-                    } else if (TRAM_NUM == parseInt(order[i]) ) {
+                    } else if (TRAM_NUM == order[orderCounter] ) {
                         
                         var markerPose = app.context.getEntityPose(markerEntity);
                         if ( markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
