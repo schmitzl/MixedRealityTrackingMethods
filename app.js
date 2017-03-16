@@ -8,6 +8,7 @@ var ReferenceFrame = Argon.Cesium.ReferenceFrame;
 var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
+var order = {1,2,3};
 var i = 0;
 const GRAFFITI_NUM = 1;
 const PORTAL_NUM = 2;
