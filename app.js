@@ -161,7 +161,6 @@ app.context.updateEvent.addEventListener(function () {
     
     if(!isInitialized) {
         order = prompt("Enter order", "1,2,3");
-        order = order.split(',');
         isInitialized = true;
     }
     
