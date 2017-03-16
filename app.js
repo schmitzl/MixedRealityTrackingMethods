@@ -112,7 +112,7 @@ app.vuforia.isAvailable().then(function (available) {
                 
                 app.context.updateEvent.addEventListener(function () {
                     
-                    if( PORTAL_NUM == parseInt(order[i])) {
+                  //  if( PORTAL_NUM == parseInt(order[i])) {
 
                         var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
                         if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -124,7 +124,7 @@ app.vuforia.isAvailable().then(function (available) {
                             tramScene.position.z = 0;
                             animationStep = 0;
                         }
-                    } else if ( GRAFFITI_NUM == parseInt(order[i])) {
+                    //} else if ( GRAFFITI_NUM == parseInt(order[i])) {
                         
                         var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
                         if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -134,7 +134,7 @@ app.vuforia.isAvailable().then(function (available) {
                         if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
                             graffitiMarkerObject.add(graffitiTramScene); 
                         }
-                    } else if (TRAM_NUM == parseInt(order[i]) ) {
+                    //} else if (TRAM_NUM == parseInt(order[i]) ) {
                         
                         var markerPose = app.context.getEntityPose(markerEntity);
                         if ( markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -144,7 +144,7 @@ app.vuforia.isAvailable().then(function (available) {
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
                             markerObject.add(tramObj); 
                         }
-                    }
+                    //}
                 });
             })["catch"](function (err) {
                 console.log("could not load dataset: " + err.message);
@@ -160,7 +160,8 @@ app.vuforia.isAvailable().then(function (available) {
 app.context.updateEvent.addEventListener(function () {
     
     if(!isInitialized) {
-        var order = prompt("Enter order", "1,2,3").split(",");
+        order = prompt("Enter order", "1,2,3");
+        order = order.split(',');
         isInitialized = true;
     }
     
