@@ -39,11 +39,19 @@
   opacity: 0;
 }
     
-.thumb {
+.preview {
     width: 200px;
     display: block;
     margin: auto;
-    opacity: 0.5;
+    margin-top: 80px;
+}
+    
+.thumb {
+    display: block;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
 }
 
 </style>
@@ -54,13 +62,17 @@
         
         <h2>find the marker</h2>
       </div>
-         <img class="thumb" src="resources/imgs/graffiti_thumb.jpg" />
+         <img class="preview" src="resources/imgs/graffiti_preview.jpg" />
+         <img class="thumb" src="resources/imgs/graffiti_thumb.jpg" onmousedown="showPreview()" onmouseup="hidePreview()">
       </div>
   </body>
 	<script>
-		function hideMe(elem) {
-		    elem.style.display = 'none';
+		function showPreview() {
+		    document.getElementsByClassName("preview").style.visibility = "hidden"; 
 		}	
+        function hidePreview() {
+            document.getElementsByClassName("preview").style.visibility = "visible"; 
+        }
 	</script>
       <script src="app.js"></script>
 </html>
