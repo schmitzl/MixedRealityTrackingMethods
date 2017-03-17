@@ -8,11 +8,11 @@ var ReferenceFrame = Argon.Cesium.ReferenceFrame;
 var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
 
-var GRAFFITI_NUM = 1;
-var PORTAL_NUM = 2;
-var TRAM_NUM = 3;
+var graffiti_step = 1;
+var portal_step = 2;
+var tram_step = 3;
 
-var order = 1;
+var step = 1;
 
 var isInitialized = false;
 
@@ -111,7 +111,7 @@ app.vuforia.isAvailable().then(function (available) {
                 
                 app.context.updateEvent.addEventListener(function () {
                     
-                   // if( PORTAL_NUM == order) {
+                    if( portal_step == step) {
 
                         var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
                         if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -123,7 +123,7 @@ app.vuforia.isAvailable().then(function (available) {
                             tramScene.position.z = 0;
                             animationStep = 0;
                         }
-                    //} else if ( GRAFFITI_NUM == order) {
+                    } else if ( graffiti_step == step) {
                         
                         var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
                         if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -133,7 +133,7 @@ app.vuforia.isAvailable().then(function (available) {
                         if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
                             graffitiMarkerObject.add(graffitiTramScene); 
                         }
-                    //} else if (TRAM_NUM == order ) {
+                    } else if (tram_step == step ) {
                         
                         var markerPose = app.context.getEntityPose(markerEntity);
                         if ( markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -143,7 +143,7 @@ app.vuforia.isAvailable().then(function (available) {
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
                             markerObject.add(tramObj); 
                         }
-                    //}
+                    }
                 });
             })["catch"](function (err) {
                 console.log("could not load dataset: " + err.message);
