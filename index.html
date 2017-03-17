@@ -41,7 +41,7 @@
     
 .preview {
     width: 200px;
-    display: block;
+    display: none;
     margin: auto;
     margin-top: 100px;
     visibility: hidden;
@@ -69,10 +69,10 @@
   </body>
 	<script>
 		function showPreview() {
-		    document.getElementsByClassName("preview").style.visibility = "hidden"; 
+		    document.getElementsByClassName("preview").style.display = 'block'; 
 		}	
         function hidePreview() {
-            document.getElementsByClassName("preview").style.visibility = "visible"; 
+            document.getElementsByClassName("preview").style.display = 'none'; 
         }
 	</script>
       <script src="app.js"></script>
