@@ -146,6 +146,8 @@ app.vuforia.isAvailable().then(function (available) {
                         }
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
                              step++;
+                             document.getElementById("thumb").src="";
+                             document.getElementById("heading").innerHTML="You found all markers";
                             markerObject.add(tramObj); 
                         }
                     } else {
