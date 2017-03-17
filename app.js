@@ -71,7 +71,7 @@ var graffitiTramBg = new THREE.Object3D();
 var graffitiTram = new THREE.Object3D();
 var graffitiMaskingPlane = new THREE.Object3D();
 loadgraffitiScene();
-graffitiTramScene.scale.set(0.25,0.35,0.25);
+graffitiTramScene.scale.set(0.25, 0.35, 0.25);
 
 var tramObj = new THREE.Object3D();
 var tramObjBase = new THREE.Object3D();
@@ -146,8 +146,8 @@ app.vuforia.isAvailable().then(function (available) {
                         }
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
                              step++;
-                             document.getElementById("thumb").src="";
-                             document.getElementById("heading").innerHTML="You found all markers";
+                             //document.getElementById("thumb").src="";
+                            // document.getElementById("heading").innerHTML="You found all markers";
                             markerObject.add(tramObj); 
                         }
                     } else {
