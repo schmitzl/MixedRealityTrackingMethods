@@ -10,9 +10,9 @@ var CesiumMath = Argon.Cesium.CesiumMath;
 
 var order = [1, 2, 3];
 var orderCounter = 0;
-const GRAFFITI_NUM = 1;
-const PORTAL_NUM = 2;
-const TRAM_NUM = 3;
+var GRAFFITI_NUM = 1;
+var PORTAL_NUM = 2;
+var TRAM_NUM = 3;
 
 var isInitialized = false;
 
