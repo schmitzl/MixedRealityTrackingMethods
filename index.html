@@ -66,26 +66,15 @@
   <body>
     <div id="argon">
       <div id="description">
-        <img class="thumb" src="resources/imgs/graffiti_thumb.jpg" unselectable="on" style="user-select:none;-moz-user-select:none;-webkit-user-select:none;" />
-        <h2>marker3</h2>
+        <img class="thumb" src="resources/imgs/graffiti_thumb.jpg" unselectable="on" style="user-select:none;-moz-user-select:none;-webkit-user-select:none;"  onmousedown="showPreview()" onmouseup="hidePreview()"/>
+        <h2>marker2</h2>
       </div>
          <img class="preview" src="resources/imgs/graffiti_preview.jpg" />
          
       </div>
   </body>
 	<script>
-      var thumb=null;
-      function window_onload() {
-        thumb=document.getElementById("thumb")
-        if(window.addEventListener) {
-           thumb.addEventListener('mousedown',showPreview,false);
-           thumb.addEventListener('mouseup',hidePreview,false);
-        }
-        else if(window.attachEvent) {
-           thumb.attachEvent('onmousedown',showPreview);
-           thumb.body.attachEvent('onmouseup',hidePreview);
-        }
-      }
+    
         
 		function showPreview() {
 		    document.getElementsByClassName("preview").style.display = 'block'; 
