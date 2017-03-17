@@ -158,10 +158,6 @@ app.vuforia.isAvailable().then(function (available) {
 
 app.context.updateEvent.addEventListener(function () {
     
-    if(!isInitialized) {
-        order = prompt("Enter order", "1,2,3");
-        isInitialized = true;
-    }
     
     graffitiTram.translateY(0.003);
     graffitiTram.translateX(0.005);
