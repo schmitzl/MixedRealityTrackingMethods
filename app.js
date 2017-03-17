@@ -111,7 +111,6 @@ app.vuforia.isAvailable().then(function (available) {
                 
                 app.context.updateEvent.addEventListener(function () {
                     
-                    if( portal_step == step) {
 
                         var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
                         if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -119,13 +118,11 @@ app.vuforia.isAvailable().then(function (available) {
                             tramMarkerObject.quaternion.copy(tramMarkerPose.orientation);
                         }
                         if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
-                            step++;
                             document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
                             tramMarkerObject.add(tramScene);
                             tramScene.position.z = 0;
                             animationStep = 0;
                         }
-                    } else if ( graffiti_step == step) {
                        
                         var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
                         if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -133,11 +130,10 @@ app.vuforia.isAvailable().then(function (available) {
                             graffitiMarkerObject.quaternion.copy(graffitiMarkerPose.orientation);
                         }
                         if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
-                            step++;
+                            graffiti_step = 0;
                             document.getElementById("thumb").src="resources/imgs/portal_thumb.jpg";
                             graffitiMarkerObject.add(graffitiTramScene); 
                         }
-                    } else if (tram_step == step ) {
                        
                         var markerPose = app.context.getEntityPose(markerEntity);
                         if ( markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -145,14 +141,11 @@ app.vuforia.isAvailable().then(function (available) {
                             markerObject.quaternion.copy(markerPose.orientation);
                         }
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
-                             step++;
                              //document.getElementById("thumb").src="";
                             // document.getElementById("heading").innerHTML="You found all markers";
                             markerObject.add(tramObj); 
                         }
-                    } else {
-                        
-                    }
+ 
                 });
             })["catch"](function (err) {
                 console.log("could not load dataset: " + err.message);
