@@ -119,30 +119,37 @@ app.vuforia.isAvailable().then(function (available) {
                             tramMarkerObject.quaternion.copy(tramMarkerPose.orientation);
                         }
                         if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
+                            step++;
+                            document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
                             tramMarkerObject.add(tramScene);
                             tramScene.position.z = 0;
                             animationStep = 0;
                         }
                     } else if ( graffiti_step == step) {
-                        
+                       
                         var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
                         if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                             graffitiMarkerObject.position.copy(graffitiMarkerPose.position);
                             graffitiMarkerObject.quaternion.copy(graffitiMarkerPose.orientation);
                         }
                         if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
+                            step++;
+                            document.getElementById("thumb").src="resources/imgs/portal_thumb.jpg";
                             graffitiMarkerObject.add(graffitiTramScene); 
                         }
                     } else if (tram_step == step ) {
-                        
+                       
                         var markerPose = app.context.getEntityPose(markerEntity);
                         if ( markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                             markerObject.position.copy(markerPose.position);
                             markerObject.quaternion.copy(markerPose.orientation);
                         }
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
+                             step++;
                             markerObject.add(tramObj); 
                         }
+                    } else {
+                        
                     }
                 });
             })["catch"](function (err) {
