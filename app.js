@@ -160,8 +160,12 @@ app.vuforia.isAvailable().then(function (available) {
 
 app.context.updateEvent.addEventListener(function () {
     
+    var graffitiStepVal = document.getElementById('textInput').value;
     
-    graffitiTram.translateY(0.003);
+    graffitiTram.position.y = graffitiStepVal * 0.003;
+    graffitiTram.position.x = graffitiStepVal * 0.005;
+    
+  /*  graffitiTram.translateY(0.003);
     graffitiTram.translateX(0.005);
     if (graffitiStep > 1080) {
         graffitiStep = 0;
@@ -190,7 +194,7 @@ app.context.updateEvent.addEventListener(function () {
     }
     
     tramBase.translateZ(0.01);
-    tramFrame.translateZ(0.01);
+    tramFrame.translateZ(0.01);*/
     
     var userPose = app.context.getEntityPose(app.context.user);
  
