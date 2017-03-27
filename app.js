@@ -160,10 +160,13 @@ app.vuforia.isAvailable().then(function (available) {
 
 app.context.updateEvent.addEventListener(function () {
     
-    var graffitiStepVal = document.getElementById('textInput').value;
-    
+    var graffitiStepVal = document.getElementById('graffiti-slider').value;
     graffitiTram.position.y = graffitiStepVal * 0.003;
     graffitiTram.position.x = graffitiStepVal * 0.005;
+    
+    var timePortalStepVal = document.getElementById('timeportal-slider').value;
+    tramBase.position.z = timePortalStepVal * 0.01;
+    tramFrame.position.z = timePortalStepVal * 0.01;
     
   /*  graffitiTram.translateY(0.003);
     graffitiTram.translateX(0.005);
