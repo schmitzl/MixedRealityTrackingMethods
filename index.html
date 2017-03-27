@@ -10,6 +10,9 @@
     <script src="resources/lib/three/modifiers/TessellateModifier.js"></script>
     <script src="resources/lib/argon.min.js"></script>
     <script src="resources/lib/argon.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     
   
     
@@ -53,6 +56,10 @@
     height: 50px;
     display: inline;
 }
+    
+#timeportal-slider {
+    display: none;
+}
 
 
 
@@ -64,7 +71,10 @@
         <img id="thumb" src="resources/imgs/graffiti_thumb.jpg"/>
         <h2 id="heading">find the marker2</h2>
       </div>
-         
+        <div id="slider">
+            <input type="range" id="graffiti-slider" value="0" min="0" max="100">
+            <input type="range" id="timeportal-slider" value="0" min="0" max="100">
+        </div>
       </div>
   </body>
 
