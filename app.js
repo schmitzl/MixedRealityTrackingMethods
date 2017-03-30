@@ -75,7 +75,7 @@ graffitiTramScene.scale.set(0.25, 0.35, 0.25);
 
 var schedule = new THREE.Object3D();
 var schedulePost = new THREE.Object3D();
-var scheduleBox = = new THREE.Object3D();
+var scheduleBox = new THREE.Object3D();
 loadSchedule();
 
 
