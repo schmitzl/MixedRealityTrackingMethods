@@ -73,14 +73,11 @@ var graffitiMaskingPlane = new THREE.Object3D();
 loadgraffitiScene();
 graffitiTramScene.scale.set(0.25, 0.35, 0.25);
 
-var tramObj = new THREE.Object3D();
-var tramObjBase = new THREE.Object3D();
-var tramObjFrame = new THREE.Object3D();
-loadTramObj();
-tramObj.translateX(-5);
-tramObj.translateZ(-10);
-tramObj.translateY(-10);
-tramObj.scale.set(10.0, 10.0, 10.0);
+var schedule = new THREE.Object3D();
+var schedulePost = new THREE.Object3D();
+var scheduleBox = = new THREE.Object3D();
+loadSchedule();
+
 
 // connect to Vuforia
 app.vuforia.isAvailable().then(function (available) {
@@ -143,7 +140,7 @@ app.vuforia.isAvailable().then(function (available) {
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
                              //document.getElementById("thumb").src="";
                             // document.getElementById("heading").innerHTML="You found all markers";
-                            markerObject.add(tramObj); 
+                            markerObject.add(schedule); 
                         }
  
                 });
@@ -443,4 +440,32 @@ function loadTramObj() {
     
     tramObj.add(tramObjFrame);
     tramObj.add(tramObjBase);
+}
+
+function loadSchedule() {
+    var schedulePostMesh;
+    var schedulePostTextureLoader = new THREE.TextureLoader();
+    var schedulePostGeometry = new THREE.Geometry();
+    var schedulePostLoader = new THREE.JSONLoader();
+    schedulePostLoader.load('resources/obj/tram/SchedulePost.js', function (schedulePostGeometry) {
+        var schedulePostMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: schedulePostTextureLoader.load('resources/obj/tram/post.png')
+        });
+        schedulePostMesh = new THREE.Mesh(schedulePostGeometry, schedulePostMaterial);
+        schedulePost.add(schedulePostMesh);
+    });
+    
+    var scheduleBoxMesh;
+    var scheduleBoxTextureLoader = new THREE.TextureLoader();
+    var scheduleBoxGeometry = new THREE.Geometry();
+    var scheduleBoxLoader = new THREE.JSONLoader();
+    scheduleBoxLoader.load('resources/obj/tram/frame.js', function (scheduleBoxGeometry) {
+        var scheduleBoxMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
+        scheduleBoxMesh = new THREE.Mesh(scheduleBoxGeometry, scheduleBoxMaterial);
+        scheduleBox.add(scheduleBoxMesh);
+    });
+    
+    schedule.add(schedulePost);
+    schedule.add(scheduleBox);
 }
