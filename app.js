@@ -165,6 +165,9 @@ app.context.updateEvent.addEventListener(function () {
     tramBase.position.z = timePortalStepVal * 0.01;
     tramFrame.position.z = timePortalStepVal * 0.01;
     
+    var rotationVal = document.getElementById('schedule-slider').value;
+    scheduleBox.rotation = rotationVal;
+    
   /*  graffitiTram.translateY(0.003);
     graffitiTram.translateX(0.005);
     if (graffitiStep > 1080) {
