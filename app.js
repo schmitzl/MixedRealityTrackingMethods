@@ -450,7 +450,7 @@ function loadSchedule() {
     schedulePostLoader.load('resources/obj/tram/SchedulePost.js', function (schedulePostGeometry) {
         var schedulePostMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
-            map: schedulePostTextureLoader.load('resources/obj/tram/post.png')
+            map: schedulePostTextureLoader.load('resources/obj/tram/post.jpg')
         });
         schedulePostMesh = new THREE.Mesh(schedulePostGeometry, schedulePostMaterial);
         schedulePost.add(schedulePostMesh);
@@ -460,8 +460,11 @@ function loadSchedule() {
     var scheduleBoxTextureLoader = new THREE.TextureLoader();
     var scheduleBoxGeometry = new THREE.Geometry();
     var scheduleBoxLoader = new THREE.JSONLoader();
-    scheduleBoxLoader.load('resources/obj/tram/frame.js', function (scheduleBoxGeometry) {
-        var scheduleBoxMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
+    scheduleBoxLoader.load('resources/obj/tram/ScheduleBox.js', function (scheduleBoxGeometry) {
+        var scheduleBoxMaterial = new THREE.MeshPhongMaterial({
+            specular: 0x111111,
+            map: scheduleBoxTextureLoader.load('resources/obj/tram/box.png')
+        });
         scheduleBoxMesh = new THREE.Mesh(scheduleBoxGeometry, scheduleBoxMaterial);
         scheduleBox.add(scheduleBoxMesh);
     });
