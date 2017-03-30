@@ -417,33 +417,6 @@ function loadgraffitiScene() {
     graffitiTramScene.add(graffitiMaskingPlane);
 }
 
-function loadTramObj() {
-    var tramObjMesh;
-    var tramObjTextureLoader = new THREE.TextureLoader();
-    var tramObjGeometry = new THREE.Geometry();
-    var tramObjLoader = new THREE.JSONLoader();
-    tramObjLoader.load('resources/obj/tram/tram.js', function (tramObjGeometry) {
-        var tramObjMaterial = new THREE.MeshPhongMaterial({
-            specular: 0x111111,
-            map: tramObjTextureLoader.load('resources/obj/tram/b_tramBase_Albedo.png')
-        });
-        tramObjMesh = new THREE.Mesh(tramObjGeometry, tramObjMaterial);
-        tramObjBase.add(tramObjMesh);
-    });
-    
-    var tramFrameMesh;
-    var tramFrameTextureLoader = new THREE.TextureLoader();
-    var tramFrameGeometry = new THREE.Geometry();
-    var tramFrameLoader = new THREE.JSONLoader();
-    tramFrameLoader.load('resources/obj/tram/frame.js', function (tramFrameGeometry) {
-        var tramFrameMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
-        tramFrameMesh = new THREE.Mesh(tramFrameGeometry, tramFrameMaterial);
-        tramObjFrame.add(tramFrameMesh);
-    });
-    
-    tramObj.add(tramObjFrame);
-    tramObj.add(tramObjBase);
-}
 
 function loadSchedule() {
     var schedulePostMesh;
