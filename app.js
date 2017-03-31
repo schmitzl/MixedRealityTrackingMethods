@@ -448,3 +448,7 @@ function loadSchedule() {
     schedule.add(schedulePost);
     schedule.add(scheduleBox);
 }
+
+function btnClicked() {
+    document.getElementById('doneBtn').style.display = 'none';
+}
