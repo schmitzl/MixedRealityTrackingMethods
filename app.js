@@ -122,6 +122,7 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("heading").innerHTML = "Move the tram";
                             document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
+                            document.getElementById("timeportal-slider").style.display = "inline";
                             tramMarkerObject.add(tramScene);
                             tramScene.position.z = 0;
                             animationStep = 0;
@@ -132,6 +133,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 isBtnClicked = false;
                                 isPlacing = false;
                                 document.getElementById("slider").style.display = "none";
+                                document.getElementById("timeportal-slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                             }
                         } else {
@@ -155,6 +157,7 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("heading").innerHTML = "Move the tram";
                             document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
+                            document.getElementById("graffiti-slider").style.display = "inline";
                             graffitiMarkerObject.add(graffitiTramScene); 
                         }
                     
@@ -163,6 +166,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 isBtnClicked = false;
                                 isPlacing = false;
                                 document.getElementById("slider").style.display = "none";
+                                document.getElementById("graffiti-slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                             }
                         } else {
@@ -184,9 +188,10 @@ app.vuforia.isAvailable().then(function (available) {
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
                              //document.getElementById("thumb").src="";
                             // document.getElementById("heading").innerHTML="You found all markers";
-                            document.getElementById("heading").innerHTML = "Rotate to schedule of line 2";
+                            document.getElementById("heading").innerHTML = "Rotate to Line 5|Schedule";
                             document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
+                            document.getElementById("schedule-slider").style.display = "inline";
                             markerObject.add(schedule); 
                         }
                     
