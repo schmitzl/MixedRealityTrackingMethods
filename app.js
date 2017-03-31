@@ -14,7 +14,10 @@ var tram_step = 3;
 
 var step = 1;
 
+var isPlacing = true;
+
 var isInitialized = false;
+var btnPressed = false;
 
 var animationStep = 0;
 var graffitiStep = 520;
@@ -108,6 +111,7 @@ app.vuforia.isAvailable().then(function (available) {
                 
                 app.context.updateEvent.addEventListener(function () {
                     
+                if(step == portal_step) {
 
                         var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
                         if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -115,23 +119,63 @@ app.vuforia.isAvailable().then(function (available) {
                             tramMarkerObject.quaternion.copy(tramMarkerPose.orientation);
                         }
                         if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
-                            document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
+                            document.getElementById("heading").innerHTML = "Move the tram";
+                            document.getElementById("doneBtn").style.display = "inline";
+                            document.getElementById("slider").style.display = "inline";
                             tramMarkerObject.add(tramScene);
                             tramScene.position.z = 0;
                             animationStep = 0;
                         }
-                       
+                    
+                        if(isPlacing) {
+                            if(btnClicked) {
+                                btnClicked = false;
+                                isPlacing = false;
+                                document.getElementById("slider").style.display = "none";
+                                document.getElementById("heading").innerHTML = "Take a screenshot";
+                            }
+                        } else {
+                            if(btnClicked) {
+                                btnClicked = false;
+                                step++;
+                                isPlacing = true;
+                                document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
+                                document.getElementById("doneBtn").style.display = "none";
+                                document.getElementById("heading").innerHTML = "Find the marker";
+                            }
+                        }
+                } else if (step == graffiti_step) {
+                    
                         var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
                         if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                             graffitiMarkerObject.position.copy(graffitiMarkerPose.position);
                             graffitiMarkerObject.quaternion.copy(graffitiMarkerPose.orientation);
                         }
                         if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
-                            graffiti_step = 0;
-                            document.getElementById("thumb").src="resources/imgs/portal_thumb.jpg";
+                            document.getElementById("heading").innerHTML = "Move the tram";
+                            document.getElementById("doneBtn").style.display = "inline";
+                            document.getElementById("slider").style.display = "inline";
                             graffitiMarkerObject.add(graffitiTramScene); 
                         }
-                       
+                    
+                        if(isPlacing) {
+                            if(btnClicked) {
+                                btnClicked = false;
+                                isPlacing = false;
+                                document.getElementById("slider").style.display = "none";
+                                document.getElementById("heading").innerHTML = "Take a screenshot";
+                            }
+                        } else {
+                            if(btnClicked) {
+                                btnClicked = false;
+                                step++;
+                                isPlacing = true;
+                                document.getElementById("thumb").src="resources/imgs/portal_thumb.jpg";
+                                document.getElementById("doneBtn").style.display = "none";
+                                document.getElementById("heading").innerHTML = "Find the marker";
+                            }
+                        }
+                } else {
                         var markerPose = app.context.getEntityPose(markerEntity);
                         if ( markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                             markerObject.position.copy(markerPose.position);
@@ -140,8 +184,29 @@ app.vuforia.isAvailable().then(function (available) {
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
                              //document.getElementById("thumb").src="";
                             // document.getElementById("heading").innerHTML="You found all markers";
+                            document.getElementById("heading").innerHTML = "Rotate to schedule of line 2";
+                            document.getElementById("doneBtn").style.display = "inline";
+                            document.getElementById("slider").style.display = "inline";
                             markerObject.add(schedule); 
                         }
+                    
+                        if(isPlacing) {
+                            if(btnClicked) {
+                                btnClicked = false;
+                                isPlacing = false;
+                                document.getElementById("slider").style.display = "none";
+                                document.getElementById("heading").innerHTML = "Take a screenshot";
+                            }
+                        } else {
+                            if(btnClicked) {
+                                btnClicked = false;
+                                step++;
+                                isPlacing = true;
+                                document.getElementById("doneBtn").style.display = "none";
+                                document.getElementById("heading").innerHTML = "You are finished";
+                            }
+                        }
+                }
  
                 });
             })["catch"](function (err) {
@@ -450,5 +515,5 @@ function loadSchedule() {
 }
 
 function btnClicked() {
-    document.getElementById('doneBtn').style.display = 'none';
+    btnPressed = true;
 }
