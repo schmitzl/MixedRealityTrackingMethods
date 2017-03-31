@@ -17,7 +17,7 @@ var step = 1;
 var isPlacing = true;
 
 var isInitialized = false;
-var btnPressed = false;
+var isBtnClicked = false;
 
 var animationStep = 0;
 var graffitiStep = 520;
@@ -128,15 +128,15 @@ app.vuforia.isAvailable().then(function (available) {
                         }
                     
                         if(isPlacing) {
-                            if(btnClicked) {
-                                btnClicked = false;
+                            if(isBtnClicked) {
+                                isBtnClicked = false;
                                 isPlacing = false;
                                 document.getElementById("slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                             }
                         } else {
-                            if(btnClicked) {
-                                btnClicked = false;
+                            if(isBtnClicked) {
+                                isBtnClicked = false;
                                 step++;
                                 isPlacing = true;
                                 document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
@@ -159,15 +159,15 @@ app.vuforia.isAvailable().then(function (available) {
                         }
                     
                         if(isPlacing) {
-                            if(btnClicked) {
-                                btnClicked = false;
+                            if(isBtnClicked) {
+                                isBtnClicked = false;
                                 isPlacing = false;
                                 document.getElementById("slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                             }
                         } else {
-                            if(btnClicked) {
-                                btnClicked = false;
+                            if(isBtnClicked) {
+                                isBtnClicked = false;
                                 step++;
                                 isPlacing = true;
                                 document.getElementById("thumb").src="resources/imgs/portal_thumb.jpg";
@@ -191,15 +191,15 @@ app.vuforia.isAvailable().then(function (available) {
                         }
                     
                         if(isPlacing) {
-                            if(btnClicked) {
-                                btnClicked = false;
+                            if(isBtnClicked) {
+                                isBtnClicked = false;
                                 isPlacing = false;
                                 document.getElementById("slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                             }
                         } else {
-                            if(btnClicked) {
-                                btnClicked = false;
+                            if(isBtnClicked) {
+                                isBtnClicked = false;
                                 step++;
                                 isPlacing = true;
                                 document.getElementById("doneBtn").style.display = "none";
@@ -515,5 +515,5 @@ function loadSchedule() {
 }
 
 function btnClicked() {
-    btnPressed = true;
+    isBtnClicked = true;
 }
