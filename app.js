@@ -192,7 +192,7 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("heading").innerHTML = "Rotate to Line 5|Schedule";
                             document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
-                            document.getElementById("schedule-slider").style.display = "inline";
+                            document.getElementById("schedule-slider").style.display = "absolute";
                             markerObject.add(schedule); 
                         }
                     
