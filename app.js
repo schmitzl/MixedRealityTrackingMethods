@@ -158,7 +158,7 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
                             document.getElementById("graffiti-slider").style.display = "inline";
-                            document.getElementById("instructions-graffiti-move").style.display = "inline";
+                            document.getElementById("instructions-graffiti-move").style.display = "absolute";
                             graffitiMarkerObject.add(graffitiTramScene); 
                         }
                     
@@ -192,7 +192,7 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("heading").innerHTML = "Rotate to Line 5|Schedule";
                             document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
-                            document.getElementById("schedule-slider").style.display = "absolute";
+                            document.getElementById("schedule-slider").style.display = "inline";
                             markerObject.add(schedule); 
                         }
                     
