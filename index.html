@@ -125,10 +125,16 @@ button {
             <input type="range" id="timeportal-slider" value="0" min="0" max="700">
             <input type="range" id="schedule-slider" value="0" min="0" max="360">
         </div>
-        <div class="instructions" id="instructions-graffiti-move"><img class="instructions-pic" src="resources/imgs/graffitiMove.png"/></div>
+        <div class="instructions" id="instructions-graffiti-move">
+            <img class="instructions-pic" src="resources/imgs/graffitiMove.png"/>
+            <button onclick="hideParent(this)">Got it!</button></div>
 
       </div>
   </body>
-
+    <script>
+		function hideParent(elem) {
+		    elem.parentElement.style.display = 'none';
+		}	
+	</script>
       <script src="app.js"></script>
 </html>
