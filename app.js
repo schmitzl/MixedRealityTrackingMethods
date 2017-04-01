@@ -120,9 +120,9 @@ app.vuforia.isAvailable().then(function (available) {
                         }
                         if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
                             document.getElementById("heading").innerHTML = "Move the tram";
-                            document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
                             document.getElementById("timeportal-slider").style.display = "inline";
+                            document.getElementById("instructions-timeportal-move").style.display = "inline";
                             tramMarkerObject.add(tramScene);
                             tramScene.position.z = 0;
                             animationStep = 0;
@@ -155,7 +155,6 @@ app.vuforia.isAvailable().then(function (available) {
                         }
                         if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
                             document.getElementById("heading").innerHTML = "Move the tram";
-                            document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
                             document.getElementById("graffiti-slider").style.display = "inline";
                             document.getElementById("instructions-graffiti-move").style.display = "inline";
@@ -193,6 +192,7 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
                             document.getElementById("schedule-slider").style.display = "inline";
+                            document.getElementById("instructions-schedule-move").style.display = "inline";
                             markerObject.add(schedule); 
                         }
                     

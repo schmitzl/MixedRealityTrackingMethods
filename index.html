@@ -130,7 +130,7 @@ button {
     <div id="argon">
       <div id="description">
         <img id="thumb" src="resources/imgs/graffiti_thumb.jpg"/>
-        <h2 id="heading">find the marker</h2>
+        <h2 id="heading">find the marker2</h2>
         <button id="doneBtn" onclick="btnClicked()">Done!</button> 
       </div>
         <div id="slider">
@@ -140,13 +140,23 @@ button {
         </div>
         <div class="instructions" id="instructions-graffiti-move">
             <img class="instructions-pic" src="resources/imgs/graffitiMove.png"/>
-            <button class="gotItBtn" onclick="hideParent(this)">Got it!</button></div>
-
+            <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
+        </div>
+        <div class="instructions" id="instructions-timeportal-move">
+            <img class="instructions-pic" src="resources/imgs/tramSceneMove1.png"/>
+            <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
+        </div>
+        <div class="instructions" id="instructions-schedule-move">
+            <img class="instructions-pic" src="resources/imgs/tramSceneMove2.png"/>
+            <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
+        </div>
       </div>
+      
   </body>
     <script>
 		function hideParent(elem) {
 		    elem.parentElement.style.display = 'none';
+            document.getElementById("doneBtn").style.display = "inline";
 		}	
 	</script>
       <script src="app.js"></script>
