@@ -141,6 +141,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 isBtnClicked = false;
                                 step++;
                                 isPlacing = true;
+                                scene.remove(tramMarkerObject);
                                 document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Find the marker";
@@ -174,6 +175,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 isBtnClicked = false;
                                 step++;
                                 isPlacing = true;
+                                scene.remove(graffitiMarkerObject);
                                 document.getElementById("thumb").src="resources/imgs/portal_thumb.jpg";
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Find the marker";
@@ -188,7 +190,7 @@ app.vuforia.isAvailable().then(function (available) {
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
                              //document.getElementById("thumb").src="";
                             // document.getElementById("heading").innerHTML="You found all markers";
-                            document.getElementById("heading").innerHTML = "Rotate to Line 5|Schedule";
+                            document.getElementById("heading").innerHTML = "Rotate to Line 5";
                             document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
                             document.getElementById("schedule-slider").style.display = "inline";
@@ -208,6 +210,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 isBtnClicked = false;
                                 step++;
                                 isPlacing = true;
+                                scene.remove(markerObject);
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "You are finished";
                             }
