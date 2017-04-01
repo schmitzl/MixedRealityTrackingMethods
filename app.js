@@ -123,7 +123,6 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
                             document.getElementById("timeportal-slider").style.display = "inline";
-                            document.getElementById("instructions-graffiti-move").style.display = "inline";
                             tramMarkerObject.add(tramScene);
                             tramScene.position.z = 0;
                             animationStep = 0;
@@ -159,6 +158,7 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("doneBtn").style.display = "inline";
                             document.getElementById("slider").style.display = "inline";
                             document.getElementById("graffiti-slider").style.display = "inline";
+                            document.getElementById("instructions-graffiti-move").style.display = "inline";
                             graffitiMarkerObject.add(graffitiTramScene); 
                         }
                     
