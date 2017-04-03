@@ -67,6 +67,9 @@ var box2Geometry = new THREE.BoxGeometry(1,3,1);
 var box2Material = new THREE.MeshBasicMaterial({color:0x00ff00});
 var box2 = new THREE.Mesh(box2Geometry,box2Material);
 
+scene.add(box1);
+scene.add(box2);
+
 // -- LOAD SCENES --
 var tramScene = new THREE.Object3D();
 var tramBase = new THREE.Object3D();
@@ -132,6 +135,7 @@ app.vuforia.isAvailable().then(function (available) {
                         if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                             tramMarkerObject.position.copy(tramMarkerPose.position);
                             tramMarkerObject.quaternion.copy(tramMarkerPose.orientation);
+                            box1.position.copy(tramMarkerPose.position);
                         }
                         if (tramMarkerPose.poseStatus & Argon.PoseStatus.FOUND) {
                             document.getElementById("heading").innerHTML = "Move the tram";
@@ -193,10 +197,9 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                                 document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
-                                scene.add(box1);
-                                scene.add(box2);
-                                box1.position.copy(graffitiTramScene.position);
-                                box2.position.copy(graffitiTramScene.position);
+                               
+                              //  box1.position.copy(graffitiTramScene.position);
+                                //box2.position.copy(graffitiTramScene.position);
                             }
                         } else if( isTakingScreenshot ){
                             if(isBtnClicked) {
