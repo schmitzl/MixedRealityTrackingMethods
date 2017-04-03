@@ -106,17 +106,6 @@ button {
     z-index: 1;
     left: 0;
     bottom: 0;
-}
-    
-#instructions-graffiti-move {
-    display: none;
-}
-    
-#instructions-schedule-move {
-    display: none;
-}
-    
-#instructions-timeportal-move {
     display: none;
 }
 
@@ -146,7 +135,21 @@ button {
             <input type="range" id="timeportal-slider" value="0" min="0" max="700">
             <input type="range" id="schedule-slider" value="0" min="0" max="360">
         </div>
-        <div class="instructions" id="instructions-graffiti-move">
+        
+         <div class="instructions" id="instructions-graffiti-find">
+            <img class="instructions-pic" src="resources/imgs/findGraffiti.png"/>
+            <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
+        </div>
+        <div class="instructions" id="instructions-timeportal-find">
+            <img class="instructions-pic" src="resources/imgs/findTimeportal.png"/>
+            <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
+        </div>
+        <div class="instructions" id="instructions-schedule-find">
+            <img class="instructions-pic" src="resources/imgs/findSchedule.png"/>
+            <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
+        </div>
+        
+         <div class="instructions" id="instructions-graffiti-move">
             <img class="instructions-pic" src="resources/imgs/graffitiMove.png"/>
             <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
         </div>
@@ -156,6 +159,19 @@ button {
         </div>
         <div class="instructions" id="instructions-schedule-move">
             <img class="instructions-pic" src="resources/imgs/tramSceneMove2.png"/>
+            <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
+        </div>
+        
+        <div class="instructions" id="instructions-graffiti-screenshot">
+            <img class="instructions-pic" src="resources/imgs/graffitiScreenshot.png"/>
+            <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
+        </div>
+        <div class="instructions" id="instructions-timeportal-screenshot">
+            <img class="instructions-pic" src="resources/imgs/tramSceneScreenshot.png"/>
+            <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
+        </div>
+        <div class="instructions" id="instructions-schedule-screenshot">
+            <img class="instructions-pic" src="resources/imgs/scheduleScreenshot.png"/>
             <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
         </div>
       </div>

@@ -30,6 +30,8 @@ scene.add(camera);
 scene.add(userLocation);
 scene.autoUpdate = false;
 
+document.getElementById("instructions-graffiti-find").style.display = "inline";
+
 
 // add light to the scene
 scene.add(new THREE.AmbientLight(0x443333));
@@ -135,6 +137,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("slider").style.display = "none";
                                 document.getElementById("timeportal-slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
+                                document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
                             }
                         } else {
                             if(isBtnClicked) {
@@ -145,9 +148,12 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Find the marker";
+                                 document.getElementById("instructions-schedule-find").style.display = "inline";
                             }
                         }
                 } else if (step == graffiti_step) {
+                    
+                       
                     
                         var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
                         if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -169,6 +175,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("slider").style.display = "none";
                                 document.getElementById("graffiti-slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
+                                document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
                             }
                         } else {
                             if(isBtnClicked) {
@@ -179,6 +186,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("thumb").src="resources/imgs/portal_thumb.jpg";
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Find the marker";
+                                document.getElementById("instructions-timeportal-find").style.display = "inline";
                             }
                         }
                 } else {
@@ -204,6 +212,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 isPlacing = false;
                                 document.getElementById("slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
+                                document.getElementById("instructions-schedule-screenshot").style.display = "inline";
                             }
                         } else {
                             if(isBtnClicked) {
