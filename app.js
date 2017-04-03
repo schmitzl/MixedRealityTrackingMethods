@@ -130,6 +130,8 @@ app.vuforia.isAvailable().then(function (available) {
                             tramMarkerObject.add(tramScene);
                             tramScene.position.z = 0;
                             animationStep = 0;
+                        } else {
+                            document.getElementById("doneBtn").style.display = "none";
                         }
                     
                         if(isPlacing) {
@@ -167,6 +169,8 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("graffiti-slider").style.display = "inline";
                             document.getElementById("instructions-graffiti-move").style.display = "inline";
                             graffitiMarkerObject.add(graffitiTramScene); 
+                        } else {
+                            document.getElementById("doneBtn").style.display = "none";
                         }
                     
                         if(isPlacing) {
@@ -207,6 +211,8 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("schedule-slider").style.display = "inline";
                             document.getElementById("instructions-schedule-move").style.display = "inline";
                             markerObject.add(schedule); 
+                        } else {
+                            document.getElementById("doneBtn").style.display = "none";
                         }
                     
                         if(isPlacing) {
