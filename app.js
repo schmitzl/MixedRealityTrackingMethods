@@ -193,13 +193,10 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                                 document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
-                                box1.position.copy(graffitiTramScene.position);
-                                box1.position.z = box1.position.z + 4;
-                                box2.position.copy(graffitiTramScene.position);
-                                box2.position.z = box2.position.z + 4;
-                                box2.position.y = 5;
                                 scene.add(box1);
                                 scene.add(box2);
+                                box1.position.copy(graffitiTramScene.position);
+                                box2.position.copy(graffitiTramScene.position);
                             }
                         } else if( isTakingScreenshot ){
                             if(isBtnClicked) {
