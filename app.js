@@ -14,10 +14,12 @@ var tram_step = 3;
 
 var step = 1;
 
-var isPlacing = true;
+var isPlacing = false;
+var isTakingScreenshot = false;
 
 var isInitialized = false;
 var isBtnClicked = false;
+
 
 var animationStep = 0;
 var graffitiStep = 520;
@@ -127,13 +129,11 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("slider").style.display = "inline";
                             document.getElementById("timeportal-slider").style.display = "inline";
                             document.getElementById("instructions-timeportal-move").style.display = "inline";
+                            isPlacing = true;
                             tramMarkerObject.add(tramScene);
                             tramScene.position.z = 0;
                             animationStep = 0;
-                        } else {
-                            document.getElementById("doneBtn").style.display = "none";
-                        }
-                    
+                        } 
                         if(isPlacing) {
                             if(isBtnClicked) {
                                 isBtnClicked = false;
@@ -142,17 +142,20 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("timeportal-slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                                 document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
+                                isTakingScreenshot = true;
                             }
-                        } else {
+                        } else if ( isTakingScreenshot ){
                             if(isBtnClicked) {
                                 isBtnClicked = false;
                                 step++;
-                                isPlacing = true;
                                 document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Find the marker";
-                                 document.getElementById("instructions-schedule-find").style.display = "inline";
+                                document.getElementById("instructions-schedule-find").style.display = "inline";
+                                isTakingScreenshot = false;
                             }
+                        } else {
+                            document.getElementById("doneBtn").style.display = "none";
                         }
                 } else if (step == graffiti_step) {
                     
@@ -168,10 +171,9 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("slider").style.display = "inline";
                             document.getElementById("graffiti-slider").style.display = "inline";
                             document.getElementById("instructions-graffiti-move").style.display = "inline";
+                            isPlacing = true;
                             graffitiMarkerObject.add(graffitiTramScene); 
-                        } else {
-                            document.getElementById("doneBtn").style.display = "none";
-                        }
+                        } 
                     
                         if(isPlacing) {
                             if(isBtnClicked) {
@@ -181,17 +183,20 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("graffiti-slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                                 document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
+                                isTakingScreenshot = true;
                             }
-                        } else {
+                        } else if( isTakingScreenshot ){
                             if(isBtnClicked) {
                                 isBtnClicked = false;
                                 step++;
-                                isPlacing = true;
                                 document.getElementById("thumb").src="resources/imgs/portal_thumb.jpg";
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Find the marker";
                                 document.getElementById("instructions-timeportal-find").style.display = "inline";
+                                isTakingScreenshot = false;
                             }
+                        } else {
+                            document.getElementById("doneBtn").style.display = "none";
                         }
                 } else {
                     
@@ -210,10 +215,9 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("slider").style.display = "inline";
                             document.getElementById("schedule-slider").style.display = "inline";
                             document.getElementById("instructions-schedule-move").style.display = "inline";
+                            isPlacing = true;
                             markerObject.add(schedule); 
-                        } else {
-                            document.getElementById("doneBtn").style.display = "none";
-                        }
+                        } 
                     
                         if(isPlacing) {
                             if(isBtnClicked) {
@@ -222,16 +226,19 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                                 document.getElementById("instructions-schedule-screenshot").style.display = "inline";
+                                isTakingScreenshot = true;
                             }
-                        } else {
+                        } else if(isTakingScreenshot) {
                             if(isBtnClicked) {
                                 isBtnClicked = false;
                                 step++;
-                                isPlacing = true;
                                 scene.remove(markerObject);
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "You are finished";
+                                isTakingScreenshot = false;
                             }
+                        } else {
+                            document.getElementById("doneBtn").style.display = "none";
                         }
                 }
  
