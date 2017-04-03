@@ -58,6 +58,15 @@ app.view.element.appendChild(hud.domElement);
 
 app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 
+// -- CREATE BOXES --
+var box1Geometry = new THREE.BoxGeometry(1,3,1);
+var box1Material = new THREE.MeshBasicMaterial({color:0x00ff00});
+var box1 = new THREE.Mesh(box1Geometry,box1Material);
+
+var box2Geometry = new THREE.BoxGeometry(1,3,1);
+var box2Material = new THREE.MeshBasicMaterial({color:0x00ff00});
+var box2 = new THREE.Mesh(box2Geometry,box2Material);
+
 // -- LOAD SCENES --
 var tramScene = new THREE.Object3D();
 var tramBase = new THREE.Object3D();
@@ -184,6 +193,13 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                                 document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
+                                box1.position.copy(graffitiTramScene.position);
+                                box1.position.z = box1.position.z + 4;
+                                box2.position.copy(graffitiTramScene.position);
+                                box2.position.z = box2.position.z + 4;
+                                box2.position.y = 5;
+                                scene.add(box1);
+                                scene.add(box2);
                             }
                         } else if( isTakingScreenshot ){
                             if(isBtnClicked) {
