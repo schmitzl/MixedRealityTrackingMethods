@@ -115,6 +115,8 @@ app.vuforia.isAvailable().then(function (available) {
                     
                 if(step == portal_step) {
 
+                        scene.remove(graffitiMarkerObject);
+                    
                         var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
                         if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                             tramMarkerObject.position.copy(tramMarkerPose.position);
@@ -144,7 +146,6 @@ app.vuforia.isAvailable().then(function (available) {
                                 isBtnClicked = false;
                                 step++;
                                 isPlacing = true;
-                                scene.remove(tramMarkerObject);
                                 document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Find the marker";
@@ -182,7 +183,6 @@ app.vuforia.isAvailable().then(function (available) {
                                 isBtnClicked = false;
                                 step++;
                                 isPlacing = true;
-                                scene.remove(graffitiMarkerObject);
                                 document.getElementById("thumb").src="resources/imgs/portal_thumb.jpg";
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Find the marker";
@@ -190,6 +190,9 @@ app.vuforia.isAvailable().then(function (available) {
                             }
                         }
                 } else {
+                    
+                        scene.remove(tramMarkerObject);    
+                    
                         var markerPose = app.context.getEntityPose(markerEntity);
                         if ( markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                             markerObject.position.copy(markerPose.position);
@@ -534,4 +537,5 @@ function loadSchedule() {
 
 function btnClicked() {
     isBtnClicked = true;
+    document.getElementById("doneBtn").style.display = "none";
 }
