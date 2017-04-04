@@ -158,8 +158,8 @@ app.vuforia.isAvailable().then(function (available) {
                                 isTakingScreenshot = true;
                                 scene.add(box1Obj);
                                 scene.add(box2Obj);
-                                box1Obj.position.copy(tramMarkerPos.position);
-                                box2Obj.position.copy(tramMarkerPos.position);
+                                box1Obj.position.copy(tramMarkerPose.position);
+                                box2Obj.position.copy(tramMarkerPose.position);
                             }
                         } else if ( isTakingScreenshot ){
                             if(isBtnClicked) {
