@@ -160,6 +160,8 @@ app.vuforia.isAvailable().then(function (available) {
                                 scene.add(box2Obj);
                                 box1Obj.position.copy(tramMarkerPose.position);
                                 box2Obj.position.copy(tramMarkerPose.position);
+                                box2Obj.position.z = box2Obj.position.z -0.5;
+                                box2Obj.position.x = box2Obj.position.x + 0.2;
                             }
                         } else if ( isTakingScreenshot ){
                             if(isBtnClicked) {
@@ -208,6 +210,8 @@ app.vuforia.isAvailable().then(function (available) {
                                 scene.add(box2Obj);
                                 box1Obj.position.copy(graffitiMarkerPose.position);
                                 box2Obj.position.copy(graffitiMarkerPose.position);
+                                box2Obj.position.z = box2Obj.position.z -0.5;
+                                box2Obj.position.x = box2Obj.position.x + 0.2;
                             }
                         } else if( isTakingScreenshot ){
                             if(isBtnClicked) {
@@ -258,6 +262,8 @@ app.vuforia.isAvailable().then(function (available) {
                                 scene.add(box2Obj);
                                 box1Obj.position.copy(markerPose.position);
                                 box2Obj.position.copy(markerPose.position);
+                                box2Obj.position.z = box2Obj.position.z -0.5;
+                                box2Obj.position.x = box2Obj.position.x + 0.2;
                             }
                         } else if(isTakingScreenshot) {
                             if(isBtnClicked) {
@@ -269,6 +275,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 isTakingScreenshot = false;
                                 scene.remove(box1Obj);
                                 scene.remove(box2Obj);
+                                
                             }
                         } else {
                             document.getElementById("doneBtn").style.display = "none";
