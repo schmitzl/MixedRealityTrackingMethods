@@ -160,8 +160,9 @@ app.vuforia.isAvailable().then(function (available) {
                                 scene.add(box2Obj);
                                 box1Obj.position.copy(tramMarkerPose.position);
                                 box2Obj.position.copy(tramMarkerPose.position);
-                                box2Obj.position.z = box2Obj.position.z -0.5;
-                                box2Obj.position.x = box2Obj.position.x + 0.2;
+                                 box2Obj.position.z = box2Obj.position.z -0.5;
+                                box2Obj.position.x = box2Obj.position.x -0.8;
+                                box2Obj.position.y = box2Obj.position.y + 0.5;
                             }
                         } else if ( isTakingScreenshot ){
                             if(isBtnClicked) {
@@ -211,7 +212,8 @@ app.vuforia.isAvailable().then(function (available) {
                                 box1Obj.position.copy(graffitiMarkerPose.position);
                                 box2Obj.position.copy(graffitiMarkerPose.position);
                                 box2Obj.position.z = box2Obj.position.z -0.5;
-                                box2Obj.position.x = box2Obj.position.x + 0.2;
+                                box2Obj.position.x = box2Obj.position.x -0.8;
+                                box2Obj.position.y = box2Obj.position.y + 0.5;
                             }
                         } else if( isTakingScreenshot ){
                             if(isBtnClicked) {
@@ -262,8 +264,9 @@ app.vuforia.isAvailable().then(function (available) {
                                 scene.add(box2Obj);
                                 box1Obj.position.copy(markerPose.position);
                                 box2Obj.position.copy(markerPose.position);
-                                box2Obj.position.z = box2Obj.position.z -0.5;
-                                box2Obj.position.x = box2Obj.position.x + 0.2;
+                                 box2Obj.position.z = box2Obj.position.z -0.5;
+                                box2Obj.position.x = box2Obj.position.x -0.8;
+                                box2Obj.position.y = box2Obj.position.y + 0.5;
                             }
                         } else if(isTakingScreenshot) {
                             if(isBtnClicked) {
