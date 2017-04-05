@@ -156,7 +156,43 @@ app.vuforia.isAvailable().then(function (available) {
                             tramScene.position.z = 0;
                             document.getElementById("thumb").src = "resources/imgs/moveThumb.jpg";
                         }
-
+                        if (isPlacing) {
+                            if (isBtnClicked) {
+                                isBtnClicked = false;
+                                isPlacing = false;
+                                document.getElementById("slider").style.display = "none";
+                                document.getElementById("timeportal-slider").style.display = "none";
+                                document.getElementById("heading").innerHTML = "Take a screenshot";
+                                document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
+                                isTakingScreenshot = true;
+                                scene.add(box1Obj);
+                                scene.add(box2Obj);
+                                box1Obj.position.copy(tramMarkerPose.position);
+                                box2Obj.position.copy(tramMarkerPose.position);
+                                box2Obj.position.z = box2Obj.position.z - 0.5;
+                                box2Obj.position.x = box2Obj.position.x + 1.5;
+                                box2Obj.position.y = box2Obj.position.y + 0.5;
+                                isRecordingPose = true;
+                            }
+                        } else if (isTakingScreenshot) {
+                            if (isBtnClicked) {
+                                isRecordingPose = false;
+                                sendData(posData);
+                                posData = "";
+                                isBtnClicked = false;
+                                step++;
+                                document.getElementById("thumb").src = "resources/imgs/tram_thumb.jpg";
+                                document.getElementById("doneBtn").style.display = "none";
+                                document.getElementById("heading").innerHTML = "Find the marker";
+                                document.getElementById("instructions-schedule-find").style.display = "inline";
+                                isTakingScreenshot = false;
+                                scene.remove(box1Obj);
+                                scene.remove(box2Obj);
+                            }
+                        } else {
+                            document.getElementById("doneBtn").style.display = "none";
+                        }
+                        
                     } else if (step == graffiti_step) {
 
 
@@ -175,7 +211,42 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("thumb").src = "resources/imgs/moveGraffitiThumb.png";
                         }
 
-
+                        if (isPlacing) {
+                            if (isBtnClicked) {
+                                isBtnClicked = false;
+                                isPlacing = false;
+                                document.getElementById("slider").style.display = "none";
+                                document.getElementById("graffiti-slider").style.display = "none";
+                                document.getElementById("heading").innerHTML = "Take a screenshot";
+                                document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
+                                isTakingScreenshot = true;
+                                scene.add(box1Obj);
+                                scene.add(box2Obj);
+                                box1Obj.position.copy(graffitiMarkerPose.position);
+                                box2Obj.position.copy(graffitiMarkerPose.position);
+                                box2Obj.position.z = box2Obj.position.z - 0.5;
+                                box2Obj.position.x = box2Obj.position.x + 1.5;
+                                box2Obj.position.y = box2Obj.position.y + 0.5;
+                                isRecordingPose = true;
+                            }
+                        } else if (isTakingScreenshot) {
+                            if (isBtnClicked) {
+                                isBtnClicked = false;
+                                step++;
+                                document.getElementById("thumb").src = "resources/imgs/portal_thumb.jpg";
+                                document.getElementById("doneBtn").style.display = "none";
+                                document.getElementById("heading").innerHTML = "Find the marker";
+                                document.getElementById("instructions-timeportal-find").style.display = "inline";
+                                isTakingScreenshot = false;
+                                scene.remove(box1Obj);
+                                scene.remove(box2Obj);
+                                isRecordingPose = false;
+                                sendData(posData);
+                                posData = "";
+                            }
+                        } else {
+                            document.getElementById("doneBtn").style.display = "none";
+                        }
                     } else {
 
                         scene.remove(tramMarkerObject);
@@ -198,7 +269,40 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("thumb").src = "resources/imgs/moveScheduleThumb.jpg";
                         }
 
-
+                        if (isPlacing) {
+                            if (isBtnClicked) {
+                                isBtnClicked = false;
+                                isPlacing = false;
+                                document.getElementById("slider").style.display = "none";
+                                document.getElementById("heading").innerHTML = "Take a screenshot";
+                                document.getElementById("instructions-schedule-screenshot").style.display = "inline";
+                                isTakingScreenshot = true;
+                                scene.add(box1Obj);
+                                scene.add(box2Obj);
+                                box1Obj.position.copy(markerPose.position);
+                                box2Obj.position.copy(markerPose.position);
+                                box2Obj.position.z = box2Obj.position.z - 0.5;
+                                box2Obj.position.x = box2Obj.position.x + 1.5;
+                                box2Obj.position.y = box2Obj.position.y + 0.5;
+                                isRecordingPose = true;
+                            }
+                        } else if (isTakingScreenshot) {
+                            if (isBtnClicked) {
+                                isBtnClicked = false;
+                                step++;
+                                scene.remove(markerObject);
+                                document.getElementById("doneBtn").style.display = "none";
+                                document.getElementById("heading").innerHTML = "You are finished";
+                                isTakingScreenshot = false;
+                                scene.remove(box1Obj);
+                                scene.remove(box2Obj);
+                                isRecordingPose = false;
+                                sendData(posData);
+                                posData = "";
+                            }
+                        } else {
+                            document.getElementById("doneBtn").style.display = "none";
+                        }
                     }
 
 
@@ -216,120 +320,6 @@ app.vuforia.isAvailable().then(function (available) {
 });
 
 app.context.updateEvent.addEventListener(function () {
-
-    if (step == portal_step) {
-        
-        if (isPlacing) {
-            if (isBtnClicked) {
-                isBtnClicked = false;
-                isPlacing = false;
-                document.getElementById("slider").style.display = "none";
-                document.getElementById("timeportal-slider").style.display = "none";
-                document.getElementById("heading").innerHTML = "Take a screenshot";
-                document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
-                isTakingScreenshot = true;
-                scene.add(box1Obj);
-                scene.add(box2Obj);
-                box1Obj.position.copy(tramMarkerPose.position);
-                box2Obj.position.copy(tramMarkerPose.position);
-                box2Obj.position.z = box2Obj.position.z - 0.5;
-                box2Obj.position.x = box2Obj.position.x + 1.5;
-                box2Obj.position.y = box2Obj.position.y + 0.5;
-                isRecordingPose = true;
-            }
-        } else if (isTakingScreenshot) {
-            if (isBtnClicked) {
-                isRecordingPose = false;
-                sendData(posData);
-                posData = "";
-                isBtnClicked = false;
-                step++;
-                document.getElementById("thumb").src = "resources/imgs/tram_thumb.jpg";
-                document.getElementById("doneBtn").style.display = "none";
-                document.getElementById("heading").innerHTML = "Find the marker";
-                document.getElementById("instructions-schedule-find").style.display = "inline";
-                isTakingScreenshot = false;
-                scene.remove(box1Obj);
-                scene.remove(box2Obj);
-            }
-        } else {
-            document.getElementById("doneBtn").style.display = "none";
-        }
-    } else if (step == graffiti_step) {
-
-        if (isPlacing) {
-            if (isBtnClicked) {
-                isBtnClicked = false;
-                isPlacing = false;
-                document.getElementById("slider").style.display = "none";
-                document.getElementById("graffiti-slider").style.display = "none";
-                document.getElementById("heading").innerHTML = "Take a screenshot";
-                document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
-                isTakingScreenshot = true;
-                scene.add(box1Obj);
-                scene.add(box2Obj);
-                box1Obj.position.copy(graffitiMarkerPose.position);
-                box2Obj.position.copy(graffitiMarkerPose.position);
-                box2Obj.position.z = box2Obj.position.z - 0.5;
-                box2Obj.position.x = box2Obj.position.x + 1.5;
-                box2Obj.position.y = box2Obj.position.y + 0.5;
-                isRecordingPose = true;
-            }
-        } else if (isTakingScreenshot) {
-            if (isBtnClicked) {
-                isBtnClicked = false;
-                step++;
-                document.getElementById("thumb").src = "resources/imgs/portal_thumb.jpg";
-                document.getElementById("doneBtn").style.display = "none";
-                document.getElementById("heading").innerHTML = "Find the marker";
-                document.getElementById("instructions-timeportal-find").style.display = "inline";
-                isTakingScreenshot = false;
-                scene.remove(box1Obj);
-                scene.remove(box2Obj);
-                isRecordingPose = false;
-                sendData(posData);
-                posData = "";
-            }
-        } else {
-            document.getElementById("doneBtn").style.display = "none";
-        }
-    } else {
-
-        if (isPlacing) {
-            if (isBtnClicked) {
-                isBtnClicked = false;
-                isPlacing = false;
-                document.getElementById("slider").style.display = "none";
-                document.getElementById("heading").innerHTML = "Take a screenshot";
-                document.getElementById("instructions-schedule-screenshot").style.display = "inline";
-                isTakingScreenshot = true;
-                scene.add(box1Obj);
-                scene.add(box2Obj);
-                box1Obj.position.copy(markerPose.position);
-                box2Obj.position.copy(markerPose.position);
-                box2Obj.position.z = box2Obj.position.z - 0.5;
-                box2Obj.position.x = box2Obj.position.x + 1.5;
-                box2Obj.position.y = box2Obj.position.y + 0.5;
-                isRecordingPose = true;
-            }
-        } else if (isTakingScreenshot) {
-            if (isBtnClicked) {
-                isBtnClicked = false;
-                step++;
-                scene.remove(markerObject);
-                document.getElementById("doneBtn").style.display = "none";
-                document.getElementById("heading").innerHTML = "You are finished";
-                isTakingScreenshot = false;
-                scene.remove(box1Obj);
-                scene.remove(box2Obj);
-                isRecordingPose = false;
-                sendData(posData);
-                posData = "";
-            }
-        } else {
-            document.getElementById("doneBtn").style.display = "none";
-        }
-    }
 
     if (isRecordingPose) {
         if (recordingStep >= 60) {
