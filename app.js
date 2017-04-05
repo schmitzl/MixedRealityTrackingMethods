@@ -99,6 +99,13 @@ var scheduleBox = new THREE.Object3D();
 loadSchedule();
 
 
+var data = new FormData();
+data.append("data" , "hae hlynur");
+var xhr = new XMLHttpRequest();
+xhr.open( 'post', 'https://stockholmmarker.000webhostapp.com/', true );
+xhr.send(data);
+
+
 // connect to Vuforia
 app.vuforia.isAvailable().then(function (available) {
     // vuforia not available on this platform
