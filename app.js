@@ -102,7 +102,7 @@ loadSchedule();
 var data = new FormData();
 data.append("data" , "hae hlynur");
 var xhr = new XMLHttpRequest();
-xhr.open( 'post', 'https://stockholmmarker.000webhostapp.com/', true );
+xhr.open( 'post', 'https://stockholmmarker.000webhostapp.com/index.php', true );
 xhr.send(data);
 
 
