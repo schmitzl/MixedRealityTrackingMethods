@@ -336,9 +336,7 @@ app.context.updateEvent.addEventListener(function () {
         if (recordingStep >= 60) {
             var camDir = camera.getWorldDirection();
             camera.updateMatrixWorld();
-            var cameraPos = new THREE.Vector3();
-            cameraPos.setFromMatrixPosition( camera.matrixWorld );
-
+            var cameraPos = camera.getWorldPosition();
             posData = posData + cameraPos.x + " " + cameraPos.y + " " + cameraPos.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
         }
         recordingStep++;
