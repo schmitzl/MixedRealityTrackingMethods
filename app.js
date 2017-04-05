@@ -325,9 +325,9 @@ app.context.updateEvent.addEventListener(function () {
         if (recordingStep >= 60) {
             camera.updateMatrixWorld();
             var cameraPos = camera.position.clone();
+            cameraPos.applyMatrix3( camera.matrixWorld );
             var camDir = camera.getWorldDirection();
-            //cameraPos.applyMatrix3( camera.matrixWorld );
-            posData = posData + camera.position.x + " " + camera.position.y + " " + camera.position.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
+            posData = posData + cameraPos.x + " " + cameraPos.y + " " + cameraPos.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
         }
         recordingStep++;
     }
