@@ -99,11 +99,9 @@ var scheduleBox = new THREE.Object3D();
 loadSchedule();
 
 
-var data = new FormData();
-data.append("data" , "hae hlynur");
-var xhr = new XMLHttpRequest();
-xhr.open( 'post', 'https://stockholmmarker.000webhostapp.com/index.php', true );
-xhr.send(data);
+var posData = "";
+var isRecordingPose = false;
+var recordingStep = 0;
 
 
 // connect to Vuforia
@@ -170,9 +168,12 @@ app.vuforia.isAvailable().then(function (available) {
                                 box2Obj.position.z = box2Obj.position.z -0.5;
                                 box2Obj.position.x = box2Obj.position.x +1.5;
                                 box2Obj.position.y = box2Obj.position.y + 0.5;
+                                isRecordingPose = true;
                             }
                         } else if ( isTakingScreenshot ){
                             if(isBtnClicked) {
+                                isRecordingPose = false;
+                                sendData(posData);
                                 isBtnClicked = false;
                                 step++;
                                 document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
@@ -221,6 +222,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 box2Obj.position.z = box2Obj.position.z -0.5;
                                 box2Obj.position.x = box2Obj.position.x +1.5;
                                 box2Obj.position.y = box2Obj.position.y + 0.5;
+                                isRecordingPose = true;
                             }
                         } else if( isTakingScreenshot ){
                             if(isBtnClicked) {
@@ -233,6 +235,9 @@ app.vuforia.isAvailable().then(function (available) {
                                 isTakingScreenshot = false;
                                 scene.remove(box1Obj);
                                 scene.remove(box2Obj);
+                                isRecordingPose = false;
+                                sendData(posData);
+                                posData = "";
                             }
                         } else {
                             document.getElementById("doneBtn").style.display = "none";
@@ -271,7 +276,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 scene.add(box2Obj);
                                 box1Obj.position.copy(markerPose.position);
                                 box2Obj.position.copy(markerPose.position);
-                                 box2Obj.position.z = box2Obj.position.z -0.5;
+                                box2Obj.position.z = box2Obj.position.z -0.5;
                                 box2Obj.position.x = box2Obj.position.x +1.5;
                                 box2Obj.position.y = box2Obj.position.y + 0.5;
                             }
@@ -305,6 +310,17 @@ app.vuforia.isAvailable().then(function (available) {
 });
 
 app.context.updateEvent.addEventListener(function () {
+    
+    if(isRecordingPose) {
+        if(recordingStep >= 60) {
+            camera.updateMatrixWorld();
+            var cameraPos = camera.position.clone();
+            var camDir = camera.getWorldDirection();
+            cameraPos.applyMatrix3( camera.matrixWorld );
+            posData = posData + cameraPos.x + " " + cameraPos.y + " " + cameraPos.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
+        } 
+        recordingStep++;
+    }
     
     var graffitiStepVal = document.getElementById('graffiti-slider').value;
     graffitiTram.position.y = graffitiStepVal * 0.003;
@@ -601,4 +617,12 @@ function loadSchedule() {
 function btnClicked() {
     isBtnClicked = true;
     document.getElementById("doneBtn").style.display = "none";
+}
+
+function sendData(postData) {
+    var data = new FormData();
+    data.append("data" , postData);
+    var xhr = new XMLHttpRequest();
+    xhr.open( 'post', 'https://stockholmmarker.000webhostapp.com/index.php', true );
+    xhr.send(data);
 }
