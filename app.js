@@ -336,8 +336,8 @@ app.context.updateEvent.addEventListener(function () {
         if (recordingStep >= 60) {
             var camDir = camera.getWorldDirection();
             camera.updateMatrixWorld();
-            var cameraPos = camera.getWorldPosition();
-            posData = posData + cameraPos.x + " " + cameraPos.y + " " + cameraPos.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
+        //    var cameraPos = userLocation.position;
+            posData = posData + userLocation.position.x + " " + userLocation.position.y + " " + userLocation.position.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
         }
         recordingStep++;
     }
