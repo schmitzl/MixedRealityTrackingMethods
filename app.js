@@ -320,7 +320,7 @@ app.context.updateEvent.addEventListener(function () {
             camera.updateMatrixWorld();
             var cameraPos = camera.position.clone();
             var camDir = camera.getWorldDirection();
-            cameraPos.applyMatrix3( camera.matrixWorld );
+            //cameraPos.applyMatrix3( camera.matrixWorld );
             posData = posData + cameraPos.x + " " + cameraPos.y + " " + cameraPos.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
         } 
         recordingStep++;
