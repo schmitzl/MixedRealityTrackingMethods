@@ -321,13 +321,21 @@ app.vuforia.isAvailable().then(function (available) {
 
 app.context.updateEvent.addEventListener(function () {
 
+     var userPose = app.context.getEntityPose(app.context.user);
+
+    if (userPose.poseStatus & Argon.PoseStatus.KNOWN) {
+        userLocation.position.copy(userPose.position);
+    } else {
+        return;
+    }   
+
+    // udpate our scene matrices
+    scene.updateMatrixWorld(false);
+    
     if (isRecordingPose) {
         if (recordingStep >= 60) {
-            camera.updateMatrixWorld();
-            var cameraPos = camera.position.clone();
-            cameraPos.applyMatrix3( camera.matrixWorld );
             var camDir = camera.getWorldDirection();
-            posData = posData + cameraPos.x + " " + cameraPos.y + " " + cameraPos.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
+            posData = posData + userPose.position.x + " " + userPose.position.y + " " + userPose.position.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
         }
         recordingStep++;
     }
@@ -343,16 +351,7 @@ app.context.updateEvent.addEventListener(function () {
     var rotationVal = document.getElementById('schedule-slider').value;
     scheduleBox.rotation.y = rotationVal * 0.01745329252;
 
-    var userPose = app.context.getEntityPose(app.context.user);
 
-    if (userPose.poseStatus & Argon.PoseStatus.KNOWN) {
-        userLocation.position.copy(userPose.position);
-    } else {
-        return;
-    }
-
-    // udpate our scene matrices
-    scene.updateMatrixWorld(false);
 });
 
 app.renderEvent.addEventListener(function () {
