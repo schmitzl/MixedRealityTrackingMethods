@@ -299,7 +299,42 @@ app.vuforia.isAvailable().then(function (available) {
                         } else {
                             document.getElementById("doneBtn").style.display = "none";
                         }
+                    
+                        if(isRecordingPose) {
+                        if(recordingStep >= 60) {
+                            camera.updateMatrixWorld();
+                            var cameraPos = camera.position.clone();
+                            var camDir = camera.getWorldDirection();
+                            //cameraPos.applyMatrix3( camera.matrixWorld );
+                            posData = posData + camera.position.x + " " + camera.position.y + " " + camera.position.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
+                        } 
+                        recordingStep++;
+                    }
+
+                    var graffitiStepVal = document.getElementById('graffiti-slider').value;
+                    graffitiTram.position.y = graffitiStepVal * 0.003;
+                    graffitiTram.position.x = graffitiStepVal * 0.005;
+
+                    var timePortalStepVal = document.getElementById('timeportal-slider').value;
+                    tramBase.position.z = timePortalStepVal * 0.01;
+                    tramFrame.position.z = timePortalStepVal * 0.01;
+
+                    var rotationVal = document.getElementById('schedule-slider').value;
+                    scheduleBox.rotation.y = rotationVal * 0.01745329252;
+
+                    var userPose = app.context.getEntityPose(app.context.user);
+
+                    if (userPose.poseStatus & Argon.PoseStatus.KNOWN) {
+                        userLocation.position.copy(userPose.position);
+                    } else {
+                        return;
+                    }
+
+                    // udpate our scene matrices
+                    scene.updateMatrixWorld(false);
                 }
+                    
+                
  
                 });
             })["catch"](function (err) {
@@ -313,72 +348,7 @@ app.vuforia.isAvailable().then(function (available) {
     });
 });
 
-app.context.updateEvent.addEventListener(function () {
-    
-    if(isRecordingPose) {
-        if(recordingStep >= 60) {
-            camera.updateMatrixWorld();
-            var cameraPos = camera.position.clone();
-            var camDir = camera.getWorldDirection();
-            //cameraPos.applyMatrix3( camera.matrixWorld );
-            posData = posData + cameraPos.x + " " + cameraPos.y + " " + cameraPos.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
-        } 
-        recordingStep++;
-    }
-    
-    var graffitiStepVal = document.getElementById('graffiti-slider').value;
-    graffitiTram.position.y = graffitiStepVal * 0.003;
-    graffitiTram.position.x = graffitiStepVal * 0.005;
-    
-    var timePortalStepVal = document.getElementById('timeportal-slider').value;
-    tramBase.position.z = timePortalStepVal * 0.01;
-    tramFrame.position.z = timePortalStepVal * 0.01;
-    
-    var rotationVal = document.getElementById('schedule-slider').value;
-    scheduleBox.rotation.y = rotationVal * 0.01745329252;
-    
-  /*  graffitiTram.translateY(0.003);
-    graffitiTram.translateX(0.005);
-    if (graffitiStep > 1080) {
-        graffitiStep = 0;
-        graffitiTram.position.x = 0;
-        graffitiTram.position.y = 0;
-        graffitiTram.translateY(-580 * 0.003);
-        graffitiTram.translateX(-580 * 0.005);
-    }
-    graffitiStep = graffitiStep + 1;
-    
-    if(animationStep > 700) {
-        tramBase.rotation.y = 199 * 0.00272665;
-        tramFrame.rotation.y = 199 * 0.00272665;
-        tramBase.position.z = 0;
-        tramFrame.position.z = 0;
-        tramBase.rotation.y = 0;
-        tramFrame.rotation.y = 0;
-        tramBase.position.x = 0;
-        tramFrame.position.x = 0;
-        animationStep = 0;
-    }
-    animationStep = animationStep + 1;
-    if(animationStep > 300  && animationStep < 500) {
-        tramBase.rotation.y = tramBase.rotation.y - 0.00272665;
-        tramFrame.rotation.y = tramFrame.rotation.y - 0.00272665;
-    }
-    
-    tramBase.translateZ(0.01);
-    tramFrame.translateZ(0.01);*/
-    
-    var userPose = app.context.getEntityPose(app.context.user);
- 
-    if (userPose.poseStatus & Argon.PoseStatus.KNOWN) {
-        userLocation.position.copy(userPose.position);
-    } else {
-        return;
-    }
-    
-    // udpate our scene matrices
-    scene.updateMatrixWorld(false);
-});
+
 
 app.renderEvent.addEventListener(function () {
     var subviews = app.view.getSubviews();
