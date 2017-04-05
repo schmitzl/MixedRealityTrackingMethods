@@ -59,15 +59,19 @@ app.view.element.appendChild(hud.domElement);
 app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 
 // -- CREATE BOXES --
-var box1Geometry = new THREE.BoxGeometry(0.3,1,0.3);
-var box1Material = new THREE.MeshBasicMaterial({color:0xff0000});
-var box1 = new THREE.Mesh(box1Geometry,box1Material);
+var box1Geometry = new THREE.BoxGeometry(0.3, 1, 0.3);
+var box1Material = new THREE.MeshBasicMaterial({
+    color: 0xff0000
+});
+var box1 = new THREE.Mesh(box1Geometry, box1Material);
 var box1Obj = new THREE.Object3D();
 box1Obj.add(box1);
 
-var box2Geometry = new THREE.BoxGeometry(0.3,1,0.3);
-var box2Material = new THREE.MeshBasicMaterial({color:0xff0000});
-var box2 = new THREE.Mesh(box2Geometry,box2Material);
+var box2Geometry = new THREE.BoxGeometry(0.3, 1, 0.3);
+var box2Material = new THREE.MeshBasicMaterial({
+    color: 0xff0000
+});
+var box2 = new THREE.Mesh(box2Geometry, box2Material);
 var box2Obj = new THREE.Object3D();
 box2Obj.add(box2);
 
@@ -122,23 +126,23 @@ app.vuforia.isAvailable().then(function (available) {
                 var tramMarkerEntity = app.context.subscribeToEntityById(trackables["markerTram2"].id);
                 var tramMarkerObject = new THREE.Object3D();
                 scene.add(tramMarkerObject);
-                
+
                 var graffitiMarkerEntity = app.context.subscribeToEntityById(trackables["banksyBgMarker"].id);
                 var graffitiMarkerObject = new THREE.Object3D();
                 scene.add(graffitiMarkerObject);
-                
+
                 var markerEntity = app.context.subscribeToEntityById(trackables["marker3"].id);
                 var markerObject = new THREE.Object3D();
                 scene.add(markerObject);
-                
+
                 app.context.updateEvent.addEventListener(function () {
-                    
-                if(step == portal_step) {
+
+                    if (step == portal_step) {
 
                         scene.remove(graffitiMarkerObject);
-                    
+
                         var tramMarkerPose = app.context.getEntityPose(tramMarkerEntity);
-                        if ( tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
+                        if (tramMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                             tramMarkerObject.position.copy(tramMarkerPose.position);
                             tramMarkerObject.quaternion.copy(tramMarkerPose.orientation);
                         }
@@ -150,50 +154,14 @@ app.vuforia.isAvailable().then(function (available) {
                             isPlacing = true;
                             tramMarkerObject.add(tramScene);
                             tramScene.position.z = 0;
-                            document.getElementById("thumb").src="resources/imgs/moveThumb.jpg";
-                        } 
-                        if(isPlacing) {
-                            if(isBtnClicked) {
-                                isBtnClicked = false;
-                                isPlacing = false;
-                                document.getElementById("slider").style.display = "none";
-                                document.getElementById("timeportal-slider").style.display = "none";
-                                document.getElementById("heading").innerHTML = "Take a screenshot";
-                                document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
-                                isTakingScreenshot = true;
-                                scene.add(box1Obj);
-                                scene.add(box2Obj);
-                                box1Obj.position.copy(tramMarkerPose.position);
-                                box2Obj.position.copy(tramMarkerPose.position);
-                                box2Obj.position.z = box2Obj.position.z -0.5;
-                                box2Obj.position.x = box2Obj.position.x +1.5;
-                                box2Obj.position.y = box2Obj.position.y + 0.5;
-                                isRecordingPose = true;
-                            }
-                        } else if ( isTakingScreenshot ){
-                            if(isBtnClicked) {
-                                isRecordingPose = false;
-                                sendData(posData);
-                                posData = "";
-                                isBtnClicked = false;
-                                step++;
-                                document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
-                                document.getElementById("doneBtn").style.display = "none";
-                                document.getElementById("heading").innerHTML = "Find the marker";
-                                document.getElementById("instructions-schedule-find").style.display = "inline";
-                                isTakingScreenshot = false;
-                                scene.remove(box1Obj);
-                                scene.remove(box2Obj);
-                            }
-                        } else {
-                            document.getElementById("doneBtn").style.display = "none";
+                            document.getElementById("thumb").src = "resources/imgs/moveThumb.jpg";
                         }
-                } else if (step == graffiti_step) {
-                    
-                           
-                    
+
+                    } else if (step == graffiti_step) {
+
+
                         var graffitiMarkerPose = app.context.getEntityPose(graffitiMarkerEntity);
-                        if ( graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
+                        if (graffitiMarkerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                             graffitiMarkerObject.position.copy(graffitiMarkerPose.position);
                             graffitiMarkerObject.quaternion.copy(graffitiMarkerPose.orientation);
                         }
@@ -203,57 +171,22 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("graffiti-slider").style.display = "inline";
                             document.getElementById("instructions-graffiti-move").style.display = "inline";
                             isPlacing = true;
-                            graffitiMarkerObject.add(graffitiTramScene); 
-                            document.getElementById("thumb").src="resources/imgs/moveGraffitiThumb.png";
-                        } 
-                    
-                        if(isPlacing) {
-                            if(isBtnClicked) {
-                                isBtnClicked = false;
-                                isPlacing = false;
-                                document.getElementById("slider").style.display = "none";
-                                document.getElementById("graffiti-slider").style.display = "none";
-                                document.getElementById("heading").innerHTML = "Take a screenshot";
-                                document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
-                                isTakingScreenshot = true;
-                                scene.add(box1Obj);
-                                scene.add(box2Obj);
-                                box1Obj.position.copy(graffitiMarkerPose.position);
-                                box2Obj.position.copy(graffitiMarkerPose.position);
-                                box2Obj.position.z = box2Obj.position.z -0.5;
-                                box2Obj.position.x = box2Obj.position.x +1.5;
-                                box2Obj.position.y = box2Obj.position.y + 0.5;
-                                isRecordingPose = true;
-                            }
-                        } else if( isTakingScreenshot ){
-                            if(isBtnClicked) {
-                                isBtnClicked = false;
-                                step++;
-                                document.getElementById("thumb").src="resources/imgs/portal_thumb.jpg";
-                                document.getElementById("doneBtn").style.display = "none";
-                                document.getElementById("heading").innerHTML = "Find the marker";
-                                document.getElementById("instructions-timeportal-find").style.display = "inline";
-                                isTakingScreenshot = false;
-                                scene.remove(box1Obj);
-                                scene.remove(box2Obj);
-                                isRecordingPose = false;
-                                sendData(posData);
-                                posData = "";
-                            }
-                        } else {
-                            document.getElementById("doneBtn").style.display = "none";
+                            graffitiMarkerObject.add(graffitiTramScene);
+                            document.getElementById("thumb").src = "resources/imgs/moveGraffitiThumb.png";
                         }
-                } else {
-                    
-                        scene.remove(tramMarkerObject);    
-                    
+
+
+                    } else {
+
+                        scene.remove(tramMarkerObject);
+
                         var markerPose = app.context.getEntityPose(markerEntity);
-                        if ( markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
+                        if (markerPose.poseStatus & Argon.PoseStatus.KNOWN) {
                             markerObject.position.copy(markerPose.position);
                             markerObject.quaternion.copy(markerPose.orientation);
                         }
                         if (markerPose.poseStatus & Argon.PoseStatus.FOUND) {
-                             //document.getElementById("thumb").src="";
+                            //document.getElementById("thumb").src="";
                             // document.getElementById("heading").innerHTML="You found all markers";
                             document.getElementById("heading").innerHTML = "Rotate to Line 5";
                             document.getElementById("doneBtn").style.display = "inline";
@@ -261,81 +194,15 @@ app.vuforia.isAvailable().then(function (available) {
                             document.getElementById("schedule-slider").style.display = "inline";
                             document.getElementById("instructions-schedule-move").style.display = "inline";
                             isPlacing = true;
-                            markerObject.add(schedule); 
-                            document.getElementById("thumb").src="resources/imgs/moveScheduleThumb.jpg";
-                        } 
-                    
-                        if(isPlacing) {
-                            if(isBtnClicked) {
-                                isBtnClicked = false;
-                                isPlacing = false;
-                                document.getElementById("slider").style.display = "none";
-                                document.getElementById("heading").innerHTML = "Take a screenshot";
-                                document.getElementById("instructions-schedule-screenshot").style.display = "inline";
-                                isTakingScreenshot = true;
-                                scene.add(box1Obj);
-                                scene.add(box2Obj);
-                                box1Obj.position.copy(markerPose.position);
-                                box2Obj.position.copy(markerPose.position);
-                                box2Obj.position.z = box2Obj.position.z -0.5;
-                                box2Obj.position.x = box2Obj.position.x +1.5;
-                                box2Obj.position.y = box2Obj.position.y + 0.5;
-                                isRecordingPose = true;
-                            }
-                        } else if(isTakingScreenshot) {
-                            if(isBtnClicked) {
-                                isBtnClicked = false;
-                                step++;
-                                scene.remove(markerObject);
-                                document.getElementById("doneBtn").style.display = "none";
-                                document.getElementById("heading").innerHTML = "You are finished";
-                                isTakingScreenshot = false;
-                                scene.remove(box1Obj);
-                                scene.remove(box2Obj);
-                                isRecordingPose = false;
-                                sendData(posData);
-                                posData = "";
-                            }
-                        } else {
-                            document.getElementById("doneBtn").style.display = "none";
+                            markerObject.add(schedule);
+                            document.getElementById("thumb").src = "resources/imgs/moveScheduleThumb.jpg";
                         }
-                    
-                        if(isRecordingPose) {
-                        if(recordingStep >= 60) {
-                            camera.updateMatrixWorld();
-                            var cameraPos = camera.position.clone();
-                            var camDir = camera.getWorldDirection();
-                            //cameraPos.applyMatrix3( camera.matrixWorld );
-                            posData = posData + camera.position.x + " " + camera.position.y + " " + camera.position.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
-                        } 
-                        recordingStep++;
+
+
                     }
 
-                    var graffitiStepVal = document.getElementById('graffiti-slider').value;
-                    graffitiTram.position.y = graffitiStepVal * 0.003;
-                    graffitiTram.position.x = graffitiStepVal * 0.005;
 
-                    var timePortalStepVal = document.getElementById('timeportal-slider').value;
-                    tramBase.position.z = timePortalStepVal * 0.01;
-                    tramFrame.position.z = timePortalStepVal * 0.01;
 
-                    var rotationVal = document.getElementById('schedule-slider').value;
-                    scheduleBox.rotation.y = rotationVal * 0.01745329252;
-
-                    var userPose = app.context.getEntityPose(app.context.user);
-
-                    if (userPose.poseStatus & Argon.PoseStatus.KNOWN) {
-                        userLocation.position.copy(userPose.position);
-                    } else {
-                        return;
-                    }
-
-                    // udpate our scene matrices
-                    scene.updateMatrixWorld(false);
-                }
-                    
-                
- 
                 });
             })["catch"](function (err) {
                 console.log("could not load dataset: " + err.message);
@@ -348,7 +215,155 @@ app.vuforia.isAvailable().then(function (available) {
     });
 });
 
+app.context.updateEvent.addEventListener(function () {
 
+    if (step == portal_step) {
+        
+        if (isPlacing) {
+            if (isBtnClicked) {
+                isBtnClicked = false;
+                isPlacing = false;
+                document.getElementById("slider").style.display = "none";
+                document.getElementById("timeportal-slider").style.display = "none";
+                document.getElementById("heading").innerHTML = "Take a screenshot";
+                document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
+                isTakingScreenshot = true;
+                scene.add(box1Obj);
+                scene.add(box2Obj);
+                box1Obj.position.copy(tramMarkerPose.position);
+                box2Obj.position.copy(tramMarkerPose.position);
+                box2Obj.position.z = box2Obj.position.z - 0.5;
+                box2Obj.position.x = box2Obj.position.x + 1.5;
+                box2Obj.position.y = box2Obj.position.y + 0.5;
+                isRecordingPose = true;
+            }
+        } else if (isTakingScreenshot) {
+            if (isBtnClicked) {
+                isRecordingPose = false;
+                sendData(posData);
+                posData = "";
+                isBtnClicked = false;
+                step++;
+                document.getElementById("thumb").src = "resources/imgs/tram_thumb.jpg";
+                document.getElementById("doneBtn").style.display = "none";
+                document.getElementById("heading").innerHTML = "Find the marker";
+                document.getElementById("instructions-schedule-find").style.display = "inline";
+                isTakingScreenshot = false;
+                scene.remove(box1Obj);
+                scene.remove(box2Obj);
+            }
+        } else {
+            document.getElementById("doneBtn").style.display = "none";
+        }
+    } else if (step == graffiti_step) {
+
+        if (isPlacing) {
+            if (isBtnClicked) {
+                isBtnClicked = false;
+                isPlacing = false;
+                document.getElementById("slider").style.display = "none";
+                document.getElementById("graffiti-slider").style.display = "none";
+                document.getElementById("heading").innerHTML = "Take a screenshot";
+                document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
+                isTakingScreenshot = true;
+                scene.add(box1Obj);
+                scene.add(box2Obj);
+                box1Obj.position.copy(graffitiMarkerPose.position);
+                box2Obj.position.copy(graffitiMarkerPose.position);
+                box2Obj.position.z = box2Obj.position.z - 0.5;
+                box2Obj.position.x = box2Obj.position.x + 1.5;
+                box2Obj.position.y = box2Obj.position.y + 0.5;
+                isRecordingPose = true;
+            }
+        } else if (isTakingScreenshot) {
+            if (isBtnClicked) {
+                isBtnClicked = false;
+                step++;
+                document.getElementById("thumb").src = "resources/imgs/portal_thumb.jpg";
+                document.getElementById("doneBtn").style.display = "none";
+                document.getElementById("heading").innerHTML = "Find the marker";
+                document.getElementById("instructions-timeportal-find").style.display = "inline";
+                isTakingScreenshot = false;
+                scene.remove(box1Obj);
+                scene.remove(box2Obj);
+                isRecordingPose = false;
+                sendData(posData);
+                posData = "";
+            }
+        } else {
+            document.getElementById("doneBtn").style.display = "none";
+        }
+    } else {
+
+        if (isPlacing) {
+            if (isBtnClicked) {
+                isBtnClicked = false;
+                isPlacing = false;
+                document.getElementById("slider").style.display = "none";
+                document.getElementById("heading").innerHTML = "Take a screenshot";
+                document.getElementById("instructions-schedule-screenshot").style.display = "inline";
+                isTakingScreenshot = true;
+                scene.add(box1Obj);
+                scene.add(box2Obj);
+                box1Obj.position.copy(markerPose.position);
+                box2Obj.position.copy(markerPose.position);
+                box2Obj.position.z = box2Obj.position.z - 0.5;
+                box2Obj.position.x = box2Obj.position.x + 1.5;
+                box2Obj.position.y = box2Obj.position.y + 0.5;
+                isRecordingPose = true;
+            }
+        } else if (isTakingScreenshot) {
+            if (isBtnClicked) {
+                isBtnClicked = false;
+                step++;
+                scene.remove(markerObject);
+                document.getElementById("doneBtn").style.display = "none";
+                document.getElementById("heading").innerHTML = "You are finished";
+                isTakingScreenshot = false;
+                scene.remove(box1Obj);
+                scene.remove(box2Obj);
+                isRecordingPose = false;
+                sendData(posData);
+                posData = "";
+            }
+        } else {
+            document.getElementById("doneBtn").style.display = "none";
+        }
+    }
+
+    if (isRecordingPose) {
+        if (recordingStep >= 60) {
+            camera.updateMatrixWorld();
+            var cameraPos = camera.position.clone();
+            var camDir = camera.getWorldDirection();
+            //cameraPos.applyMatrix3( camera.matrixWorld );
+            posData = posData + camera.position.x + " " + camera.position.y + " " + camera.position.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
+        }
+        recordingStep++;
+    }
+
+    var graffitiStepVal = document.getElementById('graffiti-slider').value;
+    graffitiTram.position.y = graffitiStepVal * 0.003;
+    graffitiTram.position.x = graffitiStepVal * 0.005;
+
+    var timePortalStepVal = document.getElementById('timeportal-slider').value;
+    tramBase.position.z = timePortalStepVal * 0.01;
+    tramFrame.position.z = timePortalStepVal * 0.01;
+
+    var rotationVal = document.getElementById('schedule-slider').value;
+    scheduleBox.rotation.y = rotationVal * 0.01745329252;
+
+    var userPose = app.context.getEntityPose(app.context.user);
+
+    if (userPose.poseStatus & Argon.PoseStatus.KNOWN) {
+        userLocation.position.copy(userPose.position);
+    } else {
+        return;
+    }
+
+    // udpate our scene matrices
+    scene.updateMatrixWorld(false);
+});
 
 app.renderEvent.addEventListener(function () {
     var subviews = app.view.getSubviews();
@@ -358,13 +373,17 @@ app.renderEvent.addEventListener(function () {
     hud.setSize(viewport.width, viewport.height);
     for (var _i = 0, subviews_1 = subviews; _i < subviews_1.length; _i++) {
         var subview = subviews_1[_i];
-      
+
         camera.position.copy(subview.pose.position);
         camera.quaternion.copy(subview.pose.orientation);
-      
+
         camera.projectionMatrix.fromArray(subview.projectionMatrix);
-        var _a = subview.viewport, x = _a.x, y = _a.y, width = _a.width, height = _a.height;
-        
+        var _a = subview.viewport,
+            x = _a.x,
+            y = _a.y,
+            width = _a.width,
+            height = _a.height;
+
         renderer.setViewport(x, y, width, height);
         renderer.setScissor(x, y, width, height);
         renderer.setScissorTest(true);
@@ -391,7 +410,7 @@ function loadTramScene() {
         tramMesh.renderOrder = 2;
         tramMesh.scale.set(.4, .4, .4);
     });
-        
+
     var portalMesh;
     var portalTextureLoader = new THREE.TextureLoader();
     var portalGeometry = new THREE.Geometry();
@@ -406,20 +425,22 @@ function loadTramScene() {
         portal.add(portalMesh);
         portalMesh.scale.set(.4, .4, .4);
     });
-    
-    
+
+
     var frameMesh;
     var frameTextureLoader = new THREE.TextureLoader();
     var frameGeometry = new THREE.Geometry();
     var frameLoader = new THREE.JSONLoader();
     frameLoader.load('resources/obj/tram/frame.js', function (frameGeometry) {
-        var frameMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
+        var frameMaterial = new THREE.MeshLambertMaterial({
+            color: 0x000000
+        });
         frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
         frameMesh.renderOrder = 2;
         tramFrame.add(frameMesh);
         frameMesh.scale.set(.4, .4, .4);
     });
-    
+
     var platformMesh;
     var platformTextureLoader = new THREE.TextureLoader();
     var platformGeometry = new THREE.Geometry();
@@ -439,7 +460,7 @@ function loadTramScene() {
     var invisibilityContainerTextureLoader = new THREE.TextureLoader();
     var invisibilityContainerGeometry = new THREE.Geometry();
     var invisibilityContainerLoader = new THREE.JSONLoader();
-    invisibilityContainerLoader.load('resources/obj/tram/invisibilityContainer.js', function(invisibilityContainerGeometry){
+    invisibilityContainerLoader.load('resources/obj/tram/invisibilityContainer.js', function (invisibilityContainerGeometry) {
         var invisibilityContainerMaterial = new THREE.MeshPhongMaterial();
         invisibilityContainerMesh = new THREE.Mesh(invisibilityContainerGeometry, invisibilityContainerMaterial);
         invisibilityContainerMesh.material.color.set(0x001100);
@@ -448,7 +469,7 @@ function loadTramScene() {
         invisibilityContainer.add(invisibilityContainerMesh);
         invisibilityContainerMesh.scale.set(.4, .4, .4);
     });
-    
+
     var skyMesh;
     var skyTextureLoader = new THREE.TextureLoader();
     var skyGeometry = new THREE.Geometry();
@@ -464,7 +485,7 @@ function loadTramScene() {
         sky.add(skyMesh);
         skyMesh.scale.set(.4, .4, .4);
     });
-    
+
     var groundMesh;
     var groundTextureLoader = new THREE.TextureLoader();
     var groundGeometry = new THREE.Geometry();
@@ -479,7 +500,7 @@ function loadTramScene() {
         ground.add(groundMesh);
         groundMesh.scale.set(.4, .4, .4);
     });
-    
+
     var stadshusetMesh;
     var stadshusetTextureLoader = new THREE.TextureLoader();
     var stadshusetGeometry = new THREE.Geometry();
@@ -495,7 +516,7 @@ function loadTramScene() {
         stadshuset.add(stadshusetMesh);
         stadshusetMesh.scale.set(.4, .4, .4);
     });
-    
+
     tramScene.add(tramBase);
     tramScene.add(tramFrame);
     tramScene.add(platform);
@@ -507,7 +528,7 @@ function loadTramScene() {
 }
 
 function loadgraffitiScene() {
-    
+
     var graffitiBgMesh;
     var graffitiBgTextureLoader = new THREE.TextureLoader();
     var graffitiBgGeometry = new THREE.Geometry();
@@ -516,13 +537,13 @@ function loadgraffitiScene() {
         var graffitiBgMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
             map: graffitiBgTextureLoader.load('resources/obj/tram/banksyTrainBackground.png')
-          
+
         });
         graffitiBgMesh = new THREE.Mesh(graffitiBgGeometry, graffitiBgMaterial);
         graffitiBgMesh.renderOrder = 2;
         graffitiTramBg.add(graffitiBgMesh);
     });
-    
+
     var graffitiTramMesh;
     var graffitiTramTextureLoader = new THREE.TextureLoader();
     var graffitiTramGeometry = new THREE.Geometry();
@@ -531,18 +552,18 @@ function loadgraffitiScene() {
         var graffitiTramMaterial = new THREE.MeshPhongMaterial({
             specular: 0x111111,
             map: graffitiTramTextureLoader.load('resources/obj/tram/banksyTrain.png'),
-            transparent: true          
+            transparent: true
         });
         graffitiTramMesh = new THREE.Mesh(graffitiTramGeometry, graffitiTramMaterial);
         graffitiTramMesh.renderOrder = 2;
         graffitiTram.add(graffitiTramMesh);
     });
-    
+
     var maskingPlaneMesh;
     var maskingPlaneTextureLoader = new THREE.TextureLoader();
     var maskingPlaneGeometry = new THREE.Geometry();
     var maskingPlaneLoader = new THREE.JSONLoader();
-    maskingPlaneLoader.load('resources/obj/tram/maskingPlane.js', function(maskingPlaneGeometry){
+    maskingPlaneLoader.load('resources/obj/tram/maskingPlane.js', function (maskingPlaneGeometry) {
         var maskingPlaneMaterial = new THREE.MeshPhongMaterial();
         maskingPlaneMesh = new THREE.Mesh(maskingPlaneGeometry, maskingPlaneMaterial);
         maskingPlaneMesh.material.color.set(0x001100);
@@ -551,7 +572,7 @@ function loadgraffitiScene() {
         graffitiMaskingPlane.add(maskingPlaneMesh);
     });
 
-  //  graffitiTramScene.add(graffitiTramBg);
+    //  graffitiTramScene.add(graffitiTramBg);
     graffitiTramScene.add(graffitiTram);
     graffitiTramScene.add(graffitiMaskingPlane);
 }
@@ -570,7 +591,7 @@ function loadSchedule() {
         schedulePostMesh = new THREE.Mesh(schedulePostGeometry, schedulePostMaterial);
         schedulePost.add(schedulePostMesh);
     });
-    
+
     var scheduleBoxMesh;
     var scheduleBoxTextureLoader = new THREE.TextureLoader();
     var scheduleBoxGeometry = new THREE.Geometry();
@@ -583,7 +604,7 @@ function loadSchedule() {
         scheduleBoxMesh = new THREE.Mesh(scheduleBoxGeometry, scheduleBoxMaterial);
         scheduleBox.add(scheduleBoxMesh);
     });
-    
+
     schedule.add(schedulePost);
     schedule.add(scheduleBox);
 }
@@ -595,8 +616,8 @@ function btnClicked() {
 
 function sendData(postData) {
     var data = new FormData();
-    data.append("data" , postData);
+    data.append("data", postData);
     var xhr = new XMLHttpRequest();
-    xhr.open( 'post', 'https://stockholmmarker.000webhostapp.com/index.php', true );
+    xhr.open('post', 'https://stockholmmarker.000webhostapp.com/index.php', true);
     xhr.send(data);
 }
