@@ -330,12 +330,16 @@ app.context.updateEvent.addEventListener(function () {
     }   
 
     // udpate our scene matrices
-    scene.updateMatrixWorld(false);
+    scene.updateMatrixWorld();
     
     if (isRecordingPose) {
         if (recordingStep >= 60) {
             var camDir = camera.getWorldDirection();
-            posData = posData + userPose.position.x + " " + userPose.position.y + " " + userPose.position.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
+            camera.updateMatrixWorld();
+            var cameraPos = new THREE.Vector3();
+            cameraPos.setFromMatrixPosition( camera.matrixWorld );
+
+            posData = posData + cameraPos.x + " " + cameraPos.y + " " + cameraPos.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
         }
         recordingStep++;
     }
