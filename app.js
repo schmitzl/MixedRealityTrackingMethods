@@ -174,6 +174,7 @@ app.vuforia.isAvailable().then(function (available) {
                             if(isBtnClicked) {
                                 isRecordingPose = false;
                                 sendData(posData);
+                                posData = "";
                                 isBtnClicked = false;
                                 step++;
                                 document.getElementById("thumb").src="resources/imgs/tram_thumb.jpg";
@@ -279,6 +280,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 box2Obj.position.z = box2Obj.position.z -0.5;
                                 box2Obj.position.x = box2Obj.position.x +1.5;
                                 box2Obj.position.y = box2Obj.position.y + 0.5;
+                                isRecordingPose = true;
                             }
                         } else if(isTakingScreenshot) {
                             if(isBtnClicked) {
@@ -290,7 +292,9 @@ app.vuforia.isAvailable().then(function (available) {
                                 isTakingScreenshot = false;
                                 scene.remove(box1Obj);
                                 scene.remove(box2Obj);
-                                
+                                isRecordingPose = false;
+                                sendData(posData);
+                                posData = "";
                             }
                         } else {
                             document.getElementById("doneBtn").style.display = "none";
