@@ -1,5 +1,6 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
 <head>
     <title>Vuforia Test</title>
     <script src="resources/lib/three/three.min.js"></script>
@@ -9,180 +10,203 @@
     <script src="resources/lib/three/modifiers/ExplodeModifier.js"></script>
     <script src="resources/lib/three/modifiers/TessellateModifier.js"></script>
     <script src="resources/lib/argon.min.js"></script>
-    <script src="resources/lib/argon.js"></script>  
-    
-<style>
+    <script src="resources/lib/argon.js"></script>
 
-h2 {
-    display: inline;
-    padding-bottom: 10px;
-    margin-left: 5px;
-    line-height: 70px;
-}
-    
-#description {
-  color: white;
-  pointer-events: auto;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  padding: 5px 10px 5px 10px;
-  background-color:rgba(0,0,0,0.76);
-  -webkit-backdrop-filter: blur(5px);
-  position:absolute;
-  top: 0px;
-  width: 100%;
-  z-index: 2;
-}
-
-.argon-focus #description {
-  transition: opacity 0.8s;
-  visibility: visible;
-  opacity: 1; 
-}
-
-.argon-no-focus #description {
-  transition: visibility 0s linear 0.8s, opacity 0.8s;
-  visibility: visible;
-  opacity: 0;
-}
-    
-#thumb {
-    width: 50px;
-    height: 50px;
-    display: inline;
-    vertical-align: middle;
-}
-    
-#timeportal-slider {
-    display: none;
-}
-
-#schedule-slider {
-    display: none;
-}
-
-#slider {
-    position: absolute;
-    color: white;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    width: 100%;
-    background-color:rgba(0,0,0,0.76);
-    text-align: center;
-}
-
-input {
-    margin: 15px;
-    width: 90%;
-}
-    
-button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 7px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    vertical-align: middle;
-}
-    
-#doneBtn {
-    display: none;
-}
-    
-#slider {
-    display: none;
-}
-    
-.instructions {
-    position: absolute;
-    background-color: white;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    vertical-align:middle;
-    z-index: 1;
-    left: 0;
-    bottom: 0;
-    display: none;
-}
-
-.instructions-pic {
-    background-color: white;
-    display: block;
-    margin: auto;
-    margin-top: 90px;
-    height: 70%;
-}
-    
-.gotItBtn {
-    float: right;
-}
-
-    
-</style>
+    <style>
+        h2 {
+            display: inline;
+            padding-bottom: 10px;
+            margin-left: 5px;
+            line-height: 70px;
+        }
+        
+        #description {
+            color: white;
+            pointer-events: auto;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            padding: 5px 10px 5px 10px;
+            background-color: rgba(0, 0, 0, 0.76);
+            -webkit-backdrop-filter: blur(5px);
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            z-index: 2;
+        }
+        
+        .argon-focus #description {
+            transition: opacity 0.8s;
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .argon-no-focus #description {
+            transition: visibility 0s linear 0.8s, opacity 0.8s;
+            visibility: visible;
+            opacity: 0;
+        }
+        
+        #thumb {
+            width: 50px;
+            height: 50px;
+            display: inline;
+            vertical-align: middle;
+        }
+        
+        #timeportal-slider {
+            display: none;
+        }
+        
+        #schedule-slider {
+            display: none;
+        }
+        
+        #slider {
+            position: absolute;
+            color: white;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.76);
+            text-align: center;
+        }
+        
+        input {
+            margin: 15px;
+            width: 90%;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 7px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            vertical-align: middle;
+        }
+        
+        #doneBtn {
+            display: none;
+        }
+        
+        #slider {
+            display: none;
+        }
+        
+        .instructions {
+            position: absolute;
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            vertical-align: middle;
+            z-index: 1;
+            left: 0;
+            bottom: 0;
+            display: none;
+        }
+        
+        .instructions-pic {
+            background-color: white;
+            display: block;
+            margin: auto;
+            margin-top: 90px;
+            height: 70%;
+        }
+        
+        .gotItBtn {
+            float: right;
+        }
+        
+        .redBox {
+            position: absolute;
+            width: 100px;
+            height: 400px;
+            background-color: red;
+            z-index: 1;
+        }
+        
+        #redBox1 {
+            left: 2px;
+            bottom: 5px;
+            display: none;
+        }
+        
+        #redBox2 {
+            bottom: 50px;
+            right: 20px;
+            display: none;
+        }
+    </style>
 </head>
-  <body>
+
+<body>
     <div id="argon">
-      <div id="description">
-        <img id="thumb" src="resources/imgs/graffiti_thumb.jpg"/>
-        <h2 id="heading">find the marker</h2>
-        <button id="doneBtn" onclick="btnClicked()">Done!</button> 
-      </div>
+
+        <div id="redBox1" class="redBox"></div>
+
+        <div id="description">
+            <img id="thumb" src="resources/imgs/graffiti_thumb.jpg" />
+            <h2 id="heading">find the marker</h2>
+            <button id="doneBtn" onclick="btnClicked()">Done!</button>
+        </div>
         <div id="slider">
             <input type="range" id="graffiti-slider" value="-370" min="-370" max="400">
             <input type="range" id="timeportal-slider" value="0" min="0" max="700">
             <input type="range" id="schedule-slider" value="0" min="0" max="360">
         </div>
-        
-         <div class="instructions" id="instructions-graffiti-find">
-            <img class="instructions-pic" src="resources/imgs/findGraffiti.png"/>
+
+        <div class="instructions" id="instructions-graffiti-find">
+            <img class="instructions-pic" src="resources/imgs/findGraffiti.png" />
             <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
         </div>
         <div class="instructions" id="instructions-timeportal-find">
-            <img class="instructions-pic" src="resources/imgs/findTimeportal.png"/>
+            <img class="instructions-pic" src="resources/imgs/findTimeportal.png" />
             <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
         </div>
         <div class="instructions" id="instructions-schedule-find">
-            <img class="instructions-pic" src="resources/imgs/findSchedule.png"/>
+            <img class="instructions-pic" src="resources/imgs/findSchedule.png" />
             <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
         </div>
-        
-         <div class="instructions" id="instructions-graffiti-move">
-            <img class="instructions-pic" src="resources/imgs/graffitiMove.png"/>
+
+        <div class="instructions" id="instructions-graffiti-move">
+            <img class="instructions-pic" src="resources/imgs/graffitiMove.png" />
             <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
         </div>
         <div class="instructions" id="instructions-timeportal-move">
-            <img class="instructions-pic" src="resources/imgs/tramSceneMove1.png"/>
+            <img class="instructions-pic" src="resources/imgs/tramSceneMove1.png" />
             <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
         </div>
         <div class="instructions" id="instructions-schedule-move">
-            <img class="instructions-pic" src="resources/imgs/tramSceneMove2.png"/>
+            <img class="instructions-pic" src="resources/imgs/tramSceneMove2.png" />
             <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
         </div>
-        
+
         <div class="instructions" id="instructions-graffiti-screenshot">
-            <img class="instructions-pic" src="resources/imgs/graffitiScreenshot.png"/>
+            <img class="instructions-pic" src="resources/imgs/graffitiScreenshot.png" />
             <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
         </div>
         <div class="instructions" id="instructions-timeportal-screenshot">
-            <img class="instructions-pic" src="resources/imgs/tramSceneScreenshot.png"/>
+            <img class="instructions-pic" src="resources/imgs/tramSceneScreenshot.png" />
             <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
         </div>
         <div class="instructions" id="instructions-schedule-screenshot">
-            <img class="instructions-pic" src="resources/imgs/scheduleScreenshot.png"/>
+            <img class="instructions-pic" src="resources/imgs/scheduleScreenshot.png" />
             <button class="gotItBtn" onclick="hideParent(this)">Got it!</button>
         </div>
-      </div>
-      
-  </body>
-    <script>
-		function hideParent(elem) {
-		    elem.parentElement.style.display = 'none';
-            document.getElementById("doneBtn").style.display = "inline";
-		}	
-	</script>
-      <script src="app.js"></script>
+    </div>
+
+</body>
+<script>
+    function hideParent(elem) {
+        elem.parentElement.style.display = 'none';
+        document.getElementById("doneBtn").style.display = "inline";
+    }
+</script>
+<script src="app.js"></script>
+
 </html>
