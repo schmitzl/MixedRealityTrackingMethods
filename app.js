@@ -90,6 +90,10 @@ var posData = "";
 var isRecordingPose = false;
 var recordingStep = 0;
 
+var end, start;
+
+var timePassed = "";
+
 
 // connect to Vuforia
 app.vuforia.isAvailable().then(function (available) {
