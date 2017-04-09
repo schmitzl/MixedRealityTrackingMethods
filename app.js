@@ -221,8 +221,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("heading").innerHTML = "Find the marker";
                                 document.getElementById("instructions-timeportal-find").style.display = "inline";
                                 isTakingScreenshot = false;
-                                scene.remove(box1Obj);
-                                scene.remove(box2Obj);
+
                                 end = +new Date();
                                 timePassed = "Time for Taking Screenshot " + (end - start);
                                 isRecordingPose = false;
