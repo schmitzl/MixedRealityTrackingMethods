@@ -58,6 +58,19 @@ app.view.element.appendChild(hud.domElement);
 
 app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 
+// -- CREATE BOXES --
+var box1Geometry = new THREE.BoxGeometry(0.3, 1, 0.3);
+var box1Material = new THREE.MeshBasicMaterial({
+    color: 0xff0000
+});
+var box1 = new THREE.Mesh(box1Geometry, box1Material);
+var box1Obj = new THREE.Object3D();
+box1Obj.add(box1);
+box1Obj.position.z = -2;
+box1Obj.position.x = -0.5;
+box1Obj.rotateY(0, -174533);
+box1Obj.rotateX(0, 174533);
+
 // -- LOAD SCENES --
 var tramScene = new THREE.Object3D();
 var tramBase = new THREE.Object3D();
@@ -143,12 +156,15 @@ app.vuforia.isAvailable().then(function (available) {
                             tramScene.position.z = 0;
                             document.getElementById("thumb").src = "resources/imgs/moveThumb.jpg";
                             start = +new Date();
+                            isRecordingPose = true;
                         }
                         if (isPlacing) {
                             if (isBtnClicked) {
                                 end = +new Date();
                                 timePassed = "Time for Placing " + (end - start);
-                                sendData(timePassed);
+                                posData = timePassed + "\n" + posData;
+                                sendData(posData);
+                                posData = "";
                                 isBtnClicked = false;
                                 isPlacing = false;
                                 document.getElementById("slider").style.display = "none";
@@ -156,7 +172,9 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                                 document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
-                                document.getElementById("redBox1").style.display = "inline";
+
+                                camera.add(box1Obj);
+
                                 isRecordingPose = true;
                                 start = +new Date();
                             }
@@ -175,7 +193,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("heading").innerHTML = "Find the marker";
                                 document.getElementById("instructions-schedule-find").style.display = "inline";
                                 isTakingScreenshot = false;
-                                document.getElementById("redBox1").style.display = "none";
+                                camera.remove(box1Obj);
                             }
                         } else {
                             document.getElementById("doneBtn").style.display = "none";
@@ -198,13 +216,16 @@ app.vuforia.isAvailable().then(function (available) {
                             graffitiMarkerObject.add(graffitiTramScene);
                             document.getElementById("thumb").src = "resources/imgs/moveGraffitiThumb.png";
                             start = +new Date();
+                            isRecordingPose = true;
                         }
 
                         if (isPlacing) {
                             if (isBtnClicked) {
                                 end = +new Date();
                                 timePassed = "Time for Placing " + (end - start);
-                                sendData(timePassed);
+                                posData = timePassed + "\n" + posData;
+                                sendData(posData);
+                                posData = "";
                                 isBtnClicked = false;
                                 isPlacing = false;
                                 document.getElementById("slider").style.display = "none";
@@ -212,7 +233,9 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                                 document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
-                                document.getElementById("redBox1").style.display = "inline";
+
+                                camera.add(box1Obj);
+
                                 isRecordingPose = true;
                                 start = +new Date();
                             }
@@ -232,7 +255,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 posData = timePassed + "\n" + posData;
                                 sendData(posData);
                                 posData = "";
-                                document.getElementById("redBox1").style.display = "none";
+                                camera.remove(box1Obj);
                             }
                         } else {
                             document.getElementById("doneBtn").style.display = "none";
@@ -258,20 +281,25 @@ app.vuforia.isAvailable().then(function (available) {
                             markerObject.add(schedule);
                             document.getElementById("thumb").src = "resources/imgs/moveScheduleThumb.jpg";
                             start = +new Date();
+                            isRecordingPose = true;
                         }
 
                         if (isPlacing) {
                             if (isBtnClicked) {
                                 end = +new Date();
                                 timePassed = "Time for Placing " + (end - start);
-                                sendData(timePassed);
+                                posData = timePassed + "\n" + posData;
+                                sendData(posData);
+                                posData = "";
                                 isBtnClicked = false;
                                 isPlacing = false;
                                 document.getElementById("slider").style.display = "none";
                                 document.getElementById("heading").innerHTML = "Take a screenshot";
                                 document.getElementById("instructions-schedule-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
-                                document.getElementById("redBox1").style.display = "inline";
+
+                                camera.add(box1Obj);
+
                                 isRecordingPose = true;
                                 start = +new Date();
                             }
@@ -283,7 +311,9 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "You are finished";
                                 isTakingScreenshot = false;
-                                document.getElementById("redBox1").style.display = "none";
+
+                                camera.remove(box1Obj);
+
                                 end = +new Date();
                                 timePassed = "Time for Taking Screenshot " + (end - start);
                                 isRecordingPose = false;
@@ -328,7 +358,7 @@ app.context.updateEvent.addEventListener(function () {
             var camDir = camera.getWorldDirection();
             camera.updateMatrixWorld();
             //    var cameraPos = userLocation.position;
-            posData = posData + userLocation.position.x + " " + userLocation.position.y + " " + userLocation.position.z + ", " + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
+            posData = posData + camDir.x + " " + camDir.y + " " + camDir.z + "\n";
         }
         recordingStep++;
     }
