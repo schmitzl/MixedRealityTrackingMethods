@@ -170,7 +170,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 isTakingScreenshot = true;
 
                                 box1Obj.scale.set(12, 12, 12);
-                                box1Obj.position.z = 12;
+                                box1Obj.position.z = 1;
                                 tramScene.add(box1Obj);
 
 
