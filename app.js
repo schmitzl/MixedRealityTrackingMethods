@@ -68,8 +68,6 @@ var box1Obj = new THREE.Object3D();
 box1Obj.add(box1);
 box1Obj.position.z = -2;
 box1Obj.position.x = -0.5;
-box1Obj.rotateY(0, -174533);
-box1Obj.rotateX(0, 174533);
 
 // -- LOAD SCENES --
 var tramScene = new THREE.Object3D();
@@ -173,7 +171,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
 
-                                camera.add(box1Obj);
+                                tramScene.add(box1Obj);
 
                                 isRecordingPose = true;
                                 start = +new Date();
@@ -193,7 +191,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("heading").innerHTML = "Find the marker";
                                 document.getElementById("instructions-schedule-find").style.display = "inline";
                                 isTakingScreenshot = false;
-                                camera.remove(box1Obj);
+                                tramScene.remove(box1Obj);
                             }
                         } else {
                             document.getElementById("doneBtn").style.display = "none";
@@ -234,7 +232,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
 
-                                camera.add(box1Obj);
+                                graffitiTramScene.add(box1Obj);
 
                                 isRecordingPose = true;
                                 start = +new Date();
@@ -255,7 +253,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 posData = timePassed + "\n" + posData;
                                 sendData(posData);
                                 posData = "";
-                                camera.remove(box1Obj);
+                                graffitiTramScene.remove(box1Obj);
                             }
                         } else {
                             document.getElementById("doneBtn").style.display = "none";
@@ -298,7 +296,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("instructions-schedule-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
 
-                                camera.add(box1Obj);
+                                schedule.add(box1Obj);
 
                                 isRecordingPose = true;
                                 start = +new Date();
@@ -312,7 +310,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("heading").innerHTML = "You are finished";
                                 isTakingScreenshot = false;
 
-                                camera.remove(box1Obj);
+                                schedule.remove(box1Obj);
 
                                 end = +new Date();
                                 timePassed = "Time for Taking Screenshot " + (end - start);
