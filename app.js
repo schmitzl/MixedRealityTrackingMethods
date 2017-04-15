@@ -78,6 +78,7 @@ var canvas = new THREE.Object3D();
 var sky = new THREE.Object3D();
 var ground = new THREE.Object3D();
 var stadshuset = new THREE.Object3D();
+var timeportalCube = new THREE.Object3D();
 loadTramScene();
 tramScene.rotation.y = Math.PI;
 tramScene.translateX(-1);
@@ -93,6 +94,7 @@ graffitiTramScene.scale.set(0.25, 0.35, 0.25);
 var schedule = new THREE.Object3D();
 var schedulePost = new THREE.Object3D();
 var scheduleBox = new THREE.Object3D();
+var scheduleCube = new THREE.Object3D();
 loadSchedule();
 
 
@@ -171,7 +173,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 isTakingScreenshot = true;
 
 
-
+                                tramScene.add(timeportalCube);
 
                                 isRecordingPose = true;
                                 start = +new Date();
@@ -191,7 +193,6 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("heading").innerHTML = "Find the marker";
                                 document.getElementById("instructions-schedule-find").style.display = "inline";
                                 isTakingScreenshot = false;
-                                scene.remove(box1Obj);
                             }
                         } else {
                             document.getElementById("doneBtn").style.display = "none";
@@ -253,7 +254,6 @@ app.vuforia.isAvailable().then(function (available) {
                                 posData = timePassed + "\n" + posData;
                                 sendData(posData);
                                 posData = "";
-                                graffitiTramScene.remove(box1Obj);
                             }
                         } else {
                             document.getElementById("doneBtn").style.display = "none";
@@ -296,7 +296,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("instructions-schedule-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
 
-                                schedule.add(box1Obj);
+                                schedule.add(scheduleCube);
 
                                 isRecordingPose = true;
                                 start = +new Date();
@@ -309,10 +309,6 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("doneBtn").style.display = "none";
                                 document.getElementById("heading").innerHTML = "You are finished";
                                 isTakingScreenshot = false;
-
-                                schedule.remove(box1Obj);
-                                box1Obj.scale.set(1, 1, 1);
-                                box1Obj.position.z = -1;
 
                                 end = +new Date();
                                 timePassed = "Time for Taking Screenshot " + (end - start);
@@ -529,6 +525,17 @@ function loadTramScene() {
         stadshusetMesh.scale.set(.4, .4, .4);
     });
 
+    var timeportalCubeMesh;
+    var timeportalCubeTextureLoader = new THREE.TextureLoader();
+    var timeportalCubeGeometry = new THREE.Geometry();
+    var timeportalCubeLoader = new THREE.JSONLoader();
+    timeportalCubeLoader.load('resources/obj/tram/timeportalCube.js', function (timeportalCubeGeometry) {
+        var timeportalCubeMaterial = new THREE.MeshPhongMaterial();
+        timeportalCubeMesh = new THREE.Mesh(timeportalCubeGeometry, timeportalCubeMaterial);
+        timeportalCubeMesh.material.color.set(0xFF0000);
+        timeportalCube.add(timeportalCubeMesh);
+    });
+
     tramScene.add(tramBase);
     tramScene.add(tramFrame);
     tramScene.add(platform);
@@ -626,6 +633,17 @@ function loadSchedule() {
         });
         scheduleBoxMesh = new THREE.Mesh(scheduleBoxGeometry, scheduleBoxMaterial);
         scheduleBox.add(scheduleBoxMesh);
+    });
+
+    var scheduleCubeMesh;
+    var scheduleCubeTextureLoader = new THREE.TextureLoader();
+    var scheduleCubeGeometry = new THREE.Geometry();
+    var scheduleCubeLoader = new THREE.JSONLoader();
+    scheduleCubeLoader.load('resources/obj/tram/scheduleCube.js', function (scheduleCubeGeometry) {
+        var scheduleCubeMaterial = new THREE.MeshPhongMaterial();
+        scheduleCubeMesh = new THREE.Mesh(scheduleCubeGeometry, scheduleCubeMaterial);
+        scheduleCubeMesh.material.color.set(0xFF0000);
+        scheduleCube.add(scheduleCubeMesh);
     });
 
     schedule.add(schedulePost);
