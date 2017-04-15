@@ -96,7 +96,7 @@ var schedulePost = new THREE.Object3D();
 var scheduleBox = new THREE.Object3D();
 var scheduleCube = new THREE.Object3D();
 loadSchedule();
-schedule.translateY(-3);
+schedule.translateY(-8);
 
 
 var posData = "";
@@ -622,6 +622,7 @@ function loadSchedule() {
         });
         schedulePostMesh = new THREE.Mesh(schedulePostGeometry, schedulePostMaterial);
         schedulePost.add(schedulePostMesh);
+        schedulePostMesh.scale.set(2.5, 2.5, 2.5);
     });
 
     var scheduleBoxMesh;
@@ -635,6 +636,7 @@ function loadSchedule() {
         });
         scheduleBoxMesh = new THREE.Mesh(scheduleBoxGeometry, scheduleBoxMaterial);
         scheduleBox.add(scheduleBoxMesh);
+        scheduleBox.scale.set(2.5, 2.5, 2.5);
     });
 
     var scheduleCubeMesh;
