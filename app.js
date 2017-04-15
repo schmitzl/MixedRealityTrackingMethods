@@ -170,8 +170,8 @@ app.vuforia.isAvailable().then(function (available) {
                                 isTakingScreenshot = true;
 
                                 tramScene.add(box1Obj);
-                                box1Obj.scale.set(3, 3, 3);
-                                box1Obj.position.z = -3;
+                                box1Obj.scale.set(12, 12, 12);
+                                box1Obj.position.z = -12;
 
                                 isRecordingPose = true;
                                 start = +new Date();
@@ -233,6 +233,8 @@ app.vuforia.isAvailable().then(function (available) {
                                 isTakingScreenshot = true;
 
                                 graffitiTramScene.add(box1Obj);
+                                box1Obj.scale.set(1, 1, 1);
+                                box1Obj.position.z = -1;
 
                                 isRecordingPose = true;
                                 start = +new Date();
@@ -311,6 +313,8 @@ app.vuforia.isAvailable().then(function (available) {
                                 isTakingScreenshot = false;
 
                                 schedule.remove(box1Obj);
+                                box1Obj.scale.set(1, 1, 1);
+                                box1Obj.position.z = -1;
 
                                 end = +new Date();
                                 timePassed = "Time for Taking Screenshot " + (end - start);
