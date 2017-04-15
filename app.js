@@ -96,6 +96,7 @@ var schedulePost = new THREE.Object3D();
 var scheduleBox = new THREE.Object3D();
 var scheduleCube = new THREE.Object3D();
 loadSchedule();
+schedule.translateY(-3);
 
 
 var posData = "";
@@ -174,6 +175,7 @@ app.vuforia.isAvailable().then(function (available) {
 
 
                                 tramScene.add(timeportalCube);
+                                timeportalCube.scale.set(0.5, 0.5, 0.5);
 
                                 isRecordingPose = true;
                                 start = +new Date();
