@@ -86,6 +86,7 @@ var graffitiTramScene = new THREE.Object3D();
 var graffitiTramBg = new THREE.Object3D();
 var graffitiTram = new THREE.Object3D();
 var graffitiMaskingPlane = new THREE.Object3D();
+var graffitiCube = new THREE.Object3D();
 loadgraffitiScene();
 graffitiTramScene.scale.set(0.25, 0.35, 0.25);
 
@@ -169,8 +170,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
 
-                                scene.add(box1Obj);
-                                box1Obj.translateZ(2);
+                                graffitiTramScene.add(graffitiCube);
 
 
                                 isRecordingPose = true;
@@ -580,10 +580,21 @@ function loadgraffitiScene() {
     maskingPlaneLoader.load('resources/obj/tram/maskingPlane.js', function (maskingPlaneGeometry) {
         var maskingPlaneMaterial = new THREE.MeshPhongMaterial();
         maskingPlaneMesh = new THREE.Mesh(maskingPlaneGeometry, maskingPlaneMaterial);
-        maskingPlaneMesh.material.color.set(0x001100);
+        maskingPlaneMesh.material.color.set(0xFF0000);
         maskingPlaneMesh.material.colorWrite = false;
         maskingPlaneMesh.renderOrder = 1;
         graffitiMaskingPlane.add(maskingPlaneMesh);
+    });
+
+    var graffitiCubeMesh;
+    var graffitiCubeTextureLoader = new THREE.TextureLoader();
+    var graffitiCubeGeometry = new THREE.Geometry();
+    var graffitiCubeLoader = new THREE.JSONLoader();
+    graffitiCubeLoader.load('resources/obj/tram/graffitiCube.js', function (graffitiCubeGeometry) {
+        var graffitiCubeMaterial = new THREE.MeshPhongMaterial();
+        graffitiCubeMesh = new THREE.Mesh(graffitiCubeGeometry, graffitiCubeMaterial);
+        graffitiCubeMesh.material.color.set(0x001100);
+        graffitiCube.add(graffitiCubeMesh);
     });
 
     //  graffitiTramScene.add(graffitiTramBg);
