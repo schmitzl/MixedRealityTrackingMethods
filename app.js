@@ -169,9 +169,8 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
 
-                                box1Obj.scale.set(12, 12, 12);
-                                box1Obj.position.z = 1;
-                                tramScene.add(box1Obj);
+                                scene.add(box1Obj);
+                                box1Obj.translateZ(2);
 
 
                                 isRecordingPose = true;
@@ -192,7 +191,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("heading").innerHTML = "Find the marker";
                                 document.getElementById("instructions-schedule-find").style.display = "inline";
                                 isTakingScreenshot = false;
-                                tramScene.remove(box1Obj);
+                                scene.remove(box1Obj);
                             }
                         } else {
                             document.getElementById("doneBtn").style.display = "none";
