@@ -175,7 +175,6 @@ app.vuforia.isAvailable().then(function (available) {
 
 
                                 tramScene.add(timeportalCube);
-                                timeportalCube.scale.set(0.5, 0.5, 0.5);
 
                                 isRecordingPose = true;
                                 start = +new Date();
@@ -536,6 +535,7 @@ function loadTramScene() {
         timeportalCubeMesh = new THREE.Mesh(timeportalCubeGeometry, timeportalCubeMaterial);
         timeportalCubeMesh.material.color.set(0xFF0000);
         timeportalCube.add(timeportalCubeMesh);
+        timeportalCubeMesh.scale.set(.4, .4, .4);
     });
 
     tramScene.add(tramBase);
