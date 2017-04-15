@@ -170,7 +170,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
 
-                                graffitiTramScene.add(graffitiCube);
+
 
 
                                 isRecordingPose = true;
@@ -232,9 +232,7 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("instructions-graffiti-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
 
-                                graffitiTramScene.add(box1Obj);
-                                box1Obj.scale.set(1, 1, 1);
-                                box1Obj.position.z = 1;
+                                graffitiTramScene.add(graffitiCube);
 
                                 isRecordingPose = true;
                                 start = +new Date();
@@ -580,7 +578,7 @@ function loadgraffitiScene() {
     maskingPlaneLoader.load('resources/obj/tram/maskingPlane.js', function (maskingPlaneGeometry) {
         var maskingPlaneMaterial = new THREE.MeshPhongMaterial();
         maskingPlaneMesh = new THREE.Mesh(maskingPlaneGeometry, maskingPlaneMaterial);
-        maskingPlaneMesh.material.color.set(0xFF0000);
+        maskingPlaneMesh.material.color.set(0x001100);
         maskingPlaneMesh.material.colorWrite = false;
         maskingPlaneMesh.renderOrder = 1;
         graffitiMaskingPlane.add(maskingPlaneMesh);
@@ -593,7 +591,7 @@ function loadgraffitiScene() {
     graffitiCubeLoader.load('resources/obj/tram/graffitiCube.js', function (graffitiCubeGeometry) {
         var graffitiCubeMaterial = new THREE.MeshPhongMaterial();
         graffitiCubeMesh = new THREE.Mesh(graffitiCubeGeometry, graffitiCubeMaterial);
-        graffitiCubeMesh.material.color.set(0x001100);
+        graffitiCubeMesh.material.color.set(0xFF0000);
         graffitiCube.add(graffitiCubeMesh);
     });
 
