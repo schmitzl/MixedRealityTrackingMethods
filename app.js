@@ -66,8 +66,6 @@ var box1Material = new THREE.MeshBasicMaterial({
 var box1 = new THREE.Mesh(box1Geometry, box1Material);
 var box1Obj = new THREE.Object3D();
 box1Obj.add(box1);
-box1Obj.position.z = -2;
-box1Obj.position.x = -0.5;
 
 // -- LOAD SCENES --
 var tramScene = new THREE.Object3D();
@@ -172,6 +170,8 @@ app.vuforia.isAvailable().then(function (available) {
                                 isTakingScreenshot = true;
 
                                 tramScene.add(box1Obj);
+                                box1Obj.scale.set(3, 3, 3);
+                                box1Obj.position.z = -3;
 
                                 isRecordingPose = true;
                                 start = +new Date();
