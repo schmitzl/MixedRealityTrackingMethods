@@ -622,7 +622,7 @@ function loadSchedule() {
         });
         schedulePostMesh = new THREE.Mesh(schedulePostGeometry, schedulePostMaterial);
         schedulePost.add(schedulePostMesh);
-        schedulePostMesh.scale.set(2.5, 2.5, 2.5);
+        schedulePostMesh.scale.set(1.5, 1.5, 1.5);
     });
 
     var scheduleBoxMesh;
@@ -636,7 +636,7 @@ function loadSchedule() {
         });
         scheduleBoxMesh = new THREE.Mesh(scheduleBoxGeometry, scheduleBoxMaterial);
         scheduleBox.add(scheduleBoxMesh);
-        scheduleBox.scale.set(2.5, 2.5, 2.5);
+        scheduleBox.scale.set(1.5, 1.5, 1.5);
     });
 
     var scheduleCubeMesh;
