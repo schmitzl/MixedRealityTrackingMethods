@@ -169,9 +169,10 @@ app.vuforia.isAvailable().then(function (available) {
                                 document.getElementById("instructions-timeportal-screenshot").style.display = "inline";
                                 isTakingScreenshot = true;
 
-                                tramScene.add(box1Obj);
                                 box1Obj.scale.set(12, 12, 12);
-                                box1Obj.position.z = -12;
+                                box1Obj.position.z = 12;
+                                tramScene.add(box1Obj);
+
 
                                 isRecordingPose = true;
                                 start = +new Date();
@@ -234,7 +235,7 @@ app.vuforia.isAvailable().then(function (available) {
 
                                 graffitiTramScene.add(box1Obj);
                                 box1Obj.scale.set(1, 1, 1);
-                                box1Obj.position.z = -1;
+                                box1Obj.position.z = 1;
 
                                 isRecordingPose = true;
                                 start = +new Date();
